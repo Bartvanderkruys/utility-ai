@@ -48,10 +48,13 @@
   <ItemGroup>
      <Compile Include="Assets\Demo\DemoCharacters.cs" />
      <Compile Include="Assets\Demo\DemoEnvironment.cs" />
+     <Compile Include="Assets\Demo\DemoUI.cs" />
+     <Compile Include="Assets\Utility\Action.cs" />
      <Compile Include="Assets\Utility\Agent.cs" />
      <Compile Include="Assets\Utility\Behavior.cs" />
      <Compile Include="Assets\Utility\Consideration.cs" />
      <Compile Include="Assets\Utility\ConsiderationSet.cs" />
+     <Compile Include="Assets\Utility\Evaluation.cs" />
      <None Include="Assets\Editor\Doxygen\Resources\BaseDoxyfile.txt" />
      <None Include="Assets\Editor\Doxygen\ReadMe.txt" />
  <Reference Include="UnityEngine.UI">

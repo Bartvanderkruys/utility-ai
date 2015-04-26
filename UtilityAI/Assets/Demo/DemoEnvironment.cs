@@ -32,6 +32,6 @@ public class DemoEnvironment : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		//update time of day
 	}
 }
