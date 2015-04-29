@@ -91,12 +91,12 @@ public class DemoCharacters : MonoBehaviour {
 	void Update () {
 
 		//keep characterproperties in range
-		energy = KeepPropertyInRange (energy, 0, 100);
-		hunger = KeepPropertyInRange (hunger, 0, 100);
-		hygiene = KeepPropertyInRange (hygiene, 0, 100);
-		socialInteraction = KeepPropertyInRange (socialInteraction, 0, 100);
-		entertainment = KeepPropertyInRange (entertainment, 0, 100);
-		supplies = KeepPropertyInRange (supplies, 0, 100);
+		energy = KeepPropertyInRange (energy, 0.0f, 100.0f);
+		hunger = KeepPropertyInRange (hunger, 0.0f, 100.0f);
+		hygiene = KeepPropertyInRange (hygiene, 0.0f, 100.0f);
+		socialInteraction = KeepPropertyInRange (socialInteraction, 0.0f, 100.0f);
+		entertainment = KeepPropertyInRange (entertainment, 0.0f, 100.0f);
+		supplies = KeepPropertyInRange (supplies, 0.0f, 100.0f);
 
 		//Passing by reference does not seem to work,
 		//therefore, I update the values every frame for now.

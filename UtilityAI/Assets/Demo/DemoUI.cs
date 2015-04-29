@@ -7,6 +7,8 @@ public class DemoUI : MonoBehaviour {
 	public GameObject character;
 	DemoCharacters characterScript;
 
+	public Text simulationSpeedText;
+
 	[Header("Consideration Text")]
 	public Text energyText;
 	public Text hungerText;
@@ -27,6 +29,7 @@ public class DemoUI : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		characterScript = (DemoCharacters)character.GetComponent(typeof(DemoCharacters));
+		simulationSpeedText.text = "Speed: " + characterScript.speed + "x";
 	}
 	
 	// Update is called once per frame
@@ -50,7 +53,7 @@ public class DemoUI : MonoBehaviour {
 	{
 		p_textObject.text = p_textString + p_consideration.GetValue();
 		Slider slider = p_textObject.GetComponentInChildren<Slider> ();
-		slider.value = p_consideration.GetValue () / 100;
+		slider.value = p_consideration.GetValue () / 100.0f;
 	}
 
 	public void SetActionScores()
@@ -75,26 +78,43 @@ public class DemoUI : MonoBehaviour {
 	//make a function for each slider
 	public void OnEnergySliderChanged(float val)
 	{
-		characterScript.energy = val * 100;
+		characterScript.energy = val * 100.0f;
 	}
 	public void OnHygieneSliderChanged(float val)
 	{
-		characterScript.hygiene = val * 100;
+		characterScript.hygiene = val * 100.0f;
 	}
 	public void OnHungerSliderChanged(float val)
 	{
-		characterScript.hunger = val * 100;
+		characterScript.hunger = val * 100.0f;
 	}
 	public void OnSocialSliderChanged(float val)
 	{
-		characterScript.socialInteraction = val * 100;
+		characterScript.socialInteraction = val * 100.0f;
 	}
 	public void OnEntertainmentSliderChanged(float val)
 	{
-		characterScript.entertainment = val * 100;
+		characterScript.entertainment = val * 100.0f;
 	}
 	public void OnSuppliesSliderChanged(float val)
 	{
-		characterScript.supplies = val * 100;
+		characterScript.supplies = val * 100.0f;
+	}
+
+	//onclick events for speed buttons
+	public void OnSpeedUp()
+	{
+		characterScript.speed += 0.25f;
+		characterScript.movementSpeed += 0.25f;
+		simulationSpeedText.text = "Speed: " + characterScript.speed + "x";
+	}
+
+	public void OnSpeedDown()
+	{
+		if (characterScript.speed != 0.25f) {
+			characterScript.speed -= 0.25f;
+			characterScript.movementSpeed -= 0.25f;
+			simulationSpeedText.text = "Speed: " + characterScript.speed + "x";
+		}
 	}
 }
