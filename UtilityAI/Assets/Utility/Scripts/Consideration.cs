@@ -2,11 +2,10 @@
 using System;
 
 [Serializable]
-public class Consideration{
+public struct Consideration{
 	public float minimum_value;
 	public float maximum_value;
 	public AnimationCurve utilityCurve;
-	
 	private float value;
 
 	public float GetValue()

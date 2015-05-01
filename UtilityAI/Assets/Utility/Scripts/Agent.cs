@@ -7,12 +7,8 @@ using System.Collections.Generic;
 
 public class Agent : MonoBehaviour {
 
-
-	public List<Behavior> Behaviors = new List<Behavior>();
-
-	//evaluate all actions
-	void Evaluate () {
-		//for each action
-			//for each consideration
-	}
+	[HideInInspector]
+	public List<Action> Actions = new List<Action>();
+	//public List<Consideration> Considerations = new List<Consideration>();
+	
 }
