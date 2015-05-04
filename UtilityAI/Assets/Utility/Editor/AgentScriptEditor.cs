@@ -23,9 +23,9 @@ public class AgentScriptEditor : Editor {
 		(Rect rect, int index, bool isActive, bool isFocused) => {
 			var element = list.serializedProperty.GetArrayElementAtIndex(index);
 			rect.y += 2;
-			EditorGUI.TextField(
-				new Rect(rect.x, rect.y, EditorGUIUtility.fieldWidth, EditorGUIUtility.singleLineHeight),
-				"Action Name: ", element.FindPropertyRelative("actionName"), GUIContent.none);
+//			EditorGUI.TextField(
+//				new Rect(rect.x, rect.y, EditorGUIUtility.fieldWidth, EditorGUIUtility.singleLineHeight),
+//				"Action Name: ", element.FindPropertyRelative("actionName"), GUIContent.none);
 			EditorGUI.PropertyField(
 				new Rect(rect.x + rect.width - 30, rect.y, 30, EditorGUIUtility.singleLineHeight),
 				element.FindPropertyRelative("time"), GUIContent.none);
