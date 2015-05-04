@@ -28,7 +28,7 @@ public class AgentScriptEditor : Editor {
 				"Action Name: ", element.FindPropertyRelative("actionName"), GUIContent.none);
 			EditorGUI.PropertyField(
 				new Rect(rect.x + rect.width - 30, rect.y, 30, EditorGUIUtility.singleLineHeight),
-				element.FindPropertyRelative("Time"), GUIContent.none);
+				element.FindPropertyRelative("time"), GUIContent.none);
 		};
 	}
 	
@@ -39,6 +39,5 @@ public class AgentScriptEditor : Editor {
 		serializedObject.Update();
 		list.DoLayoutList();
 		serializedObject.ApplyModifiedProperties();
-		//DrawDefaultInspector ();
 	}
 }
