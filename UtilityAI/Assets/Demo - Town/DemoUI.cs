@@ -9,6 +9,9 @@ public class DemoUI : MonoBehaviour {
 
 	public Text simulationSpeedText;
 
+	public GameObject agentObject;
+	Agent agent;
+
 	[Header("Consideration Text")]
 	public Text energyText;
 	public Text hungerText;
@@ -29,6 +32,7 @@ public class DemoUI : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		characterScript = (DemoCharacters)character.GetComponent(typeof(DemoCharacters));
+		agent = (Agent)agentObject.GetComponent(typeof(Agent));
 		simulationSpeedText.text = "Speed: " + characterScript.speed + "x";
 	}
 	
@@ -36,7 +40,7 @@ public class DemoUI : MonoBehaviour {
 	void Update () {
 
 		//update consideration text and panels
-		SetConsiderationUI ("Energy: ", energyText, characterScript.energyConsideration);
+		SetConsiderationUI ("Energy: ", energyText, agent.agentConsiderations[0]);
 		SetConsiderationUI ("Hunger: ", hungerText, characterScript.hungerConsideration);
 		SetConsiderationUI ("Hygiene: ", hygieneText, characterScript.hygieneConsideration);
 		SetConsiderationUI ("Social: ", socialText, characterScript.socialConsideration);

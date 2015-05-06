@@ -11,7 +11,9 @@ public class Action{
 	public delegate void Del();
 	public Del handle;
 
+
 	//appropriate considerations
+	public List<string>linkedConsideration;
 	[HideInInspector]
 	public List<Consideration> considerations;
 

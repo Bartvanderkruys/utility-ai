@@ -13,6 +13,9 @@ public class DemoCharacters : MonoBehaviour {
 	private int evaluationCounter = 0;
 	private Vector3 destination;
 
+	//agent
+	Agent agent;
+
 	[Header("Character Properties")]
 	public float energy;
 	public float hygiene;
@@ -23,7 +26,7 @@ public class DemoCharacters : MonoBehaviour {
 	public float supplies;
 
 	[Header("Considerations")]
-	public Consideration energyConsideration;
+	//public Consideration energyConsideration;
 	public Consideration hungerConsideration;
 	public Consideration hygieneConsideration;
 	public Consideration socialConsideration;
@@ -53,15 +56,15 @@ public class DemoCharacters : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//link UI to this script
+		agent = GetComponent<Agent> ();
 		demoUI = (DemoUI)UIObject.GetComponent(typeof(DemoUI));
-
 		actions = new List<Action>();
 
 		//add function delegate to action
 		//add considerations to action
 		//add actions to list
 		sleepAction.handle = Sleep;
-		sleepAction.considerations.Add (energyConsideration);
+		sleepAction.considerations.Add (agent.agentConsiderations[0]);
 		actions.Add (sleepAction);
 
 		showerAction.handle = Shower;
@@ -82,8 +85,8 @@ public class DemoCharacters : MonoBehaviour {
 		actions.Add (getGroceriesAction);
 
 		drinkCoffeeAction.handle = DrinkCoffee;
-		drinkCoffeeAction.considerations.Add (energyConsideration);
-		drinkCoffeeAction.considerations.Add (hungerConsideration);
+		drinkCoffeeAction.considerations.Add (agent.agentConsiderations[0]);
+		drinkCoffeeAction.considerations.Add (agent.agentConsiderations[0]);
 		actions.Add (drinkCoffeeAction);
 	}
 	
@@ -100,7 +103,7 @@ public class DemoCharacters : MonoBehaviour {
 
 		//Passing by reference does not seem to work,
 		//therefore, I update the values every frame for now.
-		energyConsideration.SetValue(ref energy);
+		agent.SetAgentConsideration("Energy", energy);
 		hungerConsideration.SetValue(ref hunger);
 		hygieneConsideration.SetValue(ref hygiene);
 		socialConsideration.SetValue(ref socialInteraction);
@@ -121,7 +124,7 @@ public class DemoCharacters : MonoBehaviour {
 	{
 		Action topAction = drinkCoffeeAction;
 		float topActionScore = 0.0f;
-		Debug.Log (++evaluationCounter);
+		//Debug.Log (++evaluationCounter);
 
 		//Debug.Log ("Evaluating");
 		//for each action
@@ -138,7 +141,7 @@ public class DemoCharacters : MonoBehaviour {
 			actionScore = actionScore / actions[i].considerations.Count;
 			actions[i].SetActionScore(actionScore);
 			//if the score is the highest, set the action as the next action
-			Debug.Log ("actionScore of " + actions[i].actionName + ": " + actionScore);
+			//Debug.Log ("actionScore of " + actions[i].actionName + ": " + actionScore);
 			if(actionScore > topActionScore)
 			{
 				topAction = actions[i];
@@ -147,7 +150,7 @@ public class DemoCharacters : MonoBehaviour {
 		}
 		//update UI with new ActionScores
 		demoUI.SetActionScores ();
-		Debug.Log ("Topaction: " + topAction.actionName);
+		//Debug.Log ("Topaction: " + topAction.actionName);
 		currentAction = topAction;
 		actionTimer = topAction.time;
 	}

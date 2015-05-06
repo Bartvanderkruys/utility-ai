@@ -3,6 +3,7 @@ using System;
 
 [Serializable]
 public struct Consideration{
+	public string considerationName;
 	public float minimum_value;
 	public float maximum_value;
 	public AnimationCurve utilityCurve;

@@ -7,8 +7,32 @@ using System.Collections.Generic;
 
 public class Agent : MonoBehaviour {
 
-	[HideInInspector]
-	public List<Action> Actions = new List<Action>();
-	//public List<Consideration> Considerations = new List<Consideration>();
-	
+	public List<Consideration> agentConsiderations = new List<Consideration>();
+	public List<Action> actions = new List<Action>();
+
+	void OnStart(){
+		//link considerations to actions
+		for (int i = 0; i < actions.Count; i++) {
+			for (int j = 0; j < actions[i].linkedConsideration.Count; j++) {
+				for (int k = 0; k < agentConsiderations.Count; k++) {
+					if(actions[i].linkedConsideration[j] == agentConsiderations[k].considerationName){
+						//actions[i].considerations = agentConsiderations[k];
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	public void SetAgentConsideration(string name, float value)
+	{
+		for (int i = 0; i < agentConsiderations.Count; i++) {
+			if (agentConsiderations[i].considerationName == name)
+			{
+				agentConsiderations[i].SetValue(ref value);
+				break;
+			}
+		}
+		Debug.Log (agentConsiderations[0].GetValue());
+	}
 }
