@@ -24,15 +24,17 @@ public class Agent : MonoBehaviour {
 		}
 	}
 
-	public void SetAgentConsideration(string name, float value)
+	public void SetAgentConsideration(string name, ref float value)
 	{
 		for (int i = 0; i < agentConsiderations.Count; i++) {
 			if (agentConsiderations[i].considerationName == name)
 			{
-				agentConsiderations[i].SetValue(ref value);
+				Consideration temp = agentConsiderations[i];
+				temp.value = value;
+				//Debug.Log (agentConsiderations[i].considerationName);
 				break;
 			}
 		}
-		Debug.Log (agentConsiderations[0].GetValue());
+		Debug.Log (value + "  " + agentConsiderations[0].value);
 	}
 }

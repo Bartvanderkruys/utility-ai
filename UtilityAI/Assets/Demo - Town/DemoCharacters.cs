@@ -101,15 +101,15 @@ public class DemoCharacters : MonoBehaviour {
 		entertainment = KeepPropertyInRange (entertainment, 0.0f, 100.0f);
 		supplies = KeepPropertyInRange (supplies, 0.0f, 100.0f);
 
-		//Passing by reference does not seem to work,
+		//I cannot get pointers and references to work in C#,
 		//therefore, I update the values every frame for now.
-		agent.SetAgentConsideration("Energy", energy);
-		hungerConsideration.SetValue(ref hunger);
-		hygieneConsideration.SetValue(ref hygiene);
-		socialConsideration.SetValue(ref socialInteraction);
-		entertainmentConsideration.SetValue(ref entertainment);
-		workConsideration.SetValue(ref work);
-		suppliesConsideration.SetValue(ref supplies);
+		agent.SetAgentConsideration("Energy", ref energy);
+		hungerConsideration.SetValue(hunger);
+		hygieneConsideration.SetValue(hygiene);
+		socialConsideration.SetValue(socialInteraction);
+		entertainmentConsideration.SetValue(entertainment);
+		workConsideration.SetValue(work);
+		suppliesConsideration.SetValue(supplies);
 
 
 		if (actionTimer > 0.0f) {
