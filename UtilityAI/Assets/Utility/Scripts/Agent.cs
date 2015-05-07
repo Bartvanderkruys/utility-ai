@@ -11,12 +11,12 @@ public class Agent : MonoBehaviour {
 	public List<Action> actions = new List<Action>();
 
 	void OnStart(){
-		//link considerations to actions
+		//link considerations to actions using the string names
 		for (int i = 0; i < actions.Count; i++) {
 			for (int j = 0; j < actions[i].linkedConsideration.Count; j++) {
 				for (int k = 0; k < agentConsiderations.Count; k++) {
 					if(actions[i].linkedConsideration[j] == agentConsiderations[k].considerationName){
-						//actions[i].considerations = agentConsiderations[k];
+						actions[i].considerations.Add(agentConsiderations[k]);
 						break;
 					}
 				}
