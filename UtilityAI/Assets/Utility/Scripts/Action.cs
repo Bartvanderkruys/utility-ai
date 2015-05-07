@@ -10,8 +10,7 @@ public class Action{
 	//function delegate
 	public delegate void Del();
 	public Del handle;
-
-
+	
 	//appropriate considerations
 	public List<string>linkedConsideration;
 	[HideInInspector]

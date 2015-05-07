@@ -22,29 +22,8 @@ public class DemoCharacters : MonoBehaviour {
 	public float hunger;
 	public float socialInteraction;
 	public float entertainment;
-	public float work;
 	public float supplies;
-
-	[Header("Considerations")]
-	//public Consideration energyConsideration;
-	public Consideration hungerConsideration;
-	public Consideration hygieneConsideration;
-	public Consideration socialConsideration;
-	public Consideration entertainmentConsideration;
-	public Consideration workConsideration;
-	public Consideration suppliesConsideration;
-
-	private List<Action> actions;
-	private Action currentAction;
-	[Header("Actions")]
-	public Action sleepAction;
-	public Action showerAction;
-	public Action eatAction;
-	public Action watchMovieAction;
-	public Action workAction;
-	public Action getGroceriesAction;
-	public Action drinkCoffeeAction;
-
+	
 	[Header("Waypoints")]
 	public GameObject homeWaypoint;
 	public GameObject officeWaypoint;
@@ -58,36 +37,14 @@ public class DemoCharacters : MonoBehaviour {
 		//link UI to this script
 		agent = GetComponent<Agent> ();
 		demoUI = (DemoUI)UIObject.GetComponent(typeof(DemoUI));
-		actions = new List<Action>();
 
 		//add function delegate to action
-		//add considerations to action
-		//add actions to list
-		sleepAction.handle = Sleep;
-		sleepAction.considerations.Add (agent.agentConsiderations[0]);
-		actions.Add (sleepAction);
-
-		showerAction.handle = Shower;
-		showerAction.considerations.Add (hygieneConsideration);
-		actions.Add (showerAction);
-
-		eatAction.handle = Eat;
-		eatAction.considerations.Add (hungerConsideration);
-		actions.Add (eatAction);
-
-		watchMovieAction.handle = WatchMovie;
-		watchMovieAction.considerations.Add (entertainmentConsideration);
-		watchMovieAction.considerations.Add (socialConsideration);
-		actions.Add (watchMovieAction);
-
-		getGroceriesAction.handle = GetGroceries;
-		getGroceriesAction.considerations.Add (suppliesConsideration);
-		actions.Add (getGroceriesAction);
-
-		drinkCoffeeAction.handle = DrinkCoffee;
-		drinkCoffeeAction.considerations.Add (agent.agentConsiderations[0]);
-		drinkCoffeeAction.considerations.Add (agent.agentConsiderations[0]);
-		actions.Add (drinkCoffeeAction);
+		agent.SetVoidActionDelegate("Sleep", Sleep);
+		agent.SetVoidActionDelegate("Shower", Shower);
+		agent.SetVoidActionDelegate("Eat", Eat);
+		agent.SetVoidActionDelegate("Watch Movie", WatchMovie);
+		agent.SetVoidActionDelegate("Get Groceries", GetGroceries);
+		agent.SetVoidActionDelegate("Drink Coffee", DrinkCoffee);
 	}
 	
 	// Update is called once per frame
@@ -103,56 +60,20 @@ public class DemoCharacters : MonoBehaviour {
 
 		//I cannot get pointers and references to work in C#,
 		//therefore, I update the values every frame for now.
-		agent.SetAgentConsideration("Energy", ref energy);
-		hungerConsideration.SetValue(hunger);
-		hygieneConsideration.SetValue(hygiene);
-		socialConsideration.SetValue(socialInteraction);
-		entertainmentConsideration.SetValue(entertainment);
-		workConsideration.SetValue(work);
-		suppliesConsideration.SetValue(supplies);
-
+		agent.SetAgentConsideration("Energy", energy);
+		agent.SetAgentConsideration("Hunger", hunger);
+		agent.SetAgentConsideration("Hygiene", hygiene);
+		agent.SetAgentConsideration("Social", socialInteraction);
+		agent.SetAgentConsideration("Entertainment", entertainment);
+		agent.SetAgentConsideration("Supplies", supplies);
 
 		if (actionTimer > 0.0f) {
 			actionTimer -= speed * Time.deltaTime;
-			currentAction.handle();
+			agent.GetTopAction().handle();
 		} else {
-			Evaluate ();
+			agent.Evaluate ();
+			actionTimer = agent.GetTopAction().time;
 		}
-	}
-
-	void Evaluate()
-	{
-		Action topAction = drinkCoffeeAction;
-		float topActionScore = 0.0f;
-		//Debug.Log (++evaluationCounter);
-
-		//Debug.Log ("Evaluating");
-		//for each action
-		for (int i = 0; i < actions.Count; i++) {
-			float actionScore = 0.0f;
-			//evaluate appropriate considerations
-			for (int j = 0; j < actions[i].considerations.Count; j++){
-				//normalize value
-				float x = actions[i].considerations[j].GetValue() / (actions[i].considerations[j].maximum_value - actions[i].considerations[j].minimum_value);
-				float utilityScore = 1 - actions[i].considerations[j].utilityCurve.Evaluate(x);
-				actionScore += utilityScore;
-			}
-			//determine average
-			actionScore = actionScore / actions[i].considerations.Count;
-			actions[i].SetActionScore(actionScore);
-			//if the score is the highest, set the action as the next action
-			//Debug.Log ("actionScore of " + actions[i].actionName + ": " + actionScore);
-			if(actionScore > topActionScore)
-			{
-				topAction = actions[i];
-				topActionScore = actionScore;
-			}			
-		}
-		//update UI with new ActionScores
-		demoUI.SetActionScores ();
-		//Debug.Log ("Topaction: " + topAction.actionName);
-		currentAction = topAction;
-		actionTimer = topAction.time;
 	}
 
 	void MoveToTarget()
@@ -223,11 +144,6 @@ public class DemoCharacters : MonoBehaviour {
 		hygiene -= 1.5f * speed * Time.deltaTime;
 		hunger += 2.0f * speed * Time.deltaTime;
 		supplies -= 0.5f * speed * Time.deltaTime;
-	}
-
-	public string GetCurrentActionName()
-	{
-		return currentAction.actionName;
 	}
 
 	float KeepPropertyInRange(float property, float min, float max)

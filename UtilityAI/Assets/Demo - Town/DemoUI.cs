@@ -40,15 +40,15 @@ public class DemoUI : MonoBehaviour {
 	void Update () {
 
 		//update consideration text and panels
-		SetConsiderationUI ("Energy: ", energyText, agent.agentConsiderations[0]);
-		SetConsiderationUI ("Hunger: ", hungerText, characterScript.hungerConsideration);
-		SetConsiderationUI ("Hygiene: ", hygieneText, characterScript.hygieneConsideration);
-		SetConsiderationUI ("Social: ", socialText, characterScript.socialConsideration);
-		SetConsiderationUI ("Entertainment: ", entertainmentText, characterScript.entertainmentConsideration);
-		SetConsiderationUI ("Supplies: ", suppliesText, characterScript.suppliesConsideration);
+		SetConsiderationUI ("Energy: ", energyText, agent.GetAgentConsiderationByName("Energy"));
+		SetConsiderationUI ("Hunger: ", hungerText, agent.GetAgentConsiderationByName("Hunger"));
+		SetConsiderationUI ("Hygiene: ", hygieneText, agent.GetAgentConsiderationByName("Hygiene"));
+		SetConsiderationUI ("Social: ", socialText, agent.GetAgentConsiderationByName("Social"));
+		SetConsiderationUI ("Entertainment: ", entertainmentText, agent.GetAgentConsiderationByName("Entertainment"));
+		SetConsiderationUI ("Supplies: ", suppliesText, agent.GetAgentConsiderationByName("Supplies"));
 
 		//update current action
-		currentActionText.text = "Current Action: " + characterScript.GetCurrentActionName () 
+		currentActionText.text = "Current Action: " + agent.GetTopAction ().actionName 
 			+ "\nTime Remaining: " + characterScript.actionTimer;
 	}
 
@@ -63,12 +63,12 @@ public class DemoUI : MonoBehaviour {
 	public void SetActionScores()
 	{
 		//update actionscores, text and panels
-		SetActionScoreUI ("Eat: ", eatText, characterScript.eatAction);
-		SetActionScoreUI ("Sleep: ", sleepText, characterScript.sleepAction);
-		SetActionScoreUI ("Shower: ", showerText, characterScript.showerAction);
-		SetActionScoreUI ("Get Groceries: ", getGroceriesText, characterScript.getGroceriesAction);
-		SetActionScoreUI ("Watch Movie : ", watchMovieText, characterScript.watchMovieAction);
-		SetActionScoreUI ("Drink Coffee : ", drinkCoffeeText, characterScript.drinkCoffeeAction);
+		SetActionScoreUI ("Eat: ", eatText, agent.GetActionByName("Eat"));
+        SetActionScoreUI ("Sleep: ", sleepText, agent.GetActionByName("Sleep"));
+        SetActionScoreUI ("Shower: ", showerText, agent.GetActionByName("Shower"));
+        SetActionScoreUI ("Get Groceries: ", getGroceriesText, agent.GetActionByName("Get Groceries"));
+        SetActionScoreUI ("Watch Movie : ", watchMovieText, agent.GetActionByName("Watch Moview"));
+        SetActionScoreUI ("Drink Coffee : ", drinkCoffeeText, agent.GetActionByName("Drink Coffee"));
 	}
 
 	void SetActionScoreUI(string p_textString, Text p_textObject, Action p_action)

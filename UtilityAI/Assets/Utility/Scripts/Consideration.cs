@@ -2,12 +2,12 @@
 using System;
 
 [Serializable]
-public struct Consideration{
+public class Consideration{
 	public string considerationName;
 	public float minimum_value;
 	public float maximum_value;
 	public AnimationCurve utilityCurve;
-	public float value;
+	private float value;
 
 	public float GetValue()
 	{
