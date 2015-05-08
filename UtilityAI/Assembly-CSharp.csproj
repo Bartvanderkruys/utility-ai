@@ -48,7 +48,6 @@
   <ItemGroup>
      <Compile Include="Assets\Demo - Town\DemoCharacters.cs" />
      <Compile Include="Assets\Demo - Town\DemoEnvironment.cs" />
-     <Compile Include="Assets\Demo - Town\DemoUI.cs" />
      <Compile Include="Assets\Utility\Scripts\Action.cs" />
      <Compile Include="Assets\Utility\Scripts\Agent.cs" />
      <Compile Include="Assets\Utility\Scripts\Consideration.cs" />

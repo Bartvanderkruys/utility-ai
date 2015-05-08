@@ -95,7 +95,7 @@ public class Agent : MonoBehaviour {
 				topActionScore = actionScore;
 			}			
 		}
-		Debug.Log (topAction.actionName);
+		//Debug.Log (topAction.actionName);
 	}
 
 	public Action GetTopAction()

@@ -25,7 +25,7 @@ public class Consideration{
 		//plot on utility graph
 		float utilityScore = 1 - utilityCurve.Evaluate(x);
 		//return score
-		Debug.Log (utilityScore);
+		//Debug.Log (utilityScore);
 		return utilityScore;
 	}
 }

@@ -7,7 +7,6 @@ public class DemoCharacters : MonoBehaviour {
 	public float speed;
 	public float movementSpeed;
 	public GameObject UIObject; 
-	private DemoUI demoUI;
 	[HideInInspector]
 	public float actionTimer = 0.0f; 
 	private int evaluationCounter = 0;
