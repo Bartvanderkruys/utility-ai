@@ -1,13 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Utility\Scripts\Consideration.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Utility\Scripts\Agent.cs">
     <Files>
-      <File FileName="Assets\Demo - Town\DemoCharacters.cs" Line="140" Column="20" />
-      <File FileName="Assets\Utility\Scripts\Agent.cs" Line="96" Column="8" />
-      <File FileName="Assets\Utility\Scripts\Consideration.cs" Line="13" Column="3" />
-      <File FileName="Assets\Utility\Scripts\Action.cs" Line="19" Column="1" />
-      <File FileName="Assets\Demo - Town\DemoUI.cs" Line="75" Column="3" />
+      <File FileName="Assets\Demo - Town\DemoCharacters.cs" Line="69" Column="21" />
+      <File FileName="Assets\Utility\Scripts\Agent.cs" Line="73" Column="25" />
+      <File FileName="Assets\Utility\Scripts\Consideration.cs" Line="1" Column="1" />
+      <File FileName="Assets\Utility\Scripts\Action.cs" Line="1" Column="1" />
       <File FileName="Assets\Utility\Scripts\GlobalConsiderations.cs" Line="1" Column="1" />
+      <File FileName="Assets\Utility\Scripts\OverlayUIConsiderationPanel.cs" Line="28" Column="45" />
+      <File FileName="Assets\Demo - Town\DemoUI.cs" Line="16" Column="19" />
+      <File FileName="Assets\Utility\Scripts\OverlayUIConsiderationElement.cs" Line="23" Column="54" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

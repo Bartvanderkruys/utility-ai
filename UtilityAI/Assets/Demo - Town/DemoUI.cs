@@ -32,7 +32,7 @@ public class DemoUI : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		characterScript = (DemoCharacters)character.GetComponent(typeof(DemoCharacters));
-		agent = (Agent)agentObject.GetComponent(typeof(Agent));
+		agent = (Agent)agentObject.GetComponent(typeof(Agent));	
 		simulationSpeedText.text = "Speed: " + characterScript.speed + "x";
 	}
 	

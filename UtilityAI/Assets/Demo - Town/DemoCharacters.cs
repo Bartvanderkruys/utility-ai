@@ -34,7 +34,6 @@ public class DemoCharacters : MonoBehaviour {
 	void Start () {
 		//link UI to this script
 		agent = GetComponent<Agent> ();
-		demoUI = (DemoUI)UIObject.GetComponent(typeof(DemoUI));
 
 		//add function delegate to action
 		agent.SetVoidActionDelegate("Sleep", Sleep);
@@ -71,7 +70,6 @@ public class DemoCharacters : MonoBehaviour {
 		} else {
 			agent.Evaluate ();
 			actionTimer = agent.GetTopAction().time;
-			demoUI.SetActionScores();
 		}
 	}
 
