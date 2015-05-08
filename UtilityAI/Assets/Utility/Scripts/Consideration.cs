@@ -17,4 +17,15 @@ public class Consideration{
 	{
 		value = p_value;
 	}
+
+	public float GetUtilityScore()
+	{
+		//normalize
+		float x = value / (maximum_value - minimum_value);
+		//plot on utility graph
+		float utilityScore = 1 - utilityCurve.Evaluate(x);
+		//return score
+		Debug.Log (utilityScore);
+		return utilityScore;
+	}
 }

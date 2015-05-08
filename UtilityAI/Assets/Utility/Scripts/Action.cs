@@ -15,8 +15,7 @@ public class Action{
 	public List<string>linkedConsideration;
 	[HideInInspector]
 	public List<Consideration> considerations;
-
-	//action score, for UI
+	
 	private float actionScore;
 	public float GetActionScore()
 	{

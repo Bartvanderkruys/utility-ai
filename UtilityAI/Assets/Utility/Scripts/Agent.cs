@@ -11,14 +11,13 @@ public class Agent : MonoBehaviour {
 	public List<Action> actions = new List<Action>();
 	private Action topAction;
 
-	void OnStart(){
+	void Start(){
 		//link considerations to actions using the string names
 		for (int i = 0; i < actions.Count; i++) {
 			for (int j = 0; j < actions[i].linkedConsideration.Count; j++) {
 				for (int k = 0; k < agentConsiderations.Count; k++) {
 					if(actions[i].linkedConsideration[j] == agentConsiderations[k].considerationName){
 						actions[i].considerations.Add(agentConsiderations[k]);
-						break;
 					}
 				}
 			}
@@ -42,7 +41,7 @@ public class Agent : MonoBehaviour {
 			if (actions[i].actionName == name)
 			{
 				actions[i].handle = del;
-				break;
+				return;
 			}
 		}
 		Debug.Log ("Setting Action Delegate failed. Action: " + name + " Does not exist.");
@@ -65,9 +64,7 @@ public class Agent : MonoBehaviour {
 			if (agentConsiderations[i].considerationName == name)
 			{
 				agentConsiderations[i].SetValue(value);
-				//Debug.Log (agentConsiderations[i].considerationName);
-				//Debug.Log (agentConsiderations[i].value);
-				break;
+				return;
 			}
 		}
 		Debug.Log ("Setting Consideration failed. Consideration: " + name + " Does not exist.");
@@ -85,22 +82,20 @@ public class Agent : MonoBehaviour {
 			//evaluate appropriate considerations
 			for (int j = 0; j < actions[i].considerations.Count; j++){
 				//normalize value
-				Consideration tempConsideration = actions[i].considerations[j];
-				float x = tempConsideration.GetValue() / (tempConsideration.maximum_value - tempConsideration.minimum_value);
-				float utilityScore = 1 - tempConsideration.utilityCurve.Evaluate(x);
-				actionScore += utilityScore;
+				actionScore += actions[i].considerations[j].GetUtilityScore();
 			}
 			//determine average
 			actionScore = actionScore / actions[i].considerations.Count;
 			actions[i].SetActionScore(actionScore);
+			//Debug.Log ("actionScore of " + actions[i].actionName + ": " + actionScore + " " + actions[i].GetActionScore());
 			//if the score is the highest, set the action as the next action
-			//Debug.Log ("actionScore of " + actions[i].actionName + ": " + actionScore);
 			if(actionScore > topActionScore)
 			{
 				topAction = actions[i];
 				topActionScore = actionScore;
 			}			
 		}
+		Debug.Log (topAction.actionName);
 	}
 
 	public Action GetTopAction()

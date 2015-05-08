@@ -31,8 +31,6 @@ public class DemoCharacters : MonoBehaviour {
 	public GameObject cinemaWaypoint;
 	public GameObject groceryStoreWaypoint;
 	
-
-	// Use this for initialization
 	void Start () {
 		//link UI to this script
 		agent = GetComponent<Agent> ();
@@ -73,23 +71,24 @@ public class DemoCharacters : MonoBehaviour {
 		} else {
 			agent.Evaluate ();
 			actionTimer = agent.GetTopAction().time;
+			demoUI.SetActionScores();
 		}
 	}
 
-	void MoveToTarget()
-	{
-		// move to action position
-		while (this.transform.position != destination) {
-			float step = movementSpeed * Time.deltaTime;
-			transform.position = Vector3.MoveTowards (transform.position, destination, step);
-
-			energy -= 2.0f * speed * Time.deltaTime;
-			hygiene -= 1.5f * speed * Time.deltaTime;
-			hunger -= 1.0f * speed * Time.deltaTime;
-			entertainment -= 2.0f * speed * Time.deltaTime;
-			socialInteraction -= 1.0f * speed * Time.deltaTime;
-		}
-	}
+//	void MoveToTarget()
+//	{
+//		// move to action position
+//		while (this.transform.position != destination) {
+//			float step = movementSpeed * Time.deltaTime;
+//			transform.position = Vector3.MoveTowards (transform.position, destination, step);
+//
+//			energy -= 2.0f * speed * Time.deltaTime;
+//			hygiene -= 1.5f * speed * Time.deltaTime;
+//			hunger -= 1.0f * speed * Time.deltaTime;
+//			entertainment -= 2.0f * speed * Time.deltaTime;
+//			socialInteraction -= 1.0f * speed * Time.deltaTime;
+//		}
+//	}
 
 	void Sleep()
 	{

@@ -67,7 +67,7 @@ public class DemoUI : MonoBehaviour {
         SetActionScoreUI ("Sleep: ", sleepText, agent.GetActionByName("Sleep"));
         SetActionScoreUI ("Shower: ", showerText, agent.GetActionByName("Shower"));
         SetActionScoreUI ("Get Groceries: ", getGroceriesText, agent.GetActionByName("Get Groceries"));
-        SetActionScoreUI ("Watch Movie : ", watchMovieText, agent.GetActionByName("Watch Moview"));
+        SetActionScoreUI ("Watch Movie : ", watchMovieText, agent.GetActionByName("Watch Movie"));
         SetActionScoreUI ("Drink Coffee : ", drinkCoffeeText, agent.GetActionByName("Drink Coffee"));
 	}
 
