@@ -47,6 +47,8 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Editor\Doxygen\DoxygenWindow.cs" />
+     <Compile Include="Assets\Utility\Editor\AgentInspector.cs" />
+     <Compile Include="Assets\Utility\Editor\GlobalConsiderationInspector.cs" />
      <None Include="Assets\Editor\Doxygen\Resources\BaseDoxyfile.txt" />
      <None Include="Assets\Editor\Doxygen\ReadMe.txt" />
  <Reference Include="UnityEngine.UI">

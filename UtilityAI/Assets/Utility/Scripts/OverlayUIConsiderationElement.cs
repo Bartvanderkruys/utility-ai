@@ -5,13 +5,14 @@ using UnityEngine.UI;
 public class OverlayUIConsiderationElement : MonoBehaviour {
 
 	private Consideration consideration;
-	private Text text;
-	private Slider slider;
+	public Text nameText;
+	public Text propertyText;
+	public Text utilityText;
+	public Slider propertySlider;
+	public Slider utilitySlider;
 
-	void Start()
-	{
-		text = GetComponentInChildren<Text> ();
-		slider = GetComponentInChildren<Slider> ();
+	public void Start(){
+		nameText.text = consideration.considerationName;
 	}
 
 	public void SetConsideration(Consideration p_consideration){
@@ -20,7 +21,12 @@ public class OverlayUIConsiderationElement : MonoBehaviour {
 
 	public void SetConsiderationUI()
 	{
-		text.text = consideration.considerationName + ":   " + consideration.GetValue();
-		slider.value = consideration.GetValue () / 100.0f;
+		float propertyValue = consideration.GetValue ();
+		float utilityValue = consideration.GetUtilityScore ();
+
+		propertyText.text = "P: " + propertyValue.ToString("0");
+		propertySlider.value = propertyValue / 100.0f;
+		utilityText.text = "U: " + utilityValue.ToString("0.00");
+		utilitySlider.value = utilityValue;
 	}
 }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 public class Agent : MonoBehaviour {
 
+	[HideInInspector]
 	public List<Consideration> agentConsiderations = new List<Consideration>();
 	public List<Action> actions = new List<Action>();
 	private Action topAction;
@@ -93,7 +94,7 @@ public class Agent : MonoBehaviour {
 			{
 				topAction = actions[i];
 				topActionScore = actionScore;
-			}			
+			}		
 		}
 		//Debug.Log (topAction.actionName);
 	}
