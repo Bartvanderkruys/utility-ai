@@ -15,6 +15,18 @@ public class Action{
 	public List<LinkedConsideration>linkedConsideration;
 	
 	private float actionScore;
+
+	public void EvaluateAction(){
+		actionScore = 0.0f;
+		//evaluate appropriate considerations
+		for (int j = 0; j < linkedConsideration.Count; j++){
+			//normalize value
+			actionScore += linkedConsideration[j].GetConsideration().GetUtilityScore();
+		}
+		//determine average
+		actionScore = actionScore / linkedConsideration.Count;
+	}
+
 	public float GetActionScore()
 	{
 		return actionScore;

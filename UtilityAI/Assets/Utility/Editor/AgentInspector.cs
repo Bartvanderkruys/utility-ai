@@ -5,7 +5,7 @@ using UnityEditorInternal;
 [CustomEditor(typeof(Agent))]
 public class AgentInspector : Editor {  
 	private ReorderableList considerationList;
-	
+
 	private void OnEnable() {
 		considerationList = new ReorderableList(serializedObject, 
 		                           serializedObject.FindProperty("agentConsiderations"), 
@@ -33,7 +33,6 @@ public class AgentInspector : Editor {
 				new Rect(rect.width, rect.y, EditorGUIUtility.singleLineHeight * 2, EditorGUIUtility.singleLineHeight * 2),
 				element.FindPropertyRelative("utilityCurve"), GUIContent.none);
 		};
-
 	}
 	
 	public override void OnInspectorGUI() {

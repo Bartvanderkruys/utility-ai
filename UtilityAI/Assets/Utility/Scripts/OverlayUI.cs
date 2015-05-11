@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class OverlayUI : MonoBehaviour {
 
-	public Text currentActionText;
+	public Text currentActionText, actionTimerText;
 
 	private Agent[] agents;
 	public GameObject considerationElement, actionElement, considerationContent, actionContent;
@@ -51,6 +51,7 @@ public class OverlayUI : MonoBehaviour {
 			actionElements[i].GetComponent<OverlayUIActionElement>().SetActionUI();
 		}
 		currentActionText.text = "Current Action: " + agents [0].GetTopAction().actionName;
+		actionTimerText.text = "Time Left: " + agents [0].actionTimer.ToString ("0.00");
 	}
 
 	void BuildUtilityCurve(Consideration con){

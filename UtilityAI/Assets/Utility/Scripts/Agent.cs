@@ -11,6 +11,8 @@ public class Agent : MonoBehaviour {
 	public List<Consideration> agentConsiderations = new List<Consideration>();
 	public List<Action> actions = new List<Action>();
 	private Action topAction;
+	[HideInInspector]
+	public float actionTimer = 0.0f;
 
 	void Start(){
 		//link considerations to actions using the string names
@@ -24,6 +26,17 @@ public class Agent : MonoBehaviour {
 			}
 		}
 		Evaluate ();
+	}
+
+	public void UpdateAI(){
+		if (actionTimer > 0.0f) {
+			actionTimer -= Time.deltaTime;
+			GetTopAction().handle();
+		} else {
+			//evaluate top action and store time and delegate
+			Evaluate ();
+			actionTimer = GetTopAction().time;
+		}
 	}
 
 	public Action GetActionByName(string name){
@@ -73,31 +86,18 @@ public class Agent : MonoBehaviour {
 	}
 
 	public void Evaluate(){
-		topAction = GetActionByName("Drink Coffee");
+		//topAction = GetActionByName("Drink Coffee");
 		float topActionScore = 0.0f;
-		//Debug.Log (++evaluationCounter);
-
-		//Debug.Log ("Evaluating");
 		//for each action
 		for (int i = 0; i < actions.Count; i++) {
-			float actionScore = 0.0f;
-			//evaluate appropriate considerations
-			for (int j = 0; j < actions[i].linkedConsideration.Count; j++){
-				//normalize value
-				actionScore += actions[i].linkedConsideration[j].GetConsideration().GetUtilityScore();
-			}
-			//determine average
-			actionScore = actionScore / actions[i].linkedConsideration.Count;
-			actions[i].SetActionScore(actionScore);
-			//Debug.Log ("actionScore of " + actions[i].actionName + ": " + actionScore + " " + actions[i].GetActionScore());
+			actions[i].EvaluateAction();
 			//if the score is the highest, set the action as the next action
-			if(actionScore > topActionScore)
+			if(actions[i].GetActionScore() > topActionScore)
 			{
 				topAction = actions[i];
-				topActionScore = actionScore;
-			}		
+				topActionScore = actions[i].GetActionScore();
+			}	
 		}
-		//Debug.Log (topAction.actionName);
 	}
 
 	public Action GetTopAction()

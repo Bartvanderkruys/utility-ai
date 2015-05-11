@@ -40,5 +40,6 @@ public class GlobalConsiderationInspector : Editor {
 		serializedObject.Update();
 		considerationList.DoLayoutList();
 		serializedObject.ApplyModifiedProperties();
+		DrawDefaultInspector ();
 	}
 }

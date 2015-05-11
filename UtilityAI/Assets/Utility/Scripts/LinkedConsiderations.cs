@@ -10,7 +10,7 @@ public class LinkedConsideration{
 		Global
 	}
 	public Scope scope;
-	public float weight;
+	public float weight = 1.0f;
 	private Consideration consideration;
 
 	public void SetConsideration(Consideration con){

@@ -7,7 +7,6 @@ public class DemoCharacters : MonoBehaviour {
 	public float speed;
 	public float movementSpeed;
 	[HideInInspector]
-	public float actionTimer = 0.0f; 
 	private Vector3 destination;
 	private bool atDestination = false;
 
@@ -62,22 +61,8 @@ public class DemoCharacters : MonoBehaviour {
 		agent.SetAgentConsideration("Entertainment", entertainment);
 		agent.SetAgentConsideration("Supplies", supplies);
 
-		if (actionTimer > 0.0f) {
-			if(atDestination)
-			{
-				actionTimer -= speed * Time.deltaTime;
-				agent.GetTopAction().handle();
-			} else {
-				MoveToTarget();
-			}
-		} else {
-			//evaluate top action and store time and delegate
-			agent.Evaluate ();
-			DetermineTarget();
-			actionTimer = agent.GetTopAction().time;
-			if(transform.position != destination)
-				atDestination = false;
-		}
+		agent.UpdateAI ();
+
 	}
 
 	void DetermineTarget()
@@ -102,6 +87,7 @@ public class DemoCharacters : MonoBehaviour {
 	void MoveToTarget()
 	{
 		// move to action position
+		DetermineTarget();
 		float step = movementSpeed * Time.deltaTime;
 		transform.position = Vector3.MoveTowards (transform.position, destination, step);
 
@@ -109,7 +95,7 @@ public class DemoCharacters : MonoBehaviour {
 		hygiene -= 1.5f * speed * Time.deltaTime;
 		hunger -= 1.0f * speed * Time.deltaTime;
 		entertainment -= 2.0f * speed * Time.deltaTime;
-		socialInteraction -= 1.0f * speed * Time.deltaTime;
+		socialInteraction -= 5.0f * speed * Time.deltaTime;
 
 		if (transform.position == destination)
 			atDestination = true;
@@ -117,57 +103,89 @@ public class DemoCharacters : MonoBehaviour {
 
 	void Sleep()
 	{
-		// 6 - 9 hours at home
-		energy += 15.0f * speed * Time.deltaTime;
-		hygiene -= 5.0f * speed * Time.deltaTime;
-		hunger -= 5.0f * speed * Time.deltaTime;
+		if (atDestination) {
+			energy += 10.0f * speed * Time.deltaTime;
+			hygiene -= 5.0f * speed * Time.deltaTime;
+			hunger -= 5.0f * speed * Time.deltaTime;
+			supplies -= 2.0f * speed * Time.deltaTime;
+		} else {
+			MoveToTarget ();
+		}
 	}
 
 	void Shower()
 	{
+		if(atDestination){
 		hygiene += 80.0f * speed * Time.deltaTime;
 		hunger -= 5.0f * speed * Time.deltaTime;
+		entertainment -= 2.0f * speed * Time.deltaTime;
+		} else {
+			MoveToTarget ();
+		}
 	}
 
 	void Eat()
 	{
+		if(atDestination){
 		energy += 2.0f * speed * Time.deltaTime;
 		hygiene -= 3.0f * speed * Time.deltaTime;
 		hunger += 40.0f * speed * Time.deltaTime;
-		supplies -= 0.5f * speed * Time.deltaTime;
+		supplies -= 10.0f * speed * Time.deltaTime;
+		} else {
+			MoveToTarget ();
+		}
 	}
 
 	void WatchMovie()
 	{
-		energy -= 1.0f * speed * Time.deltaTime;
-		hygiene -= 0.5f * speed * Time.deltaTime;
-		hunger -= 1.0f * speed * Time.deltaTime;
-		entertainment += 20.0f * speed * Time.deltaTime;
+		if(atDestination){
+		energy -= 2.0f * speed * Time.deltaTime;
+		hygiene -= 2.0f * speed * Time.deltaTime;
+		hunger -= 4.0f * speed * Time.deltaTime;
+		entertainment += 8.0f * speed * Time.deltaTime;
 		socialInteraction += 15.0f * speed * Time.deltaTime;
+		} else {
+			MoveToTarget ();
+		}
 	}
 
 	void Work()
 	{
+		if(atDestination){
 		energy -= 2.0f * speed * Time.deltaTime;
 		hygiene -= 2.0f * speed * Time.deltaTime;
 		hunger -= 2.0f * speed * Time.deltaTime;
+		entertainment -= 5.0f * speed * Time.deltaTime;
 		socialInteraction += 2.0f * speed * Time.deltaTime;
+		} else {
+			MoveToTarget ();
+		}
 	}
 
 	void GetGroceries()
 	{
-		energy -= 2.0f * speed * Time.deltaTime;
-		hygiene -= 1.5f * speed * Time.deltaTime;
-		socialInteraction += 1.0f * speed * Time.deltaTime;
-		supplies += 50.0f * speed * Time.deltaTime;
+		if(atDestination){
+		energy -= 3.0f * speed * Time.deltaTime;
+		hygiene -= 2.5f * speed * Time.deltaTime;
+		entertainment -= 5.0f * speed * Time.deltaTime;
+		socialInteraction += 2.0f * speed * Time.deltaTime;
+		supplies += 30.0f * speed * Time.deltaTime;
+		} else {
+			MoveToTarget ();
+		}
 	}
 
 	void DrinkCoffee()
 	{
-		energy += 2.0f * speed * Time.deltaTime;
+		if(atDestination){
+		energy += 1.0f * speed * Time.deltaTime;
 		hygiene -= 1.5f * speed * Time.deltaTime;
 		hunger += 2.0f * speed * Time.deltaTime;
 		supplies -= 0.5f * speed * Time.deltaTime;
+		socialInteraction -= 2.0f * speed * Time.deltaTime;
+		} else {
+			MoveToTarget ();
+		}
 	}
 
 	float KeepPropertyInRange(float property, float min, float max)
