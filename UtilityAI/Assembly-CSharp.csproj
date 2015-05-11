@@ -47,11 +47,12 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Demo - Town\DemoCharacters.cs" />
-     <Compile Include="Assets\Demo - Town\DemoEnvironment.cs" />
+     <Compile Include="Assets\Demo - Town\SlidingDoors.cs" />
      <Compile Include="Assets\Utility\Scripts\Action.cs" />
      <Compile Include="Assets\Utility\Scripts\Agent.cs" />
      <Compile Include="Assets\Utility\Scripts\Consideration.cs" />
      <Compile Include="Assets\Utility\Scripts\GlobalConsiderations.cs" />
+     <Compile Include="Assets\Utility\Scripts\LinkedConsiderations.cs" />
      <Compile Include="Assets\Utility\Scripts\OverlayUI.cs" />
      <Compile Include="Assets\Utility\Scripts\OverlayUIActionElement.cs" />
      <Compile Include="Assets\Utility\Scripts\OverlayUIConsiderationElement.cs" />

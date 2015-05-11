@@ -20,7 +20,7 @@ public class OverlayUIActionElement : MonoBehaviour {
 	
 	public void SetActionUI()
 	{
-		text.text = action.actionName + ":   " + action.GetActionScore ();
+		text.text = action.actionName + ":   " + action.GetActionScore ().ToString("0.00");
 		slider.value = action.GetActionScore() / 1.0f;
 	}
 }

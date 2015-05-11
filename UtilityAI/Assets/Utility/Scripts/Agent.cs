@@ -17,12 +17,13 @@ public class Agent : MonoBehaviour {
 		for (int i = 0; i < actions.Count; i++) {
 			for (int j = 0; j < actions[i].linkedConsideration.Count; j++) {
 				for (int k = 0; k < agentConsiderations.Count; k++) {
-					if(actions[i].linkedConsideration[j] == agentConsiderations[k].considerationName){
-						actions[i].considerations.Add(agentConsiderations[k]);
+					if(actions[i].linkedConsideration[j].name == agentConsiderations[k].considerationName){
+						actions[i].linkedConsideration[j].SetConsideration(agentConsiderations[k]);
 					}
 				}
 			}
 		}
+		Evaluate ();
 	}
 
 	public Action GetActionByName(string name){
@@ -81,12 +82,12 @@ public class Agent : MonoBehaviour {
 		for (int i = 0; i < actions.Count; i++) {
 			float actionScore = 0.0f;
 			//evaluate appropriate considerations
-			for (int j = 0; j < actions[i].considerations.Count; j++){
+			for (int j = 0; j < actions[i].linkedConsideration.Count; j++){
 				//normalize value
-				actionScore += actions[i].considerations[j].GetUtilityScore();
+				actionScore += actions[i].linkedConsideration[j].GetConsideration().GetUtilityScore();
 			}
 			//determine average
-			actionScore = actionScore / actions[i].considerations.Count;
+			actionScore = actionScore / actions[i].linkedConsideration.Count;
 			actions[i].SetActionScore(actionScore);
 			//Debug.Log ("actionScore of " + actions[i].actionName + ": " + actionScore + " " + actions[i].GetActionScore());
 			//if the score is the highest, set the action as the next action

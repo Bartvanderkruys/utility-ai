@@ -6,11 +6,10 @@ public class DemoCharacters : MonoBehaviour {
 	//demo values
 	public float speed;
 	public float movementSpeed;
-	public GameObject UIObject; 
 	[HideInInspector]
 	public float actionTimer = 0.0f; 
-	private int evaluationCounter = 0;
 	private Vector3 destination;
+	private bool atDestination = false;
 
 	//agent
 	Agent agent;
@@ -64,28 +63,57 @@ public class DemoCharacters : MonoBehaviour {
 		agent.SetAgentConsideration("Supplies", supplies);
 
 		if (actionTimer > 0.0f) {
-			actionTimer -= speed * Time.deltaTime;
-			agent.GetTopAction().handle();
+			if(atDestination)
+			{
+				actionTimer -= speed * Time.deltaTime;
+				agent.GetTopAction().handle();
+			} else {
+				MoveToTarget();
+			}
 		} else {
+			//evaluate top action and store time and delegate
 			agent.Evaluate ();
+			DetermineTarget();
 			actionTimer = agent.GetTopAction().time;
+			if(transform.position != destination)
+				atDestination = false;
 		}
 	}
 
-//	void MoveToTarget()
-//	{
-//		// move to action position
-//		while (this.transform.position != destination) {
-//			float step = movementSpeed * Time.deltaTime;
-//			transform.position = Vector3.MoveTowards (transform.position, destination, step);
-//
-//			energy -= 2.0f * speed * Time.deltaTime;
-//			hygiene -= 1.5f * speed * Time.deltaTime;
-//			hunger -= 1.0f * speed * Time.deltaTime;
-//			entertainment -= 2.0f * speed * Time.deltaTime;
-//			socialInteraction -= 1.0f * speed * Time.deltaTime;
-//		}
-//	}
+	void DetermineTarget()
+	{
+		if (agent.GetTopAction().handle == Sleep) {
+			destination = homeWaypoint.transform.position;
+		} else if (agent.GetTopAction().handle == Shower) {
+			destination = homeWaypoint.transform.position;
+		} else if (agent.GetTopAction().handle == Eat) {
+			destination = homeWaypoint.transform.position;
+		} else if (agent.GetTopAction().handle == WatchMovie) {
+			destination = cinemaWaypoint.transform.position;
+		} else if (agent.GetTopAction().handle == Work) {
+			destination = officeWaypoint.transform.position;
+		} else if (agent.GetTopAction().handle == GetGroceries) {
+			destination = groceryStoreWaypoint.transform.position;
+		} else if (agent.GetTopAction().handle == DrinkCoffee) {
+			destination = homeWaypoint.transform.position;
+		}
+	}
+
+	void MoveToTarget()
+	{
+		// move to action position
+		float step = movementSpeed * Time.deltaTime;
+		transform.position = Vector3.MoveTowards (transform.position, destination, step);
+
+		energy -= 2.0f * speed * Time.deltaTime;
+		hygiene -= 1.5f * speed * Time.deltaTime;
+		hunger -= 1.0f * speed * Time.deltaTime;
+		entertainment -= 2.0f * speed * Time.deltaTime;
+		socialInteraction -= 1.0f * speed * Time.deltaTime;
+
+		if (transform.position == destination)
+			atDestination = true;
+	}
 
 	void Sleep()
 	{

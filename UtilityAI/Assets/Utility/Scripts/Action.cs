@@ -11,10 +11,8 @@ public class Action{
 	public delegate void Del();
 	public Del handle;
 	
-	//appropriate considerations
-	public List<string>linkedConsideration;
-	[HideInInspector]
-	public List<Consideration> considerations;
+	//appropriate weighted considerations
+	public List<LinkedConsideration>linkedConsideration;
 	
 	private float actionScore;
 	public float GetActionScore()

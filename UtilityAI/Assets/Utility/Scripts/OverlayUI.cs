@@ -7,13 +7,11 @@ public class OverlayUI : MonoBehaviour {
 	public Text currentActionText;
 
 	private Agent[] agents;
-	public GameObject considerationElement;
-	public GameObject actionElement;
-	public GameObject considerationContent;
-	public GameObject actionContent;
+	public GameObject considerationElement, actionElement, considerationContent, actionContent;
+	public GameObject actionPanel, considerationPanel, eventPanel, utilityPanel;
 
 	public Image utilityCurveRenderer;
-
+	
 	private List<GameObject> actionElements = new List<GameObject>();
 	private List<GameObject> considerationElements = new List<GameObject>();
 
@@ -52,7 +50,7 @@ public class OverlayUI : MonoBehaviour {
 		for (int i = 0; i < actionElements.Count; i++) {
 			actionElements[i].GetComponent<OverlayUIActionElement>().SetActionUI();
 		}
-		currentActionText.text = "Current Action: " + agents [0].GetTopAction ().actionName;
+		currentActionText.text = "Current Action: " + agents [0].GetTopAction().actionName;
 	}
 
 	void BuildUtilityCurve(Consideration con){
@@ -64,5 +62,21 @@ public class OverlayUI : MonoBehaviour {
 		texture.Apply ();
 		Rect rect = utilityCurveRenderer.sprite.rect;
 		utilityCurveRenderer.sprite = Sprite.Create (texture, rect, new Vector2 (0.5f, 0.5f));
+	}
+
+	public void OnClickHide(string button){
+		Debug.Log ("clicked");
+		if (button == "Action") {
+			if(actionPanel.activeSelf)
+				actionPanel.SetActive(false);
+			else 
+				actionPanel.SetActive(true);
+		} else if (button == "Utility") {
+
+		} else if (button == "Consideration") {
+			
+		} else if (button == "Event") {
+			
+		}
 	}
 }
