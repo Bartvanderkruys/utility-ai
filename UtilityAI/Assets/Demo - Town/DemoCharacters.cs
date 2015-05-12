@@ -27,7 +27,10 @@ public class DemoCharacters : MonoBehaviour {
 	public GameObject restaurantWaypoint;
 	public GameObject cinemaWaypoint;
 	public GameObject groceryStoreWaypoint;
-	
+
+	public Property property1;
+	public Property property2;
+
 	void Start () {
 		//link UI to this script
 		agent = GetComponent<Agent> ();
@@ -62,6 +65,10 @@ public class DemoCharacters : MonoBehaviour {
 		agent.SetAgentConsideration("Supplies", supplies);
 
 		agent.UpdateAI ();
+
+	}
+
+	void FixedUpdate(){
 
 	}
 

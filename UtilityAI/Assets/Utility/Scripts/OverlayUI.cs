@@ -9,6 +9,7 @@ public class OverlayUI : MonoBehaviour {
 	private Agent[] agents;
 	public GameObject considerationElement, actionElement, considerationContent, actionContent;
 	public GameObject actionPanel, considerationPanel, eventPanel, utilityPanel;
+	public GameObject showActionsPanel, showConsiderationPanel, showEventPanel, showUtilityPanel;
 
 	public Image utilityCurveRenderer;
 	
@@ -66,18 +67,34 @@ public class OverlayUI : MonoBehaviour {
 	}
 
 	public void OnClickHide(string button){
-		Debug.Log ("clicked");
-		if (button == "Action") {
-			if(actionPanel.activeSelf)
-				actionPanel.SetActive(false);
-			else 
-				actionPanel.SetActive(true);
-		} else if (button == "Utility") {
+		if (button == "HideActions") {
+			actionPanel.SetActive (false);
+			showActionsPanel.SetActive (true);
+		} else if (button == "HideConsiderations") {
+			considerationPanel.SetActive (false);
+			showConsiderationPanel.SetActive (true);
+		} else if (button == "HideEvents") {
+			eventPanel.SetActive (false);
+			showEventPanel.SetActive (true);
+		} else if (button == "HideUtilityCurve") {
+			utilityPanel.SetActive (false);
+			showUtilityPanel.SetActive (true);
+		}
+	}
 
-		} else if (button == "Consideration") {
-			
-		} else if (button == "Event") {
-			
+	public void OnClickShow(string button){
+		if (button == "ShowActions") {
+			actionPanel.SetActive (true);
+			showActionsPanel.SetActive (false);
+		} else if (button == "ShowConsiderations") {
+			considerationPanel.SetActive (true);
+			showConsiderationPanel.SetActive (false);
+		} else if (button == "ShowEvents") {
+			eventPanel.SetActive (true);
+			showEventPanel.SetActive (false);
+		} else if (button == "ShowUtilityCurve") {
+			utilityPanel.SetActive (true);
+			showUtilityPanel.SetActive (false);
 		}
 	}
 }

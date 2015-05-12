@@ -8,6 +8,7 @@ public class Consideration{
 	public float maximum_value;
 	public AnimationCurve utilityCurve;
 	private float value;
+	public Property property;
 
 	public float GetValue()
 	{
