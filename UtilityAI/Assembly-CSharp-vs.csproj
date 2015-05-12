@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Demo - Town\DemoCharacters.cs" />
+     <Compile Include="Assets\Demo - Town\PulseMaterialColor.cs" />
      <Compile Include="Assets\Demo - Town\SlidingDoors.cs" />
      <Compile Include="Assets\Utility\Scripts\Action.cs" />
      <Compile Include="Assets\Utility\Scripts\Agent.cs" />
@@ -57,7 +58,8 @@
      <Compile Include="Assets\Utility\Scripts\OverlayUI.cs" />
      <Compile Include="Assets\Utility\Scripts\OverlayUIActionElement.cs" />
      <Compile Include="Assets\Utility\Scripts\OverlayUIConsiderationElement.cs" />
-     <Compile Include="Assets\Utility\Scripts\Property.cs" />
+     <Compile Include="Assets\Utility\Scripts\Properties\Property.cs" />
+     <Compile Include="Assets\Utility\Scripts\Properties\PropertyBoundedFloat.cs" />
      <None Include="Assets\Editor\Doxygen\Resources\BaseDoxyfile.txt" />
      <None Include="Assets\Editor\Doxygen\ReadMe.txt" />
  <Reference Include="UnityEngine.UI">

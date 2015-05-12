@@ -8,12 +8,14 @@ public class DemoCharacters : MonoBehaviour {
 	public float movementSpeed;
 	[HideInInspector]
 	private Vector3 destination;
-	private bool atDestination = false;
+	static bool atDestination = false;
 
 	//agent
 	Agent agent;
 
 	[Header("Character Properties")]
+	public List<Property> CharacterProperties;
+
 	public float energy;
 	public float hygiene;
 	public float hunger;
@@ -79,7 +81,7 @@ public class DemoCharacters : MonoBehaviour {
 		} else if (agent.GetTopAction().handle == Shower) {
 			destination = homeWaypoint.transform.position;
 		} else if (agent.GetTopAction().handle == Eat) {
-			destination = homeWaypoint.transform.position;
+			destination = restaurantWaypoint.transform.position;
 		} else if (agent.GetTopAction().handle == WatchMovie) {
 			destination = cinemaWaypoint.transform.position;
 		} else if (agent.GetTopAction().handle == Work) {
@@ -95,6 +97,7 @@ public class DemoCharacters : MonoBehaviour {
 	{
 		// move to action position
 		DetermineTarget();
+
 		float step = movementSpeed * Time.deltaTime;
 		transform.position = Vector3.MoveTowards (transform.position, destination, step);
 
@@ -103,14 +106,13 @@ public class DemoCharacters : MonoBehaviour {
 		hunger -= 1.0f * speed * Time.deltaTime;
 		entertainment -= 2.0f * speed * Time.deltaTime;
 		socialInteraction -= 5.0f * speed * Time.deltaTime;
-
-		if (transform.position == destination)
-			atDestination = true;
 	}
 
 	void Sleep()
 	{
-		if (atDestination) {
+		DetermineTarget();
+		if (transform.position == destination) {
+			atDestination = true;
 			energy += 10.0f * speed * Time.deltaTime;
 			hygiene -= 5.0f * speed * Time.deltaTime;
 			hunger -= 5.0f * speed * Time.deltaTime;
@@ -122,7 +124,9 @@ public class DemoCharacters : MonoBehaviour {
 
 	void Shower()
 	{
-		if(atDestination){
+		DetermineTarget();
+		if (transform.position == destination) {
+		atDestination = true;
 		hygiene += 80.0f * speed * Time.deltaTime;
 		hunger -= 5.0f * speed * Time.deltaTime;
 		entertainment -= 2.0f * speed * Time.deltaTime;
@@ -133,7 +137,9 @@ public class DemoCharacters : MonoBehaviour {
 
 	void Eat()
 	{
-		if(atDestination){
+		DetermineTarget();
+		if (transform.position == destination) {
+		atDestination = true;
 		energy += 2.0f * speed * Time.deltaTime;
 		hygiene -= 3.0f * speed * Time.deltaTime;
 		hunger += 40.0f * speed * Time.deltaTime;
@@ -145,7 +151,9 @@ public class DemoCharacters : MonoBehaviour {
 
 	void WatchMovie()
 	{
-		if(atDestination){
+		DetermineTarget();
+		if (transform.position == destination) {
+		atDestination = true;	
 		energy -= 2.0f * speed * Time.deltaTime;
 		hygiene -= 2.0f * speed * Time.deltaTime;
 		hunger -= 4.0f * speed * Time.deltaTime;
@@ -158,7 +166,9 @@ public class DemoCharacters : MonoBehaviour {
 
 	void Work()
 	{
-		if(atDestination){
+		DetermineTarget();
+		if (transform.position == destination) {
+		atDestination = true;
 		energy -= 2.0f * speed * Time.deltaTime;
 		hygiene -= 2.0f * speed * Time.deltaTime;
 		hunger -= 2.0f * speed * Time.deltaTime;
@@ -171,7 +181,9 @@ public class DemoCharacters : MonoBehaviour {
 
 	void GetGroceries()
 	{
-		if(atDestination){
+		DetermineTarget();
+		if (transform.position == destination) {
+		atDestination = true;
 		energy -= 3.0f * speed * Time.deltaTime;
 		hygiene -= 2.5f * speed * Time.deltaTime;
 		entertainment -= 5.0f * speed * Time.deltaTime;
@@ -184,7 +196,9 @@ public class DemoCharacters : MonoBehaviour {
 
 	void DrinkCoffee()
 	{
-		if(atDestination){
+		DetermineTarget();
+		if (transform.position == destination) {
+		atDestination = true;
 		energy += 1.0f * speed * Time.deltaTime;
 		hygiene -= 1.5f * speed * Time.deltaTime;
 		hunger += 2.0f * speed * Time.deltaTime;

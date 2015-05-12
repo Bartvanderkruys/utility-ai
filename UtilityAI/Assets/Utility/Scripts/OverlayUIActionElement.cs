@@ -23,4 +23,8 @@ public class OverlayUIActionElement : MonoBehaviour {
 		text.text = action.actionName + ":   " + action.GetActionScore ().ToString("0.00");
 		slider.value = action.GetActionScore() / 1.0f;
 	}
+
+	public void Select(){
+		Debug.Log ("Click");
+	}
 }
