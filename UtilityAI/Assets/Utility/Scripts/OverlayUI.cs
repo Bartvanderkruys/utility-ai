@@ -19,26 +19,27 @@ public class OverlayUI : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		agents = FindObjectsOfType (typeof(Agent)) as Agent[];
-		BuildUtilityCurve (agents[0].agentConsiderations[0]);
+		BuildUtilityCurve (agents[0].actions[0].considerations[0]);
 		//create all consideration and action elements
 		for (int i = 0; i < agents.Length; i++) {
-			for(int j = 0; j < agents[i].agentConsiderations.Count; j++) {
-				GameObject temp = Instantiate(considerationElement, 
-				                              new Vector3(considerationContent.transform.position.x, 
-				            considerationContent.transform.position.y + considerationElements.Count * -28, 
-				            considerationContent.transform.position.z), 	Quaternion.identity) as GameObject;
-				temp.transform.SetParent(considerationContent.transform);
-				temp.GetComponent<OverlayUIConsiderationElement>().SetConsideration(agents[i].agentConsiderations[j]);
-				considerationElements.Add (temp);
-			}
 			for(int j = 0; j < agents[i].actions.Count; j++) {
-				GameObject temp = Instantiate(actionElement, 
+				GameObject tempAct = Instantiate(actionElement, 
 				                              new Vector3(actionContent.transform.position.x, 
 				            actionContent.transform.position.y + actionElements.Count * -25, 
 				            actionContent.transform.position.z), 	Quaternion.identity) as GameObject;
-				temp.transform.SetParent(actionContent.transform);
-				temp.GetComponent<OverlayUIActionElement>().SetAction(agents[i].actions[j]);
-				actionElements.Add (temp);
+				tempAct.transform.SetParent(actionContent.transform);
+				tempAct.GetComponent<OverlayUIActionElement>().SetAction(agents[i].actions[j]);
+				actionElements.Add (tempAct);
+
+				for(int k = 0; k < agents[i].actions[j].considerations.Count; k++){
+					GameObject tempCon = Instantiate(considerationElement, 
+					                              new Vector3(considerationContent.transform.position.x, 
+					            considerationContent.transform.position.y + considerationElements.Count * -28, 
+					            considerationContent.transform.position.z), 	Quaternion.identity) as GameObject;
+					tempCon.transform.SetParent(considerationContent.transform);
+					tempCon.GetComponent<OverlayUIConsiderationElement>().SetConsideration(agents[i].actions[j].considerations[k]);
+					considerationElements.Add (tempCon);
+				}
 			}
 		}
 	}

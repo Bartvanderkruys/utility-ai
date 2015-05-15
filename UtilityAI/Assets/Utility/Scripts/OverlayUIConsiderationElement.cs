@@ -12,7 +12,7 @@ public class OverlayUIConsiderationElement : MonoBehaviour {
 	public Slider utilitySlider;
 
 	public void Start(){
-		nameText.text = consideration.considerationName;
+		nameText.text = consideration.name;
 	}
 
 	public void SetConsideration(Consideration p_consideration){
@@ -21,8 +21,8 @@ public class OverlayUIConsiderationElement : MonoBehaviour {
 
 	public void SetConsiderationUI()
 	{
-		float propertyValue = consideration.GetValue ();
-		float utilityValue = consideration.GetUtilityScore ();
+		float propertyValue = consideration.propertyScore;
+		float utilityValue = consideration.utilityScore;
 
 		propertyText.text = "P: " + propertyValue.ToString("0");
 		propertySlider.value = propertyValue / 100.0f;

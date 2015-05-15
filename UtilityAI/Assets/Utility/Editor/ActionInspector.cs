@@ -2,17 +2,18 @@
 using UnityEditor;  
 using UnityEditorInternal;
 
-[CustomEditor(typeof(GlobalConsiderations))]
-public class GlobalConsiderationInspector : Editor {  
+[CustomEditor(typeof(Agent))]
+public class ActionInspector : Editor {  
 	private ReorderableList considerationList;
 	
 	private void OnEnable() {
+
 		considerationList = new ReorderableList(serializedObject, 
-		                                        serializedObject.FindProperty("globalConsiderations"), 
+		                                        serializedObject.FindProperty("considerations"), 
 		                                        true, true, true, true);
 		
 		considerationList.drawHeaderCallback = (Rect rect) => {  
-			EditorGUI.LabelField(rect, "Global Considerations");
+			EditorGUI.LabelField(rect, "Considerations");
 		};
 		considerationList.elementHeight = EditorGUIUtility.singleLineHeight * 2 + 5;
 		considerationList.drawElementCallback =  
@@ -22,18 +23,14 @@ public class GlobalConsiderationInspector : Editor {
 			
 			EditorGUI.PropertyField(
 				new Rect(rect.x, rect.y, rect.width - 50.0f, EditorGUIUtility.singleLineHeight),
-				element.FindPropertyRelative("considerationName"), GUIContent.none);
+				element.FindPropertyRelative("name"), GUIContent.none);
 			EditorGUI.PropertyField(
-				new Rect(rect.x, rect.y + EditorGUIUtility.singleLineHeight + 2, rect.width * 0.5f, EditorGUIUtility.singleLineHeight),
-				element.FindPropertyRelative("minimum_value"), GUIContent.none);
-			EditorGUI.PropertyField(
-				new Rect(rect.x + rect.width * 0.5f - 25.0f, rect.y + EditorGUIUtility.singleLineHeight + 2, rect.width * 0.5f - 25.0f, EditorGUIUtility.singleLineHeight),
-				element.FindPropertyRelative("maximum_value"), GUIContent.none);
+				new Rect(rect.x, rect.y + EditorGUIUtility.singleLineHeight, rect.width - 50.0f, EditorGUIUtility.singleLineHeight),
+				element.FindPropertyRelative("property"), GUIContent.none);
 			EditorGUI.PropertyField(
 				new Rect(rect.width, rect.y, EditorGUIUtility.singleLineHeight * 2, EditorGUIUtility.singleLineHeight * 2),
 				element.FindPropertyRelative("utilityCurve"), GUIContent.none);
 		};
-		
 	}
 	
 	public override void OnInspectorGUI() {

@@ -34,44 +34,20 @@ public class DemoCharacters : MonoBehaviour {
 	public Property property2;
 
 	void Start () {
-		//link UI to this script
 		agent = GetComponent<Agent> ();
 
 		//add function delegate to action
-		agent.SetVoidActionDelegate("Sleep", Sleep);
-		agent.SetVoidActionDelegate("Shower", Shower);
-		agent.SetVoidActionDelegate("Eat", Eat);
-		agent.SetVoidActionDelegate("Watch Movie", WatchMovie);
-		agent.SetVoidActionDelegate("Get Groceries", GetGroceries);
-		agent.SetVoidActionDelegate("Drink Coffee", DrinkCoffee);
+//		agent.SetVoidActionDelegate("Sleep", Sleep);
+//		agent.SetVoidActionDelegate("Shower", Shower);
+//		agent.SetVoidActionDelegate("Eat", Eat);
+//		agent.SetVoidActionDelegate("Watch Movie", WatchMovie);
+//		agent.SetVoidActionDelegate("Get Groceries", GetGroceries);
+//		agent.SetVoidActionDelegate("Drink Coffee", DrinkCoffee);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
-		//keep characterproperties in range
-		energy = KeepPropertyInRange (energy, 0.0f, 100.0f);
-		hunger = KeepPropertyInRange (hunger, 0.0f, 100.0f);
-		hygiene = KeepPropertyInRange (hygiene, 0.0f, 100.0f);
-		socialInteraction = KeepPropertyInRange (socialInteraction, 0.0f, 100.0f);
-		entertainment = KeepPropertyInRange (entertainment, 0.0f, 100.0f);
-		supplies = KeepPropertyInRange (supplies, 0.0f, 100.0f);
-
-		//I cannot get pointers and references to work in C#,
-		//therefore, I update the values every frame for now.
-		agent.SetAgentConsideration("Energy", energy);
-		agent.SetAgentConsideration("Hunger", hunger);
-		agent.SetAgentConsideration("Hygiene", hygiene);
-		agent.SetAgentConsideration("Social", socialInteraction);
-		agent.SetAgentConsideration("Entertainment", entertainment);
-		agent.SetAgentConsideration("Supplies", supplies);
-
 		agent.UpdateAI ();
-
-	}
-
-	void FixedUpdate(){
-
 	}
 
 	void DetermineTarget()
@@ -207,15 +183,5 @@ public class DemoCharacters : MonoBehaviour {
 		} else {
 			MoveToTarget ();
 		}
-	}
-
-	float KeepPropertyInRange(float property, float min, float max)
-	{
-		if (property < min)
-			return min;
-		else if (property > max)
-			return max;
-		else
-			return property;
 	}
 }

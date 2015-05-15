@@ -2,31 +2,16 @@
 using System;
 
 [Serializable]
-public class Consideration{
-	public string considerationName;
-	public float minimum_value;
-	public float maximum_value;
+public class Consideration {
+	public string name;
 	public AnimationCurve utilityCurve;
-	private float value;
 	public Property property;
 
-	public float GetValue()
-	{
-		return value;
-	}
-	public void SetValue(float p_value)
-	{
-		value = p_value;
+	public float propertyScore{
+		get { return property.normalizedValue; }
 	}
 
-	public float GetUtilityScore()
-	{
-		//normalize
-		float x = value / (maximum_value - minimum_value);
-		//plot on utility graph
-		float utilityScore = 1 - utilityCurve.Evaluate(x);
-		//return score
-		//Debug.Log (utilityScore);
-		return utilityScore;
+	public float utilityScore {
+		get { return 1 - utilityCurve.Evaluate (property.normalizedValue); }
 	}
 }

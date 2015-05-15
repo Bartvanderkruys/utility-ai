@@ -3,10 +3,10 @@ using System;
 
 [Serializable]
 public class Property : MonoBehaviour{
-	protected float normalized_value;
+	protected float nValue;
 
-	public float need {
-		get{ return normalized_value; }
+	public float normalizedValue {
+		get{ return nValue; }
 	}
 
 	void Start(){}

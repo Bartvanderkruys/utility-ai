@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 [Serializable]
-public class Action{
+public class Action : MonoBehaviour{
 	public string actionName;
 	//time required to perform action;
 	public float time;
@@ -12,19 +12,20 @@ public class Action{
 	public Del handle;
 	
 	//appropriate weighted considerations
-	public List<LinkedConsideration>linkedConsideration;
-	
+	[HideInInspector]
+	public List<Consideration> considerations = new List<Consideration>();
+
 	private float actionScore;
 
 	public void EvaluateAction(){
 		actionScore = 0.0f;
 		//evaluate appropriate considerations
-		for (int j = 0; j < linkedConsideration.Count; j++){
+		for (int j = 0; j < considerations.Count; j++){
 			//normalize value
-			actionScore += linkedConsideration[j].GetConsideration().GetUtilityScore();
+			actionScore += considerations[j].utilityScore;
 		}
 		//determine average
-		actionScore = actionScore / linkedConsideration.Count;
+		actionScore = actionScore / considerations.Count;
 	}
 
 	public float GetActionScore()

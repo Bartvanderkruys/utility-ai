@@ -47,8 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Editor\Doxygen\DoxygenWindow.cs" />
-     <Compile Include="Assets\Utility\Editor\AgentInspector.cs" />
-     <Compile Include="Assets\Utility\Editor\GlobalConsiderationInspector.cs" />
+     <Compile Include="Assets\Utility\Editor\ActionInspector.cs" />
      <Compile Include="Assets\Utility\Editor\PropertyInspector.cs" />
      <None Include="Assets\Editor\Doxygen\Resources\BaseDoxyfile.txt" />
      <None Include="Assets\Editor\Doxygen\ReadMe.txt" />

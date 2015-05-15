@@ -6,12 +6,19 @@ public class PropertyBoundedFloat : Property {
 	public float maxValue = 100.0f;
 	public float startValue = 50.0f;
 	public float decreasePerSec = 0.0f;
-	public float currValue;
+	private float currValue;
 
 
-	public float current {
+	public float value {
 		get{ return currValue; }
-		set{ currValue = value; }
+		set{ 
+			currValue = value; 
+			nValue = (currValue - minValue) / (maxValue - minValue);
+			if (currValue < minValue)
+				currValue = minValue;
+			if (currValue > maxValue)
+				currValue = maxValue;
+		}
 	}
 
 	// Use this for initialization
@@ -21,12 +28,6 @@ public class PropertyBoundedFloat : Property {
 	
 	// Update is called once per frame
 	void Update () {
-		currValue -= Time.deltaTime * decreasePerSec;
-		if (currValue < minValue)
-			currValue = minValue;
-		if (currValue > maxValue)
-			currValue = maxValue;
-
-		normalized_value = (currValue - minValue) / (maxValue - minValue);
+		value -= Time.deltaTime * decreasePerSec;
 	}
 }
