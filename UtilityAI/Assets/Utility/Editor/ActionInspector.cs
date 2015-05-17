@@ -2,7 +2,7 @@
 using UnityEditor;  
 using UnityEditorInternal;
 
-[CustomEditor(typeof(Agent))]
+[CustomEditor(typeof(Action))]
 public class ActionInspector : Editor {  
 	private ReorderableList considerationList;
 	
@@ -22,10 +22,13 @@ public class ActionInspector : Editor {
 			rect.y += 2;
 			
 			EditorGUI.PropertyField(
-				new Rect(rect.x, rect.y, rect.width - 50.0f, EditorGUIUtility.singleLineHeight),
+				new Rect(rect.x, rect.y, rect.width - 100.0f, EditorGUIUtility.singleLineHeight),
 				element.FindPropertyRelative("name"), GUIContent.none);
 			EditorGUI.PropertyField(
-				new Rect(rect.x, rect.y + EditorGUIUtility.singleLineHeight, rect.width - 50.0f, EditorGUIUtility.singleLineHeight),
+				new Rect(rect.width - 60.0f, rect.y, 50.0f, EditorGUIUtility.singleLineHeight),
+				element.FindPropertyRelative("weight"), GUIContent.none);
+			EditorGUI.PropertyField(
+				new Rect(rect.x, rect.y + EditorGUIUtility.singleLineHeight + 2, rect.width - 50.0f, EditorGUIUtility.singleLineHeight),
 				element.FindPropertyRelative("property"), GUIContent.none);
 			EditorGUI.PropertyField(
 				new Rect(rect.width, rect.y, EditorGUIUtility.singleLineHeight * 2, EditorGUIUtility.singleLineHeight * 2),

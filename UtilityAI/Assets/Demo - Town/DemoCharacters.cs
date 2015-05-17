@@ -7,42 +7,38 @@ public class DemoCharacters : MonoBehaviour {
 	public float speed;
 	public float movementSpeed;
 	[HideInInspector]
-	private Vector3 destination;
-	static bool atDestination = false;
+	private Vector3 destination, preDestination;
+	private bool isOutside = false; 
+	private bool isOutsideDestination = false;
+	private bool atDestination = false;
 
 	//agent
 	Agent agent;
-
-	[Header("Character Properties")]
-	public List<Property> CharacterProperties;
-
-	public float energy;
-	public float hygiene;
-	public float hunger;
-	public float socialInteraction;
-	public float entertainment;
-	public float supplies;
+	public PropertyBoundedFloat energy, hunger, hygiene, social, entertainment, supplies;
 	
 	[Header("Waypoints")]
-	public GameObject homeWaypoint;
-	public GameObject officeWaypoint;
-	public GameObject restaurantWaypoint;
-	public GameObject cinemaWaypoint;
-	public GameObject groceryStoreWaypoint;
-
-	public Property property1;
-	public Property property2;
+	public GameObject homeWaypointIn;
+	public GameObject homeWaypointOut;
+	public GameObject officeWaypointIn;
+	public GameObject officeWaypointOut;
+	public GameObject restaurantWaypointIn;
+	public GameObject restaurantWaypointOut;
+	public GameObject cinemaWaypointIn;
+	public GameObject cinemaWaypointOut;
+	public GameObject groceryStoreWaypointIn;
+	public GameObject groceryStoreWaypointOut;
 
 	void Start () {
 		agent = GetComponent<Agent> ();
+		preDestination = transform.position;
 
 		//add function delegate to action
-//		agent.SetVoidActionDelegate("Sleep", Sleep);
-//		agent.SetVoidActionDelegate("Shower", Shower);
-//		agent.SetVoidActionDelegate("Eat", Eat);
-//		agent.SetVoidActionDelegate("Watch Movie", WatchMovie);
-//		agent.SetVoidActionDelegate("Get Groceries", GetGroceries);
-//		agent.SetVoidActionDelegate("Drink Coffee", DrinkCoffee);
+		agent.SetVoidActionDelegate("Sleep", Sleep);
+		agent.SetVoidActionDelegate("Shower", Shower);
+		agent.SetVoidActionDelegate("Eat", Eat);
+		agent.SetVoidActionDelegate("Watch Movie", WatchMovie);
+		agent.SetVoidActionDelegate("Get Groceries", GetGroceries);
+		agent.SetVoidActionDelegate("Drink Coffee", DrinkCoffee);
 	}
 	
 	// Update is called once per frame
@@ -53,46 +49,63 @@ public class DemoCharacters : MonoBehaviour {
 	void DetermineTarget()
 	{
 		if (agent.GetTopAction().handle == Sleep) {
-			destination = homeWaypoint.transform.position;
+			destination = homeWaypointIn.transform.position;
+			preDestination = homeWaypointOut.transform.position;
 		} else if (agent.GetTopAction().handle == Shower) {
-			destination = homeWaypoint.transform.position;
+			destination = homeWaypointIn.transform.position;
+			preDestination = homeWaypointOut.transform.position;
 		} else if (agent.GetTopAction().handle == Eat) {
-			destination = restaurantWaypoint.transform.position;
+			destination = restaurantWaypointIn.transform.position;
+			preDestination = restaurantWaypointOut.transform.position;
 		} else if (agent.GetTopAction().handle == WatchMovie) {
-			destination = cinemaWaypoint.transform.position;
+			destination = cinemaWaypointIn.transform.position;
+			preDestination = cinemaWaypointOut.transform.position;
 		} else if (agent.GetTopAction().handle == Work) {
-			destination = officeWaypoint.transform.position;
+			destination = officeWaypointIn.transform.position;
+			preDestination = officeWaypointOut.transform.position;
 		} else if (agent.GetTopAction().handle == GetGroceries) {
-			destination = groceryStoreWaypoint.transform.position;
+			destination = groceryStoreWaypointIn.transform.position;
+			preDestination = groceryStoreWaypointOut.transform.position;
 		} else if (agent.GetTopAction().handle == DrinkCoffee) {
-			destination = homeWaypoint.transform.position;
+			destination = homeWaypointIn.transform.position;
+			preDestination = homeWaypointIn.transform.position;
 		}
 	}
 
 	void MoveToTarget()
 	{
-		// move to action position
-		DetermineTarget();
-
 		float step = movementSpeed * Time.deltaTime;
-		transform.position = Vector3.MoveTowards (transform.position, destination, step);
 
-		energy -= 2.0f * speed * Time.deltaTime;
-		hygiene -= 1.5f * speed * Time.deltaTime;
-		hunger -= 1.0f * speed * Time.deltaTime;
-		entertainment -= 2.0f * speed * Time.deltaTime;
-		socialInteraction -= 5.0f * speed * Time.deltaTime;
+		if (!isOutside) {
+			transform.position = Vector3.MoveTowards (transform.position, preDestination, step);
+			if (transform.position == preDestination) {
+				DetermineTarget ();
+				isOutside = true;
+			}
+		} else 	if (isOutside && !isOutsideDestination) {
+			transform.position = Vector3.MoveTowards (transform.position, preDestination, step);
+			if (transform.position == preDestination) {
+				isOutsideDestination = true;
+			}
+		} else if (isOutside && isOutsideDestination) {
+			transform.position = Vector3.MoveTowards (transform.position, destination, step);
+			if(transform.position == destination){
+				agent.StartTimer();
+				atDestination = true;
+			}
+		}
 	}
 
 	void Sleep()
 	{
-		DetermineTarget();
-		if (transform.position == destination) {
-			atDestination = true;
-			energy += 10.0f * speed * Time.deltaTime;
-			hygiene -= 5.0f * speed * Time.deltaTime;
-			hunger -= 5.0f * speed * Time.deltaTime;
-			supplies -= 2.0f * speed * Time.deltaTime;
+		if (agent.newAction) {
+			isOutside = false;
+			isOutsideDestination = false;
+			atDestination = false;
+			agent.newAction = false;
+		}
+		if(atDestination){	
+			energy.value += 10.0f * speed * Time.deltaTime;
 		} else {
 			MoveToTarget ();
 		}
@@ -100,12 +113,16 @@ public class DemoCharacters : MonoBehaviour {
 
 	void Shower()
 	{
-		DetermineTarget();
-		if (transform.position == destination) {
-		atDestination = true;
-		hygiene += 80.0f * speed * Time.deltaTime;
-		hunger -= 5.0f * speed * Time.deltaTime;
-		entertainment -= 2.0f * speed * Time.deltaTime;
+		if (agent.newAction) {
+			isOutside = false;
+			isOutsideDestination = false;
+			atDestination = false;
+			agent.newAction = false;
+		}
+		if(atDestination){	
+			hygiene.value += 80.0f * speed * Time.deltaTime;
+			hunger.value -= 5.0f * speed * Time.deltaTime;
+			entertainment.value -= 2.0f * speed * Time.deltaTime;
 		} else {
 			MoveToTarget ();
 		}
@@ -113,13 +130,16 @@ public class DemoCharacters : MonoBehaviour {
 
 	void Eat()
 	{
-		DetermineTarget();
-		if (transform.position == destination) {
-		atDestination = true;
-		energy += 2.0f * speed * Time.deltaTime;
-		hygiene -= 3.0f * speed * Time.deltaTime;
-		hunger += 40.0f * speed * Time.deltaTime;
-		supplies -= 10.0f * speed * Time.deltaTime;
+		if (agent.newAction) {
+			isOutside = false;
+			isOutsideDestination = false;
+			atDestination = false;
+			agent.newAction = false;
+		}
+		if(atDestination){	
+			energy.value += 2.0f * speed * Time.deltaTime;
+			hunger.value += 60.0f * speed * Time.deltaTime;
+			supplies.value -= 10.0f * speed * Time.deltaTime;
 		} else {
 			MoveToTarget ();
 		}
@@ -127,14 +147,15 @@ public class DemoCharacters : MonoBehaviour {
 
 	void WatchMovie()
 	{
-		DetermineTarget();
-		if (transform.position == destination) {
-		atDestination = true;	
-		energy -= 2.0f * speed * Time.deltaTime;
-		hygiene -= 2.0f * speed * Time.deltaTime;
-		hunger -= 4.0f * speed * Time.deltaTime;
-		entertainment += 8.0f * speed * Time.deltaTime;
-		socialInteraction += 15.0f * speed * Time.deltaTime;
+		if (agent.newAction) {
+			isOutside = false;
+			isOutsideDestination = false;
+			atDestination = false;
+			agent.newAction = false;
+		}
+		if(atDestination){	
+		entertainment.value += 15.0f * speed * Time.deltaTime;
+		social.value += 15.0f * speed * Time.deltaTime;
 		} else {
 			MoveToTarget ();
 		}
@@ -142,14 +163,14 @@ public class DemoCharacters : MonoBehaviour {
 
 	void Work()
 	{
-		DetermineTarget();
-		if (transform.position == destination) {
-		atDestination = true;
-		energy -= 2.0f * speed * Time.deltaTime;
-		hygiene -= 2.0f * speed * Time.deltaTime;
-		hunger -= 2.0f * speed * Time.deltaTime;
-		entertainment -= 5.0f * speed * Time.deltaTime;
-		socialInteraction += 2.0f * speed * Time.deltaTime;
+		if (agent.newAction) {
+			isOutside = false;
+			isOutsideDestination = false;
+			atDestination = false;
+			agent.newAction = false;
+		}
+		if(atDestination){	
+		social.value += 2.0f * speed * Time.deltaTime;
 		} else {
 			MoveToTarget ();
 		}
@@ -157,14 +178,14 @@ public class DemoCharacters : MonoBehaviour {
 
 	void GetGroceries()
 	{
-		DetermineTarget();
-		if (transform.position == destination) {
-		atDestination = true;
-		energy -= 3.0f * speed * Time.deltaTime;
-		hygiene -= 2.5f * speed * Time.deltaTime;
-		entertainment -= 5.0f * speed * Time.deltaTime;
-		socialInteraction += 2.0f * speed * Time.deltaTime;
-		supplies += 30.0f * speed * Time.deltaTime;
+		if (agent.newAction) {
+			isOutside = false;
+			isOutsideDestination = false;
+			atDestination = false;
+			agent.newAction = false;
+		}
+		if(atDestination){	
+		supplies.value += 60.0f * speed * Time.deltaTime;
 		} else {
 			MoveToTarget ();
 		}
@@ -172,14 +193,15 @@ public class DemoCharacters : MonoBehaviour {
 
 	void DrinkCoffee()
 	{
-		DetermineTarget();
-		if (transform.position == destination) {
-		atDestination = true;
-		energy += 1.0f * speed * Time.deltaTime;
-		hygiene -= 1.5f * speed * Time.deltaTime;
-		hunger += 2.0f * speed * Time.deltaTime;
-		supplies -= 0.5f * speed * Time.deltaTime;
-		socialInteraction -= 2.0f * speed * Time.deltaTime;
+		if (agent.newAction) {
+			isOutside = false;
+			isOutsideDestination = false;
+			atDestination = false;
+			agent.newAction = false;
+		}
+		if(atDestination){	
+		energy.value += 1.0f * speed * Time.deltaTime;
+		hunger.value += 2.0f * speed * Time.deltaTime;
 		} else {
 			MoveToTarget ();
 		}

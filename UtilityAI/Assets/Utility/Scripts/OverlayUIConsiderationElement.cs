@@ -24,8 +24,8 @@ public class OverlayUIConsiderationElement : MonoBehaviour {
 		float propertyValue = consideration.propertyScore;
 		float utilityValue = consideration.utilityScore;
 
-		propertyText.text = "P: " + propertyValue.ToString("0");
-		propertySlider.value = propertyValue / 100.0f;
+		propertyText.text = "P: " + propertyValue.ToString("0.00");
+		propertySlider.value = propertyValue;
 		utilityText.text = "U: " + utilityValue.ToString("0.00");
 		utilitySlider.value = utilityValue;
 	}

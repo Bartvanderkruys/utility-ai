@@ -6,23 +6,27 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public class Agent : MonoBehaviour {
-
-	[HideInInspector]
+	
 	public List<Action> actions = new List<Action>();
-	private Action topAction;
+	private Action previousAction, topAction;
 	[HideInInspector]
 	public float actionTimer = 0.0f;
+	private bool isTiming = false;
+	[HideInInspector]
+	public bool newAction;
 
 	void Start(){
 		Evaluate ();
 	}
 
 	public void UpdateAI(){
-		if (actionTimer > 0.0f) {
+		if (actionTimer > 0.0f && isTiming) {
 			actionTimer -= Time.deltaTime;
-			GetTopAction().handle();
+			GetTopAction ().handle ();
+		} else if (actionTimer > 0.0f) {
+			GetTopAction ().handle ();
 		} else {
-			//evaluate top action and store time and delegate
+			StopTimer();
 			Evaluate ();
 			actionTimer = GetTopAction().time;
 		}
@@ -40,19 +44,29 @@ public class Agent : MonoBehaviour {
 		Debug.Log ("Setting Action Delegate failed. Action: " + name + " Does not exist.");
 	}
 
+	public void StartTimer(){
+		isTiming = true;
+	}
+
+	public void StopTimer(){
+		isTiming = false;
+	}
+
 	public void Evaluate(){
-		//topAction = GetActionByName("Drink Coffee");
+
+		previousAction = topAction;
 		float topActionScore = 0.0f;
-		//for each action
+
 		for (int i = 0; i < actions.Count; i++) {
 			actions[i].EvaluateAction();
-			//if the score is the highest, set the action as the next action
 			if(actions[i].GetActionScore() > topActionScore)
 			{
 				topAction = actions[i];
 				topActionScore = actions[i].GetActionScore();
 			}	
 		}
+		if(topAction != previousAction)
+			newAction = true;
 	}
 
 	public Action GetTopAction()

@@ -6,6 +6,7 @@ public class Consideration {
 	public string name;
 	public AnimationCurve utilityCurve;
 	public Property property;
+	public float weight = 1.0f;
 
 	public float propertyScore{
 		get { return property.normalizedValue; }
