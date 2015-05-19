@@ -10,6 +10,7 @@ public class OverlayUI : MonoBehaviour {
 	public GameObject considerationElement, actionElement, considerationContent, actionContent;
 	public GameObject actionPanel, considerationPanel, eventPanel, utilityPanel;
 	public GameObject showActionsPanel, showConsiderationPanel, showEventPanel, showUtilityPanel;
+	public Text utilityCurveText;
 
 	public Image utilityCurveRenderer;
 	
@@ -19,13 +20,12 @@ public class OverlayUI : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		agents = FindObjectsOfType (typeof(Agent)) as Agent[];
-		BuildUtilityCurve (agents[0].actions[0].considerations[0]);
 		//create all consideration and action elements
 		for (int i = 0; i < agents.Length; i++) {
 			for(int j = 0; j < agents[i].actions.Count; j++) {
 				GameObject tempAct = Instantiate(actionElement, 
-				                              new Vector3(actionContent.transform.position.x, 
-				            actionContent.transform.position.y + actionElements.Count * -25, 
+				                              new Vector3(actionContent.transform.position.x +100, 
+				            actionContent.transform.position.y + actionElements.Count * -27, 
 				            actionContent.transform.position.z), 	Quaternion.identity) as GameObject;
 				tempAct.transform.SetParent(actionContent.transform);
 				tempAct.GetComponent<OverlayUIActionElement>().SetAction(agents[i].actions[j]);
@@ -33,8 +33,8 @@ public class OverlayUI : MonoBehaviour {
 
 				for(int k = 0; k < agents[i].actions[j].considerations.Count; k++){
 					GameObject tempCon = Instantiate(considerationElement, 
-					                              new Vector3(considerationContent.transform.position.x, 
-					            considerationContent.transform.position.y + considerationElements.Count * -28, 
+					                                 new Vector3(considerationContent.transform.position.x, 
+					            considerationContent.transform.position.y + considerationElements.Count * -30, 
 					            considerationContent.transform.position.z), 	Quaternion.identity) as GameObject;
 					tempCon.transform.SetParent(considerationContent.transform);
 					tempCon.GetComponent<OverlayUIConsiderationElement>().SetConsideration(agents[i].actions[j].considerations[k]);
@@ -54,6 +54,11 @@ public class OverlayUI : MonoBehaviour {
 		}
 		currentActionText.text = "Current Action: " + agents [0].GetTopAction().actionName;
 		actionTimerText.text = "Time Left: " + agents [0].actionTimer.ToString ("0.00");
+	}
+
+	public void SetUtilityCurve(Consideration con){
+		utilityCurveText.text = con.name;
+		BuildUtilityCurve(con);
 	}
 
 	void BuildUtilityCurve(Consideration con){

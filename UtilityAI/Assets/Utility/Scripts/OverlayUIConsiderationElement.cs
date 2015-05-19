@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class OverlayUIConsiderationElement : MonoBehaviour {
 
+	private OverlayUI ui;
 	private Consideration consideration;
 	public Text nameText;
 	public Text propertyText;
@@ -13,6 +14,7 @@ public class OverlayUIConsiderationElement : MonoBehaviour {
 
 	public void Start(){
 		nameText.text = consideration.name;
+		ui = GetComponentInParent<OverlayUI> ();
 	}
 
 	public void SetConsideration(Consideration p_consideration){
@@ -28,5 +30,9 @@ public class OverlayUIConsiderationElement : MonoBehaviour {
 		propertySlider.value = propertyValue;
 		utilityText.text = "U: " + utilityValue.ToString("0.00");
 		utilitySlider.value = utilityValue;
+	}
+
+	public void Select(){
+		ui.SetUtilityCurve (consideration);
 	}
 }

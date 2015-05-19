@@ -17,7 +17,6 @@ public class PulseMaterialColor : MonoBehaviour {
 	void Update () {
 		if (pulsing) {
 			float sineColorValue = Mathf.Abs(Mathf.Sin(Time.time * 3.0f))/2;
-			Debug.Log (sineColorValue);
 			mat.SetColor("_Color", new Color(0, 0.5f + sineColorValue, 0));
 		} 
 	}

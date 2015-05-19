@@ -7,13 +7,11 @@ public class SlidingDoors : MonoBehaviour {
 	public GameObject doorRight;
 	
 	void OnTriggerEnter(Collider col){
-		Debug.Log ("Trigger Enter");
 		doorLeft.transform.localPosition = new Vector3 (-8.0f, 0.0f, 0.0f);
 		doorRight.transform.localPosition = new Vector3 (3.0f, 0.0f, 0.0f);
 	}
 
 	void OnTriggerExit(Collider col){
-		Debug.Log ("Trigger Exit");
 		doorLeft.transform.localPosition = new Vector3 (-5.0f, 0.0f, 0.0f);
 		doorRight.transform.localPosition = new Vector3 (0.0f, 0.0f, 0.0f);
 	}
