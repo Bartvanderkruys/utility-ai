@@ -3,7 +3,6 @@ using System;
 
 [Serializable]
 public class Consideration {
-	public string name;
 	public AnimationCurve utilityCurve;
 	public Property property;
 	public float weight = 1.0f;

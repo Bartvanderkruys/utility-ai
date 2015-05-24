@@ -57,9 +57,12 @@
      <Compile Include="Assets\Utility\Scripts\LinkedConsiderations.cs" />
      <Compile Include="Assets\Utility\Scripts\OverlayUI.cs" />
      <Compile Include="Assets\Utility\Scripts\OverlayUIActionElement.cs" />
+     <Compile Include="Assets\Utility\Scripts\OverlayUIAgentElement.cs" />
      <Compile Include="Assets\Utility\Scripts\OverlayUIConsiderationElement.cs" />
+     <Compile Include="Assets\Utility\Scripts\OverlayUIPropertyElement.cs" />
      <Compile Include="Assets\Utility\Scripts\Properties\Property.cs" />
      <Compile Include="Assets\Utility\Scripts\Properties\PropertyBoundedFloat.cs" />
+     <Compile Include="Assets\Utility\Scripts\UtilityTime.cs" />
      <None Include="Assets\Editor\Doxygen\Resources\BaseDoxyfile.txt" />
      <None Include="Assets\Editor\Doxygen\ReadMe.txt" />
  <Reference Include="UnityEngine.UI">

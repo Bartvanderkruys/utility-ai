@@ -21,6 +21,19 @@ public class PropertyBoundedFloat : Property {
 		}
 	}
 
+	public override void SetFloatValue(float value){
+		currValue = value; 
+		nValue = (currValue - minValue) / (maxValue - minValue);
+		if (currValue < minValue)
+			currValue = minValue;
+		if (currValue > maxValue)
+			currValue = maxValue;
+	}
+
+	public override float GetFloatMax(){
+		return maxValue;
+	}
+
 	// Use this for initialization
 	void Start () {
 		currValue = startValue;

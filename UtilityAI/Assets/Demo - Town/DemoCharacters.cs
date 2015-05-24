@@ -68,13 +68,13 @@ public class DemoCharacters : MonoBehaviour {
 			preDestination = groceryStoreWaypointOut.transform.position;
 		} else if (agent.GetTopAction().handle == DrinkCoffee) {
 			destination = homeWaypointIn.transform.position;
-			preDestination = homeWaypointIn.transform.position;
+			preDestination = homeWaypointOut.transform.position;
 		}
 	}
 
 	void MoveToTarget()
 	{
-		float step = movementSpeed * Time.deltaTime;
+		float step = movementSpeed * UtilityTime.time;
 
 		if (!isOutside) {
 			transform.position = Vector3.MoveTowards (transform.position, preDestination, step);

@@ -20,10 +20,7 @@ public class ActionInspector : Editor {
 		(Rect rect, int index, bool isActive, bool isFocused) => {
 			var element = considerationList.serializedProperty.GetArrayElementAtIndex(index);
 			rect.y += 2;
-			
-			EditorGUI.PropertyField(
-				new Rect(rect.x, rect.y, rect.width - 100.0f, EditorGUIUtility.singleLineHeight),
-				element.FindPropertyRelative("name"), GUIContent.none);
+
 			EditorGUI.PropertyField(
 				new Rect(rect.width - 60.0f, rect.y, 50.0f, EditorGUIUtility.singleLineHeight),
 				element.FindPropertyRelative("weight"), GUIContent.none);

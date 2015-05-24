@@ -9,7 +9,8 @@ public class Property : MonoBehaviour{
 		get{ return nValue; }
 	}
 
-	void Start(){}
+	public virtual void SetFloatValue(float value){}
+	public virtual float GetFloatMax(){return nValue;}
 
-	void Update(){}
+	public bool modifiable;
 }

@@ -4,13 +4,14 @@ using System.Collections.Generic;
 
 [Serializable]
 public class Action : MonoBehaviour{
-	public string actionName;
 	//time required to perform action;
 	public float time;
 	//function delegate
 	public delegate void Del();
 	public Del handle;
-	
+	public int priorityLevel;
+	public bool interruptible;
+
 	//appropriate weighted considerations
 	[HideInInspector]
 	public List<Consideration> considerations = new List<Consideration>();

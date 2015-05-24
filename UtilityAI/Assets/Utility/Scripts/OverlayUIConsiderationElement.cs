@@ -6,33 +6,59 @@ public class OverlayUIConsiderationElement : MonoBehaviour {
 
 	private OverlayUI ui;
 	private Consideration consideration;
-	public Text nameText;
-	public Text propertyText;
-	public Text utilityText;
-	public Slider propertySlider;
+	public Text nameText, utilityText;
 	public Slider utilitySlider;
+	private ColorBlock normalColorBlock, selectedColorBlock;
+	private bool isActionConsideration = false, selected = false;
 
 	public void Start(){
-		nameText.text = consideration.name;
 		ui = GetComponentInParent<OverlayUI> ();
+		normalColorBlock = GetComponent<Button> ().colors;
+		selectedColorBlock = GetComponent<Button> ().colors;
+		selectedColorBlock.normalColor = new Color (0.4f, 0.4f, 0.3f, 1.0f);
 	}
 
-	public void SetConsideration(Consideration p_consideration){
+	public void SetConsideration(Consideration p_consideration, bool isAction, string actionName){
 		consideration = p_consideration;
+		isActionConsideration = isAction;
+		if (isAction)
+			nameText.text = consideration.property.name;
+		else
+			nameText.text = actionName;
 	}
 
 	public void SetConsiderationUI()
 	{
-		float propertyValue = consideration.propertyScore;
 		float utilityValue = consideration.utilityScore;
-
-		propertyText.text = "P: " + propertyValue.ToString("0.00");
-		propertySlider.value = propertyValue;
 		utilityText.text = "U: " + utilityValue.ToString("0.00");
 		utilitySlider.value = utilityValue;
 	}
 
+	public Consideration GetConsideration(){
+		return consideration;
+	}
+
 	public void Select(){
-		ui.SetUtilityCurve (consideration);
+		if (isActionConsideration) {
+			if(!selected){
+				ui.DisplayCurve (consideration, true, false);
+				selected = true;
+				GetComponent<Button> ().colors = selectedColorBlock;
+			} else {
+				ui.DisplayCurve (consideration, true, true);
+				selected = false;
+				GetComponent<Button>().colors = normalColorBlock;
+			}
+		} else {
+			if(!selected){
+				ui.DisplayCurve (consideration, false, false);
+				selected = true;
+				GetComponent<Button>().colors = selectedColorBlock;
+			} else {
+				ui.DisplayCurve (consideration, false, true);
+				selected = false;
+				GetComponent<Button>().colors = normalColorBlock;
+			}
+		}
 	}
 }
