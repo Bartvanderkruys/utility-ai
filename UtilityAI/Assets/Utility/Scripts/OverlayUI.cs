@@ -19,6 +19,7 @@ public class OverlayUI : MonoBehaviour {
 
 	public Text utilitySpeedText;
 	public Image utilityCurveRenderer, actionUtilityCurveRenderer;
+	public Button pauseButton;
 
 	private List<Property> agentProperties = new List<Property>();	
 	private List<GameObject> actionElements = new List<GameObject>();
@@ -31,9 +32,15 @@ public class OverlayUI : MonoBehaviour {
 	private Action selectedAction;
 	private Property selectedProperty;
 	private Consideration selectedPropertyConsideration, selectedActionConsideration;
+	private ColorBlock normalColorBlock, selectedColorBlock;
 
 	// Use this for initialization
 	void Start () {
+
+		normalColorBlock = pauseButton.colors;
+		selectedColorBlock = pauseButton.colors;
+		selectedColorBlock.normalColor = new Color (0.5f, 0.5f, 0.5f, 1.0f);
+
 		agents = FindObjectsOfType (typeof(Agent)) as Agent[];
 
 		//create all consideration and action elements
@@ -47,7 +54,7 @@ public class OverlayUI : MonoBehaviour {
 			tempAgent.GetComponent<OverlayUIAgentElement>().SetAgent(agents[i]);
 			agentElements.Add (tempAgent);
 		}
-		utilitySpeedText.text = "Utility Time: " + UtilityTime.speed.ToString("0.00") + "x";
+		utilitySpeedText.text = "Speed: " + UtilityTime.speed.ToString("0.00") + "x";
 	}
 
 	public void DisplayAgent(Agent agent, bool selected){
@@ -323,12 +330,19 @@ public class OverlayUI : MonoBehaviour {
 		}
 	}
 	
-	public void ChangeUtilityTime(bool faster){
-		if (faster)
-			UtilityTime.speed += 0.25f;
-		else 
+	public void ChangeUtilityTime(int function){
+		if (function == 0 && !UtilityTime.paused) {
+			UtilityTime.paused = true;
+			pauseButton.colors = selectedColorBlock;
+		} else if (function == 0 && UtilityTime.paused){
+			UtilityTime.paused = false;
+			pauseButton.colors = normalColorBlock;
+		} else if (function == 1 && UtilityTime.speed > 1.0f) {
 			UtilityTime.speed -= 0.25f;
-		utilitySpeedText.text = "Utility Speed: " + UtilityTime.speed.ToString("0.00") + "x";
+		} else if (function == 2) {
+			UtilityTime.speed += 0.25f;
+		}
+		utilitySpeedText.text = "Speed: " + UtilityTime.speed.ToString("0.00") + "x";
 	}
 
 	public void OnClickHide(string button){

@@ -8,8 +8,10 @@ using System.Collections.Generic;
 public class Agent : MonoBehaviour {
 
 	public string agentName;
+	public int historyStates = 10;
 	public bool randomStartProperties;
 	public List<Action> actions = new List<Action>();
+
 	[HideInInspector]
 	public List<string> actionHistory = new List<string>();
 	private Action previousAction, topAction;
@@ -83,10 +85,16 @@ public class Agent : MonoBehaviour {
 				topActionScore = actions[i].GetActionScore();
 			}	
 		}
-		if(topAction != previousAction)
+		if (topAction != previousAction)
 			newAction = true;
+		else
+			StartTimer ();
 
-		actionHistory.Insert (0, topAction.name);
+		actionHistory.Add (topAction.name);
+		if (actionHistory.Count > historyStates){
+			actionHistory.RemoveAt(0);
+		}
+
 		currentActionScore = topActionScore;
 		return topActionScore;
 	}
@@ -114,7 +122,10 @@ public class Agent : MonoBehaviour {
 		if (validInterruption) {
 			newAction = true;
 			topAction = topInterruption;
-			actionHistory.Insert (0, "Interruption: " + topAction.name);
+			actionHistory.Add ("Interruption: " + topAction.name);
+			if (actionHistory.Count > historyStates){
+				actionHistory.RemoveAt(0);
+			}
 			currentActionScore = topActionScore;
 			return true;
 		}
