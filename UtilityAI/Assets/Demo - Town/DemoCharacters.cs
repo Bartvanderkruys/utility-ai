@@ -4,7 +4,6 @@ using System.Collections.Generic;
 public class DemoCharacters : MonoBehaviour {
 
 	//demo values
-	public float speed;
 	public float movementSpeed;
 	[HideInInspector]
 	private Vector3 destination, preDestination;
@@ -105,7 +104,7 @@ public class DemoCharacters : MonoBehaviour {
 			agent.newAction = false;
 		}
 		if(atDestination){	
-			energy.value += 10.0f * speed * Time.deltaTime;
+			energy.value += 10.0f * UtilityTime.time;
 		} else {
 			MoveToTarget ();
 		}
@@ -120,9 +119,9 @@ public class DemoCharacters : MonoBehaviour {
 			agent.newAction = false;
 		}
 		if(atDestination){	
-			hygiene.value += 80.0f * speed * Time.deltaTime;
-			hunger.value -= 5.0f * speed * Time.deltaTime;
-			entertainment.value -= 2.0f * speed * Time.deltaTime;
+			hygiene.value += 80.0f * UtilityTime.time;
+			hunger.value -= 5.0f * UtilityTime.time;
+			entertainment.value -= 2.0f * UtilityTime.time;
 		} else {
 			MoveToTarget ();
 		}
@@ -137,9 +136,9 @@ public class DemoCharacters : MonoBehaviour {
 			agent.newAction = false;
 		}
 		if(atDestination){	
-			energy.value += 2.0f * speed * Time.deltaTime;
-			hunger.value += 60.0f * speed * Time.deltaTime;
-			supplies.value -= 10.0f * speed * Time.deltaTime;
+			energy.value += 2.0f * UtilityTime.time;
+			hunger.value += 60.0f * UtilityTime.time;
+			supplies.value -= 10.0f * UtilityTime.time;
 		} else {
 			MoveToTarget ();
 		}
@@ -154,8 +153,8 @@ public class DemoCharacters : MonoBehaviour {
 			agent.newAction = false;
 		}
 		if(atDestination){	
-		entertainment.value += 15.0f * speed * Time.deltaTime;
-		social.value += 15.0f * speed * Time.deltaTime;
+			entertainment.value += 15.0f * UtilityTime.time;
+			social.value += 15.0f * UtilityTime.time;
 		} else {
 			MoveToTarget ();
 		}
@@ -170,7 +169,7 @@ public class DemoCharacters : MonoBehaviour {
 			agent.newAction = false;
 		}
 		if(atDestination){	
-		social.value += 2.0f * speed * Time.deltaTime;
+			social.value += 2.0f * UtilityTime.time;
 		} else {
 			MoveToTarget ();
 		}
@@ -185,7 +184,7 @@ public class DemoCharacters : MonoBehaviour {
 			agent.newAction = false;
 		}
 		if(atDestination){	
-		supplies.value += 60.0f * speed * Time.deltaTime;
+			supplies.value += 60.0f * UtilityTime.time;
 		} else {
 			MoveToTarget ();
 		}
@@ -200,8 +199,8 @@ public class DemoCharacters : MonoBehaviour {
 			agent.newAction = false;
 		}
 		if(atDestination){	
-		energy.value += 1.0f * speed * Time.deltaTime;
-		hunger.value += 2.0f * speed * Time.deltaTime;
+			energy.value += 1.0f * UtilityTime.time;
+			hunger.value += 2.0f * UtilityTime.time;
 		} else {
 			MoveToTarget ();
 		}

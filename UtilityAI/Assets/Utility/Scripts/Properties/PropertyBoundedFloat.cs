@@ -41,6 +41,6 @@ public class PropertyBoundedFloat : Property {
 	
 	// Update is called once per frame
 	void Update () {
-		value -= Time.deltaTime * decreasePerSec;
+		value -= UtilityTime.time * decreasePerSec;
 	}
 }

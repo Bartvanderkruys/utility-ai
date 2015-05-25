@@ -9,7 +9,6 @@ public class OverlayUIActionElement : MonoBehaviour {
 	public Text text;
 	public Text ActionScoreText;
 	public Slider slider;
-	private Button button;
 	private ColorBlock normalColorBlock, selectedColorBlock;
 	private bool selected = false;
 

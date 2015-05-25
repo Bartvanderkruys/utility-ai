@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public class Agent : MonoBehaviour {
 
 	public string agentName;
+	public bool randomStartProperties;
 	public List<Action> actions = new List<Action>();
 	[HideInInspector]
 	public List<string> actionHistory = new List<string>();
@@ -21,11 +22,18 @@ public class Agent : MonoBehaviour {
 
 	void Start(){
 		Evaluate ();
+
+		if (randomStartProperties) {
+			Property[] properties = GetComponentsInChildren<Property>();
+			for(int i = 0; i < properties.Length; i++){
+				properties[i].SetFloatValue( Random.value * properties[i].GetFloatMax() );
+			}
+		}
 	}
 
 	public void UpdateAI(){
 		if (actionTimer > 0.0f && isTiming) {
-			actionTimer -= Time.deltaTime;
+			actionTimer -= UtilityTime.time;
 			GetTopAction ().handle ();
 			if(GetTopAction().interruptible){
 				if(EvaluateInteruption()){

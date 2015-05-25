@@ -50,42 +50,79 @@ public class OverlayUI : MonoBehaviour {
 		utilitySpeedText.text = "Utility Time: " + UtilityTime.speed.ToString("0.00") + "x";
 	}
 
-	public void DisplayAgent(Agent agent){
+	public void DisplayAgent(Agent agent, bool selected){
 
-		displayedAgent = agent;
-		displayingAgent = true;
-
-		for (int i = 0; i < agent.GetComponentsInChildren<Property>().Length; i++) {
-			agentProperties.Add(agent.GetComponentsInChildren<Property>()[i]);
+		for (int i = 0; i < actionElements.Count; i++) {
+			Destroy (actionElements[i]);
 		}
+		for (int i = 0; i < considerationElements.Count; i++) {
+			Destroy (considerationElements[i]);
+		}
+		for (int i = 0; i < propertyElements.Count; i++) {
+			Destroy (propertyElements[i]);
+		}
+		actionElements.Clear ();
+		considerationElements.Clear ();
+		agentProperties.Clear ();
+		propertyElements.Clear ();
 
-		for(int i = 0; i < agentProperties.Count; i++){
-			GameObject tempProp;
-			if(agentProperties[i].modifiable){
-				tempProp = Instantiate(ModifiablePropertyElement, 
-				                                 new Vector3(propertyContent.transform.position.x, 
-				            considerationContent.transform.position.y + propertyElements.Count * - 27, 
-				            considerationContent.transform.position.z), 	Quaternion.identity) as GameObject;
-			} else {
-				tempProp = Instantiate(PropertyElement, 
-				                                  new Vector3(propertyContent.transform.position.x, 
-				            considerationContent.transform.position.y + propertyElements.Count * - 27, 
-				            considerationContent.transform.position.z), 	Quaternion.identity) as GameObject;
+		utilityPanel.SetActive (false);
+		actionConsiderationsPanel.SetActive (false);
+		selectedAction = null;
+		selectedProperty = null;
+		selectedActionConsideration = null;
+		selectedPropertyConsideration = null;
+
+		//deselect other agents
+		if (!selected) {
+
+			if (displayedAgent != null) {
+				for (int i = 0; i < agentElements.Count; i++) {
+					if (agentElements [i].GetComponent<OverlayUIAgentElement> ().GetAgent () == displayedAgent) {
+						agentElements [i].GetComponent<OverlayUIAgentElement> ().Select ();
+						break;
+					}
+				}
 			}
-				tempProp.transform.SetParent(propertyContent.transform);
-				tempProp.GetComponent<OverlayUIPropertyElement>().SetProperty(agentProperties[i]);
-				propertyElements.Add (tempProp);
-		}
 
-		for (int i = 0; i < agent.actions.Count; i++) {
-			//populate UI actions
-			GameObject tempAct = Instantiate (actionElement, 
+			displayedAgent = agent;
+			displayingAgent = true;
+
+			for (int i = 0; i < agent.GetComponentsInChildren<Property>().Length; i++) {
+				agentProperties.Add (agent.GetComponentsInChildren<Property> () [i]);
+			}
+
+			for (int i = 0; i < agentProperties.Count; i++) {
+				GameObject tempProp;
+				if (agentProperties [i].modifiable) {
+					tempProp = Instantiate (ModifiablePropertyElement, 
+				                                 new Vector3 (propertyContent.transform.position.x, 
+				            considerationContent.transform.position.y + propertyElements.Count * - 27, 
+				            considerationContent.transform.position.z), Quaternion.identity) as GameObject;
+				} else {
+					tempProp = Instantiate (PropertyElement, 
+				                                  new Vector3 (propertyContent.transform.position.x, 
+				            considerationContent.transform.position.y + propertyElements.Count * - 27, 
+				            considerationContent.transform.position.z), Quaternion.identity) as GameObject;
+				}
+				tempProp.transform.SetParent (propertyContent.transform);
+				tempProp.GetComponent<OverlayUIPropertyElement> ().SetProperty (agentProperties [i]);
+				propertyElements.Add (tempProp);
+			}
+
+			for (int i = 0; i < agent.actions.Count; i++) {
+				//populate UI actions
+				GameObject tempAct = Instantiate (actionElement, 
 			                                 new Vector3 (actionContent.transform.position.x + 100, 
 			            actionContent.transform.position.y + actionElements.Count * - 27, 
 			            actionContent.transform.position.z), Quaternion.identity) as GameObject;
-			tempAct.transform.SetParent(actionContent.transform);
-			tempAct.GetComponent<OverlayUIActionElement> ().SetAction (agent.actions [i]);
-			actionElements.Add (tempAct);
+				tempAct.transform.SetParent (actionContent.transform);
+				tempAct.GetComponent<OverlayUIActionElement> ().SetAction (agent.actions [i]);
+				actionElements.Add (tempAct);
+			}
+		} else {
+			displayingAgent = false;
+			displayedAgent = null;
 		}
 	}
 
@@ -173,32 +210,6 @@ public class OverlayUI : MonoBehaviour {
 		}
 	}
 
-	public void DeselectedAgent(Agent agent){
-
-		displayingAgent = false;
-
-		for (int i = 0; i < actionElements.Count; i++) {
-			Destroy (actionElements[i]);
-		}
-		for (int i = 0; i < considerationElements.Count; i++) {
-			Destroy (considerationElements[i]);
-		}
-		for (int i = 0; i < propertyElements.Count; i++) {
-			Destroy (propertyElements[i]);
-		}
-		actionElements.Clear ();
-		considerationElements.Clear ();
-		agentProperties.Clear ();
-		propertyElements.Clear ();
-
-		utilityPanel.SetActive (false);
-		actionConsiderationsPanel.SetActive (false);
-		selectedAction = null;
-		selectedProperty = null;
-		selectedActionConsideration = null;
-		selectedPropertyConsideration = null;
-	}
-	
 	// Update is called once per frame
 	void Update () {
 
@@ -227,9 +238,10 @@ public class OverlayUI : MonoBehaviour {
 
 		if (displayingAgent) {
 			for (int i = 0; i < displayedAgent.actionHistory.Count; i++) {
+				actionHistoryContent.GetComponent<RectTransform>().sizeDelta = new Vector2(155, historyElements.Count * 15 + 15);
 				GameObject tempHistory = Instantiate (historyElement, 
 				                                     new Vector3 (actionHistoryContent.transform.position.x, 
-	                                                             actionHistoryContent.transform.position.y + historyElements.Count * 15,
+				             									 actionHistoryContent.transform.position.y,
 	                                                             actionHistoryContent.transform.position.z), Quaternion.identity) as GameObject;
 				tempHistory.GetComponent<Text> ().text = displayedAgent.actionHistory [i];
 				tempHistory.transform.SetParent (actionHistoryContent.transform);

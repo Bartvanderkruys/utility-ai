@@ -7,10 +7,11 @@ public class PulseMaterialColor : MonoBehaviour {
 	private bool pulsing = false;
 	private Color originalColor;
 	private Collider characterCollider;
+	private OverlayUI ui;
 
 	void Start(){
+		ui = GameObject.Find ("OverlayUI").GetComponent<OverlayUI> ();
 		originalColor = mat.GetColor ("_Color");
-		characterCollider = GameObject.Find ("Character").GetComponent<BoxCollider> ();
 	}
 
 	// Update is called once per frame
@@ -22,12 +23,12 @@ public class PulseMaterialColor : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider col){
-		if(col == characterCollider)
+		if(col.gameObject.tag == "Player")
 		pulsing = true;
 	}
 
 	void OnTriggerExit(Collider col){
-		if (col == characterCollider) {
+		if(col.gameObject.tag == "Player") {
 			pulsing = false;
 			mat.SetColor ("_Color", originalColor);
 		}
