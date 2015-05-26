@@ -21,6 +21,7 @@ public class Agent : MonoBehaviour {
 	private bool isTiming = false;
 	[HideInInspector]
 	public bool newAction;
+	private bool paused = false;
 
 	void Start(){
 		Evaluate ();
@@ -34,20 +35,22 @@ public class Agent : MonoBehaviour {
 	}
 
 	public void UpdateAI(){
-		if (actionTimer > 0.0f && isTiming) {
-			actionTimer -= UtilityTime.time;
-			GetTopAction ().handle ();
-			if(GetTopAction().interruptible){
-				if(EvaluateInteruption()){
-					actionTimer = GetTopAction().time;
+		if (!paused) {
+			if (actionTimer > 0.0f && isTiming) {
+				actionTimer -= UtilityTime.time;
+				GetTopAction ().handle ();
+				if (GetTopAction ().interruptible) {
+					if (EvaluateInteruption ()) {
+						actionTimer = GetTopAction ().time;
+					}
 				}
+			} else if (actionTimer > 0.0f) {
+				GetTopAction ().handle ();
+			} else {
+				StopTimer ();
+				Evaluate ();
+				actionTimer = GetTopAction ().time;
 			}
-		} else if (actionTimer > 0.0f) {
-			GetTopAction ().handle ();
-		} else {
-			StopTimer();
-			Evaluate ();
-			actionTimer = GetTopAction().time;
 		}
 	}
 
@@ -69,6 +72,17 @@ public class Agent : MonoBehaviour {
 
 	public void StopTimer(){
 		isTiming = false;
+	}
+
+	public void Pause(){
+		if (!paused)
+			paused = true;
+		else
+			paused = false;
+	}
+
+	public bool IsPaused(){
+		return paused;
 	}
 
 	public float Evaluate(){
