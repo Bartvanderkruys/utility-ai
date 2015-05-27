@@ -37,10 +37,12 @@ public class OverlayUIAgentElement : MonoBehaviour {
 		if (!selected) {
 			ui.DisplayAgent(agent, false);
 			selected = true;
+			agent.characterIndicator.SetActive(true);
 			GetComponent<Button>().colors = selectedColorBlock;
 		} else {
 			ui.DisplayAgent(agent, true);
 			selected = false;
+			agent.characterIndicator.SetActive(false);
 			GetComponent<Button>().colors = normalColorBlock;
 		}
 	}

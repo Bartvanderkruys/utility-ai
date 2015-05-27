@@ -10,6 +10,7 @@ public class Agent : MonoBehaviour {
 	public string agentName;
 	public int historyStates = 10;
 	public bool randomStartProperties;
+	public GameObject characterIndicator;
 	public List<Action> actions = new List<Action>();
 
 	[HideInInspector]

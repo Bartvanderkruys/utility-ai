@@ -47,10 +47,10 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Demo - Town\DemoCharacters.cs" />
-     <Compile Include="Assets\Demo - Town\PulseMaterialColor.cs" />
      <Compile Include="Assets\Demo - Town\SlidingDoors.cs" />
      <Compile Include="Assets\Utility\Scripts\Action.cs" />
      <Compile Include="Assets\Utility\Scripts\Agent.cs" />
+     <Compile Include="Assets\Utility\Scripts\CharacterIndicator.cs" />
      <Compile Include="Assets\Utility\Scripts\Consideration.cs" />
      <Compile Include="Assets\Utility\Scripts\DragPanel.cs" />
      <Compile Include="Assets\Utility\Scripts\GlobalConsiderations.cs" />
