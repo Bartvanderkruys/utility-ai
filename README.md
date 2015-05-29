@@ -8,4 +8,4 @@ Welcome to UtilityAI, an open-source solution for the creation of utility-based 
 * Scalability for many agents and considerations.
 * A Demo project which shows a simple UtilityAI system.
 
-Visit the [Wiki](https://github.com/Bartvanderkruys/UtilityAI/edit/wiki) to learn all about it!
+Visit the [Wiki](https://github.com/Bartvanderkruys/UtilityAI/wiki) to learn all about it!
