@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[AddComponentMenu("UtilityAI/Float Property")]
 public class PropertyBoundedFloat : Property {
 	public float minValue = 0.0f;
 	public float maxValue = 100.0f;

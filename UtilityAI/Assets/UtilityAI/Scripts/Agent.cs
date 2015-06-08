@@ -5,6 +5,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+[AddComponentMenu("UtilityAI/Agent")]
 public class Agent : MonoBehaviour {
 
 	public string agentName;

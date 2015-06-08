@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 
 [Serializable]
+[AddComponentMenu("UtilityAI/Action")]
 public class Action : MonoBehaviour{
 	//time required to perform action;
 	public float time;
