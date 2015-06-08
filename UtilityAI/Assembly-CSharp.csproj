@@ -48,19 +48,19 @@
   <ItemGroup>
      <Compile Include="Assets\Demo - Town\DemoCharacters.cs" />
      <Compile Include="Assets\Demo - Town\SlidingDoors.cs" />
-     <Compile Include="Assets\UtilityAI\Scripts\Action.cs" />
-     <Compile Include="Assets\UtilityAI\Scripts\Agent.cs" />
-     <Compile Include="Assets\UtilityAI\Scripts\Misc\CharacterIndicator.cs" />
-     <Compile Include="Assets\UtilityAI\Scripts\Misc\Consideration.cs" />
-     <Compile Include="Assets\UtilityAI\Scripts\Misc\DragPanel.cs" />
+     <Compile Include="Assets\UtilityAI\Scripts\Misc\UAI_CharacterIndicator.cs" />
+     <Compile Include="Assets\UtilityAI\Scripts\Misc\UAI_Consideration.cs" />
+     <Compile Include="Assets\UtilityAI\Scripts\Misc\UAI_DragPanel.cs" />
      <Compile Include="Assets\UtilityAI\Scripts\OverlayUI\OverlayUI.cs" />
      <Compile Include="Assets\UtilityAI\Scripts\OverlayUI\OverlayUIActionElement.cs" />
      <Compile Include="Assets\UtilityAI\Scripts\OverlayUI\OverlayUIAgentElement.cs" />
      <Compile Include="Assets\UtilityAI\Scripts\OverlayUI\OverlayUIConsiderationElement.cs" />
      <Compile Include="Assets\UtilityAI\Scripts\OverlayUI\OverlayUIPropertyElement.cs" />
      <Compile Include="Assets\UtilityAI\Scripts\OverlayUI\UtilityTime.cs" />
-     <Compile Include="Assets\UtilityAI\Scripts\Properties\Property.cs" />
-     <Compile Include="Assets\UtilityAI\Scripts\Properties\PropertyBoundedFloat.cs" />
+     <Compile Include="Assets\UtilityAI\Scripts\Properties\UAI_Property.cs" />
+     <Compile Include="Assets\UtilityAI\Scripts\Properties\UAI_PropertyBoundedFloat.cs" />
+     <Compile Include="Assets\UtilityAI\Scripts\UAI_Action.cs" />
+     <Compile Include="Assets\UtilityAI\Scripts\UAI_Agent.cs" />
      <None Include="Assets\Editor\Doxygen\Resources\BaseDoxyfile.txt" />
      <None Include="Assets\Editor\Doxygen\ReadMe.txt" />
  <Reference Include="UnityEngine.UI">

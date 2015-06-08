@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
 public class OverlayUIAgentElement : MonoBehaviour {
 
-	private Agent agent;
+	private UAI_Agent agent;
 	public Text text;
 	private OverlayUI ui;
 	private bool selected = false;
@@ -24,12 +24,12 @@ public class OverlayUIAgentElement : MonoBehaviour {
 		pauseSelectedColorBlock.normalColor = new Color (0.5f, 0.5f, 0.5f, 1.0f);
 	}
 
-	public void SetAgent(Agent p_agent){
+	public void SetAgent(UAI_Agent p_agent){
 		agent = p_agent;
 		SetAgentUI ();
 	}
 
-	public Agent GetAgent(){
+	public UAI_Agent GetAgent(){
 		return agent;
 	}
 

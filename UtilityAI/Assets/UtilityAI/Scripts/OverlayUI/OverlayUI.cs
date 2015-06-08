@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
@@ -6,9 +6,9 @@ public class OverlayUI : MonoBehaviour {
 
 	public Text currentActionText, actionTimerText;
 
-	private Agent[] agents;
-	private Agent displayedAgent;
-	private Consideration displayedConsideration, displayedActionConsideration;
+	private UAI_Agent[] agents;
+	private UAI_Agent displayedAgent;
+	private UAI_Consideration displayedConsideration, displayedActionConsideration;
 	private bool displayingCurve = false, displayingAgent = false, displayingActionCurve = false;
 
 	public GameObject ModifiablePropertyElement, PropertyElement, considerationElement, actionElement, agentElement, historyElement, 
@@ -21,7 +21,7 @@ public class OverlayUI : MonoBehaviour {
 	public Image utilityCurveRenderer, actionUtilityCurveRenderer;
 	public Button pauseButton;
 
-	private List<Property> agentProperties = new List<Property>();	
+	private List<UAI_Property> agentProperties = new List<UAI_Property>();	
 	private List<GameObject> actionElements = new List<GameObject>();
 	private List<GameObject> agentElements = new List<GameObject>();
 	private List<GameObject> considerationElements = new List<GameObject>();
@@ -29,9 +29,9 @@ public class OverlayUI : MonoBehaviour {
 	private List<GameObject> propertyElements = new List<GameObject>();
 	private List<GameObject> historyElements = new List<GameObject>();
 
-	private Action selectedAction;
-	private Property selectedProperty;
-	private Consideration selectedPropertyConsideration, selectedActionConsideration;
+	private UAI_Action selectedAction;
+	private UAI_Property selectedProperty;
+	private UAI_Consideration selectedPropertyConsideration, selectedActionConsideration;
 	private ColorBlock normalColorBlock, selectedColorBlock;
 
 	// Use this for initialization
@@ -41,7 +41,7 @@ public class OverlayUI : MonoBehaviour {
 		selectedColorBlock = pauseButton.colors;
 		selectedColorBlock.normalColor = new Color (0.5f, 0.5f, 0.5f, 1.0f);
 
-		agents = FindObjectsOfType (typeof(Agent)) as Agent[];
+		agents = FindObjectsOfType (typeof(UAI_Agent)) as UAI_Agent[];
 
 		//create all consideration and action elements
 		for (int i = 0; i < agents.Length; i++) {
@@ -57,7 +57,7 @@ public class OverlayUI : MonoBehaviour {
 		utilitySpeedText.text = "Speed: " + UtilityTime.speed.ToString("0.00") + "x";
 	}
 
-	public void DisplayAgent(Agent agent, bool selected){
+	public void DisplayAgent(UAI_Agent agent, bool selected){
 
 		for (int i = 0; i < actionElements.Count; i++) {
 			Destroy (actionElements[i]);
@@ -95,8 +95,8 @@ public class OverlayUI : MonoBehaviour {
 			displayedAgent = agent;
 			displayingAgent = true;
 
-			for (int i = 0; i < agent.GetComponentsInChildren<Property>().Length; i++) {
-				agentProperties.Add (agent.GetComponentsInChildren<Property> () [i]);
+			for (int i = 0; i < agent.GetComponentsInChildren<UAI_Property>().Length; i++) {
+				agentProperties.Add (agent.GetComponentsInChildren<UAI_Property> () [i]);
 			}
 
 			for (int i = 0; i < agentProperties.Count; i++) {
@@ -133,7 +133,7 @@ public class OverlayUI : MonoBehaviour {
 		}
 	}
 
-	public void DisplayConsiderations(Property property, bool selected){
+	public void DisplayConsiderations(UAI_Property property, bool selected){
 
 		for (int i = 0; i < considerationElements.Count; i++) {
 			Destroy (considerationElements[i]);
@@ -143,7 +143,7 @@ public class OverlayUI : MonoBehaviour {
 		if (!selected) {
 			if (selectedProperty != null) {
 				for (int i = 0; i < propertyElements.Count; i++) {
-					Property tempProperty = propertyElements[i].GetComponent<OverlayUIPropertyElement>().GetProperty ();
+					UAI_Property tempProperty = propertyElements[i].GetComponent<OverlayUIPropertyElement>().GetProperty ();
 					if (selectedProperty == tempProperty){
 						propertyElements[i].GetComponent<OverlayUIPropertyElement> ().Select ();
 						break;
@@ -177,7 +177,7 @@ public class OverlayUI : MonoBehaviour {
 		}
 	}
 
-	public void DisplayActionConsiderations(Action action, bool selected){
+	public void DisplayActionConsiderations(UAI_Action action, bool selected){
 
 		for (int i = 0; i < actionConsiderationElements.Count; i++) {
 			Destroy (actionConsiderationElements[i]);
@@ -187,7 +187,7 @@ public class OverlayUI : MonoBehaviour {
 		if (!selected) {
 			if (selectedAction != null){
 				for(int i = 0; i < actionElements.Count; i++){
-					Action tempAction = actionElements[i].GetComponent<OverlayUIActionElement>().GetAction();
+					UAI_Action tempAction = actionElements[i].GetComponent<OverlayUIActionElement>().GetAction();
 					if(selectedAction == tempAction){
 						actionElements[i].GetComponent<OverlayUIActionElement>().Select ();
 						break;
@@ -267,12 +267,12 @@ public class OverlayUI : MonoBehaviour {
 		}
 	}
 
-	public void DisplayCurve(Consideration consideration, bool isActionConsideration, bool selected){
+	public void DisplayCurve(UAI_Consideration consideration, bool isActionConsideration, bool selected){
 		if (!selected) {
 			if (isActionConsideration) {
 				if (selectedActionConsideration != null){
 					for(int i = 0; i < actionConsiderationElements.Count; i++){
-						Consideration tempCon = actionConsiderationElements[i].GetComponent<OverlayUIConsiderationElement>().GetConsideration();
+						UAI_Consideration tempCon = actionConsiderationElements[i].GetComponent<OverlayUIConsiderationElement>().GetConsideration();
 						if(selectedActionConsideration == tempCon){
 							actionConsiderationElements[i].GetComponent<OverlayUIConsiderationElement>().Select ();
 							break;
@@ -287,7 +287,7 @@ public class OverlayUI : MonoBehaviour {
 			} else {
 				if (selectedPropertyConsideration != null){
 					for(int i = 0; i < considerationElements.Count; i++){
-						Consideration tempCon = considerationElements[i].GetComponent<OverlayUIConsiderationElement>().GetConsideration();
+						UAI_Consideration tempCon = considerationElements[i].GetComponent<OverlayUIConsiderationElement>().GetConsideration();
 						if(selectedPropertyConsideration == tempCon){
 							considerationElements[i].GetComponent<OverlayUIConsiderationElement>().Select ();
 							break;
@@ -313,7 +313,7 @@ public class OverlayUI : MonoBehaviour {
 		}
 	}
 
-	void BuildUtilityCurve(Consideration con, bool isActionConsideration){
+	void BuildUtilityCurve(UAI_Consideration con, bool isActionConsideration){
 		Texture2D texture = new Texture2D (128, 128, TextureFormat.RGBA32, false);
 			for (int i = 0; i < 128; i++) {
 			int y = Mathf.FloorToInt(con.utilityCurve.Evaluate(i/128.0f)*128.0f);

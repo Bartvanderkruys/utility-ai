@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DragPanel : MonoBehaviour {
+public class UAI_DragPanel : MonoBehaviour {
 
 	public GameObject panel;
 

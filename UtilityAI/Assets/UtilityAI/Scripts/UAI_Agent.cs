@@ -6,17 +6,17 @@ using UnityEngine;
 using System.Collections.Generic;
 
 [AddComponentMenu("UtilityAI/Agent")]
-public class Agent : MonoBehaviour {
+public class UAI_Agent : MonoBehaviour {
 
 	public string agentName;
 	public int historyStates = 10;
 	public bool randomStartProperties;
 	public GameObject characterIndicator;
-	public List<Action> actions = new List<Action>();
+	public List<UAI_Action> actions = new List<UAI_Action>();
 
 	[HideInInspector]
 	public List<string> actionHistory = new List<string>();
-	private Action previousAction, topAction;
+	private UAI_Action previousAction, topAction;
 	[HideInInspector]
 	public float actionTimer = 0.0f;
 	private float currentActionScore;
@@ -29,7 +29,7 @@ public class Agent : MonoBehaviour {
 		Evaluate ();
 
 		if (randomStartProperties) {
-			Property[] properties = GetComponentsInChildren<Property>();
+			UAI_Property[] properties = GetComponentsInChildren<UAI_Property>();
 			for(int i = 0; i < properties.Length; i++){
 				properties[i].SetFloatValue( Random.value * properties[i].GetFloatMax() );
 			}
@@ -56,7 +56,7 @@ public class Agent : MonoBehaviour {
 		}
 	}
 
-	public void SetVoidActionDelegate(string name, Action.Del del)
+	public void SetVoidActionDelegate(string name, UAI_Action.Del del)
 	{
 		for (int i = 0; i < actions.Count; i++) {
 			if (actions[i].name == name)
@@ -119,7 +119,7 @@ public class Agent : MonoBehaviour {
 
 		int topActionPriority = topAction.priorityLevel;
 		float topActionScore = 0.0f;
-		Action topInterruption = topAction;
+		UAI_Action topInterruption = topAction;
 		bool validInterruption = false;
 		
 		for (int i = 0; i < actions.Count; i++) {
@@ -148,7 +148,7 @@ public class Agent : MonoBehaviour {
 		return false;
 	}
 
-	public Action GetTopAction()
+	public UAI_Action GetTopAction()
 	{
 		return topAction;
 	}

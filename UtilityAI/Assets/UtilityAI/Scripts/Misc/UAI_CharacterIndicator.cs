@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CharacterIndicator : MonoBehaviour 
+public class UAI_CharacterIndicator : MonoBehaviour 
 { 
 	private Camera cam;
 	public GameObject indicator;

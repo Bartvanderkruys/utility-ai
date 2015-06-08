@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 public class DemoCharacters : MonoBehaviour {
@@ -12,8 +12,8 @@ public class DemoCharacters : MonoBehaviour {
 	private bool atDestination = false;
 
 	//agent
-	Agent agent;
-	public PropertyBoundedFloat energy, hunger, hygiene, social, entertainment, supplies;
+	UAI_Agent agent;
+	public UAI_PropertyBoundedFloat energy, hunger, hygiene, social, entertainment, supplies;
 	
 	[Header("Waypoints")]
 	public GameObject homeWaypointIn;
@@ -28,7 +28,7 @@ public class DemoCharacters : MonoBehaviour {
 	public GameObject groceryStoreWaypointOut;
 
 	void Start () {
-		agent = GetComponent<Agent> ();
+		agent = GetComponent<UAI_Agent> ();
 		preDestination = transform.position;
 
 		//add function delegate to action

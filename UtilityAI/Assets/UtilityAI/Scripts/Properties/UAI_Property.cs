@@ -2,7 +2,7 @@
 using System;
 
 [Serializable]
-public class Property : MonoBehaviour{
+public class UAI_Property : MonoBehaviour{
 	protected float nValue;
 
 	public float normalizedValue {

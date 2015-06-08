@@ -1,9 +1,9 @@
-﻿using UnityEngine;  
+using UnityEngine;  
 using UnityEditor;  
 using UnityEditorInternal;
 
-[CustomEditor(typeof(Property))]
-public class PropertyInspector : Editor {  
+[CustomEditor(typeof(UAI_Property))]
+public class UAI_PropertyInspector : Editor {  
 
 	private void OnEnable() {		
 	}

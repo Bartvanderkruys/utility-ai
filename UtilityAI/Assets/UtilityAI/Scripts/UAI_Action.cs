@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections.Generic;
 
 [Serializable]
 [AddComponentMenu("UtilityAI/Action")]
-public class Action : MonoBehaviour{
+public class UAI_Action : MonoBehaviour{
 	//time required to perform action;
 	public float time;
 	//function delegate
@@ -15,7 +15,7 @@ public class Action : MonoBehaviour{
 
 	//appropriate weighted considerations
 	[HideInInspector]
-	public List<Consideration> considerations = new List<Consideration>();
+	public List<UAI_Consideration> considerations = new List<UAI_Consideration>();
 
 	private float actionScore;
 

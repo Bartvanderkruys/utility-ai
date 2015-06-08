@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
 public class OverlayUIActionElement : MonoBehaviour {
 
 	private OverlayUI ui;
-	private Action action;
+	private UAI_Action action;
 	public Text text;
 	public Text ActionScoreText;
 	public Slider slider;
@@ -19,11 +19,11 @@ public class OverlayUIActionElement : MonoBehaviour {
 		selectedColorBlock.normalColor = new Color (0.4f, 0.4f, 0.3f, 1.0f);
 	}
 
-	public Action GetAction(){
+	public UAI_Action GetAction(){
 		return action;
 	}
 	
-	public void SetAction(Action p_action){
+	public void SetAction(UAI_Action p_action){
 		action = p_action;
 		text.text = action.name;
 	}

@@ -1,9 +1,9 @@
-﻿using UnityEngine;  
+using UnityEngine;  
 using UnityEditor;  
 using UnityEditorInternal;
 
-[CustomEditor(typeof(Action))]
-public class ActionInspector : Editor {  
+[CustomEditor(typeof(UAI_Action))]
+public class UAI_ActionInspector : Editor {  
 	private ReorderableList considerationList;
 	
 	private void OnEnable() {

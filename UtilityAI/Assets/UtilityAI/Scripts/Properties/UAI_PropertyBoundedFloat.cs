@@ -2,7 +2,7 @@
 using System.Collections;
 
 [AddComponentMenu("UtilityAI/Float Property")]
-public class PropertyBoundedFloat : Property {
+public class UAI_PropertyBoundedFloat : UAI_Property {
 	public float minValue = 0.0f;
 	public float maxValue = 100.0f;
 	public float startValue = 50.0f;

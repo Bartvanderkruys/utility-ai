@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
 public class OverlayUIPropertyElement : MonoBehaviour {
 	
 	private OverlayUI ui;
-	private Property property;
+	private UAI_Property property;
 	private bool selected = false;
 	public Text nameText, propertyText;
 	public Slider propertySlider;
@@ -18,12 +18,12 @@ public class OverlayUIPropertyElement : MonoBehaviour {
 		selectedColorBlock.normalColor = new Color (0.4f, 0.4f, 0.3f, 1.0f);
 	}
 
-	public void SetProperty(Property p_property){
+	public void SetProperty(UAI_Property p_property){
 		property = p_property;
 		nameText.text = property.transform.name;
 	}
 
-	public Property GetProperty(){
+	public UAI_Property GetProperty(){
 		return property;
 	}
 	

@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
 public class OverlayUIConsiderationElement : MonoBehaviour {
 
 	private OverlayUI ui;
-	private Consideration consideration;
+	private UAI_Consideration consideration;
 	public Text nameText, utilityText;
 	public Slider utilitySlider;
 	private ColorBlock normalColorBlock, selectedColorBlock;
@@ -18,7 +18,7 @@ public class OverlayUIConsiderationElement : MonoBehaviour {
 		selectedColorBlock.normalColor = new Color (0.4f, 0.4f, 0.3f, 1.0f);
 	}
 
-	public void SetConsideration(Consideration p_consideration, bool isAction, string actionName){
+	public void SetConsideration(UAI_Consideration p_consideration, bool isAction, string actionName){
 		consideration = p_consideration;
 		isActionConsideration = isAction;
 		if (isAction)
@@ -34,7 +34,7 @@ public class OverlayUIConsiderationElement : MonoBehaviour {
 		utilitySlider.value = utilityValue;
 	}
 
-	public Consideration GetConsideration(){
+	public UAI_Consideration GetConsideration(){
 		return consideration;
 	}
 

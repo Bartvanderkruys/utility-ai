@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 
 [Serializable]
-public class Consideration {
+public class UAI_Consideration {
 	public AnimationCurve utilityCurve;
-	public Property property;
+	public UAI_Property property;
 	public float weight = 1.0f;
 
 	public float propertyScore{
