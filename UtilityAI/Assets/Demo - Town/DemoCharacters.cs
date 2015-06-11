@@ -13,7 +13,7 @@ public class DemoCharacters : MonoBehaviour {
 
 	//agent
 	UAI_Agent agent;
-	public UAI_PropertyBoundedFloat energy, hunger, hygiene, social, entertainment, supplies;
+	public UAI_PropertyBoundedFloat energy, hunger, hygiene, entertainment, supplies, money;
 	
 	[Header("Waypoints")]
 	public GameObject homeWaypointIn;
@@ -38,6 +38,7 @@ public class DemoCharacters : MonoBehaviour {
 		agent.SetVoidActionDelegate("Watch Movie", WatchMovie);
 		agent.SetVoidActionDelegate("Get Groceries", GetGroceries);
 		agent.SetVoidActionDelegate("Drink Coffee", DrinkCoffee);
+		agent.SetVoidActionDelegate("Work", Work);
 	}
 	
 	// Update is called once per frame
@@ -95,14 +96,19 @@ public class DemoCharacters : MonoBehaviour {
 		}
 	}
 
-	void Sleep()
-	{
+	void ResetPositions(){
 		if (agent.newAction) {
 			isOutside = false;
 			isOutsideDestination = false;
 			atDestination = false;
 			agent.newAction = false;
 		}
+	}
+
+	void Sleep()
+	{
+		ResetPositions ();
+
 		if(atDestination){	
 			energy.value += 10.0f * UtilityTime.time;
 		} else {
@@ -112,12 +118,8 @@ public class DemoCharacters : MonoBehaviour {
 
 	void Shower()
 	{
-		if (agent.newAction) {
-			isOutside = false;
-			isOutsideDestination = false;
-			atDestination = false;
-			agent.newAction = false;
-		}
+		ResetPositions ();
+
 		if(atDestination){	
 			hygiene.value += 80.0f * UtilityTime.time;
 			hunger.value -= 5.0f * UtilityTime.time;
@@ -129,12 +131,8 @@ public class DemoCharacters : MonoBehaviour {
 
 	void Eat()
 	{
-		if (agent.newAction) {
-			isOutside = false;
-			isOutsideDestination = false;
-			atDestination = false;
-			agent.newAction = false;
-		}
+		ResetPositions ();
+
 		if(atDestination){	
 			energy.value += 2.0f * UtilityTime.time;
 			hunger.value += 60.0f * UtilityTime.time;
@@ -146,15 +144,10 @@ public class DemoCharacters : MonoBehaviour {
 
 	void WatchMovie()
 	{
-		if (agent.newAction) {
-			isOutside = false;
-			isOutsideDestination = false;
-			atDestination = false;
-			agent.newAction = false;
-		}
+		ResetPositions ();
+
 		if(atDestination){	
 			entertainment.value += 15.0f * UtilityTime.time;
-			social.value += 15.0f * UtilityTime.time;
 		} else {
 			MoveToTarget ();
 		}
@@ -162,14 +155,10 @@ public class DemoCharacters : MonoBehaviour {
 
 	void Work()
 	{
-		if (agent.newAction) {
-			isOutside = false;
-			isOutsideDestination = false;
-			atDestination = false;
-			agent.newAction = false;
-		}
-		if(atDestination){	
-			social.value += 2.0f * UtilityTime.time;
+		ResetPositions ();
+
+		if(atDestination){
+
 		} else {
 			MoveToTarget ();
 		}
@@ -177,12 +166,8 @@ public class DemoCharacters : MonoBehaviour {
 
 	void GetGroceries()
 	{
-		if (agent.newAction) {
-			isOutside = false;
-			isOutsideDestination = false;
-			atDestination = false;
-			agent.newAction = false;
-		}
+		ResetPositions ();
+
 		if(atDestination){	
 			supplies.value += 60.0f * UtilityTime.time;
 		} else {
@@ -192,12 +177,8 @@ public class DemoCharacters : MonoBehaviour {
 
 	void DrinkCoffee()
 	{
-		if (agent.newAction) {
-			isOutside = false;
-			isOutsideDestination = false;
-			atDestination = false;
-			agent.newAction = false;
-		}
+		ResetPositions ();
+
 		if(atDestination){	
 			energy.value += 1.0f * UtilityTime.time;
 			hunger.value += 2.0f * UtilityTime.time;
