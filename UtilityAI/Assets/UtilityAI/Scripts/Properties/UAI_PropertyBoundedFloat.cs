@@ -6,9 +6,8 @@ public class UAI_PropertyBoundedFloat : UAI_Property {
 	public float minValue = 0.0f;
 	public float maxValue = 100.0f;
 	public float startValue = 50.0f;
-	public float decreasePerSec = 0.0f;
+	public float ChangePerSec = 0.0f;
 	private float currValue;
-
 
 	public float value {
 		get{ return currValue; }
@@ -42,6 +41,6 @@ public class UAI_PropertyBoundedFloat : UAI_Property {
 	
 	// Update is called once per frame
 	void Update () {
-		value -= UtilityTime.time * decreasePerSec;
+		value += UtilityTime.time * ChangePerSec;
 	}
 }

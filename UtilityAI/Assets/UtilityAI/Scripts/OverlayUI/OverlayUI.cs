@@ -256,12 +256,12 @@ public class OverlayUI : MonoBehaviour {
 			}
 
 			if (displayingCurve) {
-				utilityIndicator.transform.localPosition = new Vector3 (0, (1 - displayedConsideration.utilityScore) * 128 - 64, 0);
+				utilityIndicator.transform.localPosition = new Vector3 (0, (displayedConsideration.utilityScore) * 128 - 64, 0);
 				propertyIndicator.transform.localPosition = new Vector3 (displayedConsideration.propertyScore * 128 - 64, 0, 0);
 			}
 
 			if (displayingActionCurve) {
-				actionUtilityIndicator.transform.localPosition = new Vector3 (0, (1 - displayedActionConsideration.utilityScore) * 128 - 64, 0);
+				actionUtilityIndicator.transform.localPosition = new Vector3 (0, (displayedActionConsideration.utilityScore) * 128 - 64, 0);
 				actionPropertyIndicator.transform.localPosition = new Vector3 (displayedActionConsideration.propertyScore * 128 - 64, 0, 0);
 			}
 		}

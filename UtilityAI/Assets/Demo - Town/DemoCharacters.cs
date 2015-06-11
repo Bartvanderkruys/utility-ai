@@ -110,7 +110,7 @@ public class DemoCharacters : MonoBehaviour {
 		ResetPositions ();
 
 		if(atDestination){	
-			energy.value += 10.0f * UtilityTime.time;
+			energy.value += 20.0f * UtilityTime.time;
 		} else {
 			MoveToTarget ();
 		}
@@ -122,8 +122,6 @@ public class DemoCharacters : MonoBehaviour {
 
 		if(atDestination){	
 			hygiene.value += 80.0f * UtilityTime.time;
-			hunger.value -= 5.0f * UtilityTime.time;
-			entertainment.value -= 2.0f * UtilityTime.time;
 		} else {
 			MoveToTarget ();
 		}
@@ -135,8 +133,8 @@ public class DemoCharacters : MonoBehaviour {
 
 		if(atDestination){	
 			energy.value += 2.0f * UtilityTime.time;
-			hunger.value += 60.0f * UtilityTime.time;
-			supplies.value -= 10.0f * UtilityTime.time;
+			hunger.value -= 60.0f * UtilityTime.time;
+			money.value -= 10.0f * UtilityTime.time;
 		} else {
 			MoveToTarget ();
 		}
@@ -148,6 +146,7 @@ public class DemoCharacters : MonoBehaviour {
 
 		if(atDestination){	
 			entertainment.value += 15.0f * UtilityTime.time;
+			money.value -= 5.0f * UtilityTime.time;
 		} else {
 			MoveToTarget ();
 		}
@@ -158,7 +157,7 @@ public class DemoCharacters : MonoBehaviour {
 		ResetPositions ();
 
 		if(atDestination){
-
+			money.value += 50.0f * UtilityTime.time;
 		} else {
 			MoveToTarget ();
 		}
@@ -170,6 +169,7 @@ public class DemoCharacters : MonoBehaviour {
 
 		if(atDestination){	
 			supplies.value += 60.0f * UtilityTime.time;
+			money.value -= 10.0f * UtilityTime.time;
 		} else {
 			MoveToTarget ();
 		}
