@@ -54,6 +54,7 @@ public class OverlayUI : MonoBehaviour {
 			tempAgent.GetComponent<OverlayUIAgentElement>().SetAgent(agents[i]);
 			agentElements.Add (tempAgent);
 		}
+		agentContent.GetComponent<RectTransform>().sizeDelta = new Vector2(200, agentElements.Count * 22);
 		utilitySpeedText.text = "Speed: " + UtilityTime.speed.ToString("0.00") + "x";
 	}
 
@@ -116,6 +117,8 @@ public class OverlayUI : MonoBehaviour {
 				tempProp.GetComponent<OverlayUIPropertyElement> ().SetProperty (agentProperties [i]);
 				propertyElements.Add (tempProp);
 			}
+			propertyContent.GetComponent<RectTransform>().sizeDelta = new Vector2(200, propertyElements.Count * 27);
+
 
 			for (int i = 0; i < agent.actions.Count; i++) {
 				//populate UI actions
@@ -127,6 +130,8 @@ public class OverlayUI : MonoBehaviour {
 				tempAct.GetComponent<OverlayUIActionElement> ().SetAction (agent.actions [i]);
 				actionElements.Add (tempAct);
 			}
+			actionContent.GetComponent<RectTransform>().sizeDelta = new Vector2(200, actionElements.Count * 27);
+
 		} else {
 			displayingAgent = false;
 			displayedAgent = null;
