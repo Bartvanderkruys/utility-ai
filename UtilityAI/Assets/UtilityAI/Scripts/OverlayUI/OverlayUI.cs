@@ -169,6 +169,8 @@ public class OverlayUI : MonoBehaviour {
 					}
 				}
 			}
+			considerationContent.GetComponent<RectTransform>().sizeDelta = new Vector2(200, considerationElements.Count * 27);
+
 			utilityCurve.SetActive (false);
 			displayingCurve = false;
 			utilityPanel.SetActive (true);
@@ -209,6 +211,8 @@ public class OverlayUI : MonoBehaviour {
 				tempCon.GetComponent<OverlayUIConsiderationElement> ().SetConsideration (action.considerations [i], true, action.name);
 				actionConsiderationElements.Add (tempCon);
 			}
+			actionConsiderationContent.GetComponent<RectTransform>().sizeDelta = new Vector2(200, actionConsiderationElements.Count * 27);
+
 			actionConsiderationCurve.SetActive (false);
 			displayingActionCurve = false;
 			actionConsiderationsPanel.SetActive (true);
