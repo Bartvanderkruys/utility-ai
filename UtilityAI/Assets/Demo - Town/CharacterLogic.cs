@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class DemoCharacters : MonoBehaviour {
+public class CharacterLogic : MonoBehaviour {
 
 	//demo values
 	public float movementSpeed;
@@ -34,7 +34,7 @@ public class DemoCharacters : MonoBehaviour {
 		//add function delegate to action
 		agent.SetVoidActionDelegate("Sleep", Sleep);
 		agent.SetVoidActionDelegate("Shower", Shower);
-		agent.SetVoidActionDelegate("Eat", Eat);
+		agent.SetVoidActionDelegate("Eat at Restaurant", EatAtRestaurant);
 		agent.SetVoidActionDelegate("Watch Movie", WatchMovie);
 		agent.SetVoidActionDelegate("Get Groceries", GetGroceries);
 		agent.SetVoidActionDelegate("Drink Coffee", DrinkCoffee);
@@ -54,7 +54,7 @@ public class DemoCharacters : MonoBehaviour {
 		} else if (agent.GetTopAction().handle == Shower) {
 			destination = homeWaypointIn.transform.position;
 			preDestination = homeWaypointOut.transform.position;
-		} else if (agent.GetTopAction().handle == Eat) {
+		} else if (agent.GetTopAction().handle == EatAtRestaurant) {
 			destination = restaurantWaypointIn.transform.position;
 			preDestination = restaurantWaypointOut.transform.position;
 		} else if (agent.GetTopAction().handle == WatchMovie) {
@@ -127,7 +127,7 @@ public class DemoCharacters : MonoBehaviour {
 		}
 	}
 
-	void Eat()
+	void EatAtRestaurant()
 	{
 		ResetPositions ();
 
