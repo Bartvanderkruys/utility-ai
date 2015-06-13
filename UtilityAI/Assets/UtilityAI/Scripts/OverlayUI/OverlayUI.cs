@@ -120,14 +120,14 @@ public class OverlayUI : MonoBehaviour {
 			propertyContent.GetComponent<RectTransform>().sizeDelta = new Vector2(200, propertyElements.Count * 27);
 
 
-			for (int i = 0; i < agent.actions.Count; i++) {
+			for (int i = 0; i < agent.linkedActions.Count; i++) {
 				//populate UI actions
 				GameObject tempAct = Instantiate (actionElement, 
 			                                 new Vector3 (actionContent.transform.position.x + 100, 
 			            actionContent.transform.position.y + actionElements.Count * - 27, 
 			            actionContent.transform.position.z), Quaternion.identity) as GameObject;
 				tempAct.transform.SetParent (actionContent.transform);
-				tempAct.GetComponent<OverlayUIActionElement> ().SetAction (agent.actions [i]);
+				tempAct.GetComponent<OverlayUIActionElement> ().SetAction (agent.linkedActions[i].action);
 				actionElements.Add (tempAct);
 			}
 			actionContent.GetComponent<RectTransform>().sizeDelta = new Vector2(200, actionElements.Count * 27);
@@ -156,15 +156,16 @@ public class OverlayUI : MonoBehaviour {
 				}
 			}
 
-			for (int i = 0; i < displayedAgent.actions.Count; i++) {
-				for (int j = 0; j < displayedAgent.actions[i].considerations.Count; j++) {
-					if (displayedAgent.actions [i].considerations [j].property == property) {
+			for (int i = 0; i < displayedAgent.linkedActions.Count; i++) {
+				for (int j = 0; j < displayedAgent.linkedActions[i].action.considerations.Count; j++) {
+					if (displayedAgent.linkedActions [i].action.considerations [j].property == property) {
 						GameObject tempCon = Instantiate (considerationElement, 
 					                                  new Vector3 (considerationContent.transform.position.x, 
 					             considerationContent.transform.position.y + considerationElements.Count * - 27, 
 					             considerationContent.transform.position.z), Quaternion.identity) as GameObject;
 						tempCon.transform.SetParent (considerationContent.transform);
-						tempCon.GetComponent<OverlayUIConsiderationElement> ().SetConsideration (displayedAgent.actions [i].considerations [j], false, displayedAgent.actions[i].name);
+						tempCon.GetComponent<OverlayUIConsiderationElement> ().SetConsideration (
+							displayedAgent.linkedActions [i].action.considerations [j], false, displayedAgent.linkedActions[i].action.name);
 						considerationElements.Add (tempCon);
 					}
 				}

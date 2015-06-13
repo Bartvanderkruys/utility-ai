@@ -11,7 +11,7 @@ public class UAI_Agent : MonoBehaviour {
 	public string agentName;
 	public int historyStates = 10;
 	public GameObject characterIndicator;
-	public List<UAI_Action> actions = new List<UAI_Action>();
+	public List<UAI_LinkedAction> linkedActions = new List<UAI_LinkedAction>();
 
 	[HideInInspector]
 	public List<string> actionHistory = new List<string>();
@@ -50,10 +50,10 @@ public class UAI_Agent : MonoBehaviour {
 
 	public void SetVoidActionDelegate(string name, UAI_Action.Del del)
 	{
-		for (int i = 0; i < actions.Count; i++) {
-			if (actions[i].name == name)
+		for (int i = 0; i < linkedActions.Count; i++) {
+			if (linkedActions[i].action.name == name)
 			{
-				actions[i].handle = del;
+				linkedActions[i].action.handle = del;
 				return;
 			}
 		}
@@ -85,12 +85,12 @@ public class UAI_Agent : MonoBehaviour {
 
 		float topActionScore = 0.0f;
 
-		for (int i = 0; i < actions.Count; i++) {
-			actions[i].EvaluateAction();
-			if(actions[i].GetActionScore() > topActionScore)
+		for (int i = 0; i < linkedActions.Count; i++) {
+			linkedActions[i].action.EvaluateAction();
+			if(linkedActions[i].action.GetActionScore() > topActionScore)
 			{
-				topAction = actions[i];
-				topActionScore = actions[i].GetActionScore();
+				topAction = linkedActions[i].action;
+				topActionScore = linkedActions[i].action.GetActionScore();
 			}	
 		}
 		if (topAction != previousAction)
@@ -114,14 +114,14 @@ public class UAI_Agent : MonoBehaviour {
 		UAI_Action topInterruption = topAction;
 		bool validInterruption = false;
 		
-		for (int i = 0; i < actions.Count; i++) {
-			if(actions[i].priorityLevel < topActionPriority){
-				actions[i].EvaluateAction();
-				if(actions[i].GetActionScore() > currentActionScore && 
-				   actions[i].GetActionScore() > topActionScore)
+		for (int i = 0; i < linkedActions.Count; i++) {
+			if(linkedActions[i].action.priorityLevel < topActionPriority){
+				linkedActions[i].action.EvaluateAction();
+				if(linkedActions[i].action.GetActionScore() > currentActionScore && 
+				   linkedActions[i].action.GetActionScore() > topActionScore)
 				{
-					topInterruption = actions[i];
-					topActionScore = actions[i].GetActionScore();
+					topInterruption = linkedActions[i].action;
+					topActionScore = linkedActions[i].action.GetActionScore();
 					validInterruption = true;
 				}	
 			}

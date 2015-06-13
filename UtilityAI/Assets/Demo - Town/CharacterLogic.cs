@@ -35,10 +35,12 @@ public class CharacterLogic : MonoBehaviour {
 		agent.SetVoidActionDelegate("Sleep", Sleep);
 		agent.SetVoidActionDelegate("Shower", Shower);
 		agent.SetVoidActionDelegate("Eat at Restaurant", EatAtRestaurant);
+		agent.SetVoidActionDelegate("Eat at Home", EatAtHome);
 		agent.SetVoidActionDelegate("Watch Movie", WatchMovie);
 		agent.SetVoidActionDelegate("Get Groceries", GetGroceries);
 		agent.SetVoidActionDelegate("Drink Coffee", DrinkCoffee);
 		agent.SetVoidActionDelegate("Work", Work);
+		agent.SetVoidActionDelegate("Work at Home", WorkAtHome);
 	}
 	
 	// Update is called once per frame
@@ -57,6 +59,9 @@ public class CharacterLogic : MonoBehaviour {
 		} else if (agent.GetTopAction().handle == EatAtRestaurant) {
 			destination = restaurantWaypointIn.transform.position;
 			preDestination = restaurantWaypointOut.transform.position;
+		} else if (agent.GetTopAction().handle == EatAtHome) {
+			destination = homeWaypointIn.transform.position;
+			preDestination = homeWaypointOut.transform.position;
 		} else if (agent.GetTopAction().handle == WatchMovie) {
 			destination = cinemaWaypointIn.transform.position;
 			preDestination = cinemaWaypointOut.transform.position;
@@ -67,6 +72,9 @@ public class CharacterLogic : MonoBehaviour {
 			destination = groceryStoreWaypointIn.transform.position;
 			preDestination = groceryStoreWaypointOut.transform.position;
 		} else if (agent.GetTopAction().handle == DrinkCoffee) {
+			destination = homeWaypointIn.transform.position;
+			preDestination = homeWaypointOut.transform.position;
+		} else if (agent.GetTopAction().handle == WorkAtHome) {
 			destination = homeWaypointIn.transform.position;
 			preDestination = homeWaypointOut.transform.position;
 		}
@@ -158,7 +166,7 @@ public class CharacterLogic : MonoBehaviour {
 		ResetPositions ();
 
 		if(atDestination){	
-			entertainment.value += 15.0f * UtilityTime.time;
+			entertainment.value += 30.0f * UtilityTime.time;
 			money.value -= 10.0f * UtilityTime.time;
 		} else {
 			MoveToTarget ();
@@ -175,6 +183,18 @@ public class CharacterLogic : MonoBehaviour {
 			MoveToTarget ();
 		}
 	}
+
+	void WorkAtHome()
+	{
+		ResetPositions ();
+		
+		if(atDestination){
+			money.value += 20.0f * UtilityTime.time;
+		} else {
+			MoveToTarget ();
+		}
+	}
+
 
 	void GetGroceries()
 	{
