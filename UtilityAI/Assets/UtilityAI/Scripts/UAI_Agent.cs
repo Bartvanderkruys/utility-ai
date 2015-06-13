@@ -11,8 +11,8 @@ public class UAI_Agent : MonoBehaviour {
 	public string agentName;
 	public int historyStates = 10;
 	public GameObject characterIndicator;
+	[HideInInspector]
 	public List<UAI_LinkedAction> linkedActions = new List<UAI_LinkedAction>();
-
 	[HideInInspector]
 	public List<string> actionHistory = new List<string>();
 	private UAI_Action previousAction, topAction;

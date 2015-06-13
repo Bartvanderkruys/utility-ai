@@ -13,8 +13,8 @@ public class OverlayUI : MonoBehaviour {
 
 	public GameObject ModifiablePropertyElement, PropertyElement, considerationElement, actionElement, agentElement, historyElement, 
 					  propertyContent, considerationContent, actionContent, agentContent, actionHistoryContent, actionConsiderationContent,
-					  actionPanel, considerationPanel, eventPanel, utilityPanel, agentsPanel, utilityCurve, actionConsiderationCurve,
-					  showActionsPanel, showConsiderationPanel, showEventPanel, showUtilityPanel, showAgentsPanel, actionConsiderationsPanel,	
+					  actionsPanel, propertiesPanel, eventsPanel, propertyConsiderationsPanel, agentsPanel, utilityCurve, actionConsiderationCurve,
+					  showActionsPanel, showPropertiesPanel, showEventPanel, showAgentsPanel, actionConsiderationsPanel,	
 	                  utilityIndicator, propertyIndicator, actionPropertyIndicator, actionUtilityIndicator;
 
 	public Text utilitySpeedText;
@@ -74,7 +74,7 @@ public class OverlayUI : MonoBehaviour {
 		agentProperties.Clear ();
 		propertyElements.Clear ();
 
-		utilityPanel.SetActive (false);
+		propertyConsiderationsPanel.SetActive (false);
 		actionConsiderationsPanel.SetActive (false);
 		selectedAction = null;
 		selectedProperty = null;
@@ -174,12 +174,12 @@ public class OverlayUI : MonoBehaviour {
 
 			utilityCurve.SetActive (false);
 			displayingCurve = false;
-			utilityPanel.SetActive (true);
+			propertyConsiderationsPanel.SetActive (true);
 			selectedProperty = property;
 		} else {
 			utilityCurve.SetActive (false);
 			displayingCurve = false;
-			utilityPanel.SetActive (false);
+			propertyConsiderationsPanel.SetActive (false);
 			selectedProperty = null;
 			selectedPropertyConsideration = null;
 		}
@@ -356,38 +356,32 @@ public class OverlayUI : MonoBehaviour {
 	}
 
 	public void OnClickHide(string button){
-		if (button == "HideActions") {
-			actionPanel.SetActive (false);
+		if (button == "HideActionsPanel") {
+			actionsPanel.SetActive (false);
 			showActionsPanel.SetActive (true);
-		} else if (button == "HideConsiderations") {
-			considerationPanel.SetActive (false);
-			showConsiderationPanel.SetActive (true);
-		} else if (button == "HideEvents") {
-			eventPanel.SetActive (false);
+		} else if (button == "HidePropertiesPanel") {
+			propertiesPanel.SetActive (false);
+			showPropertiesPanel.SetActive (true);
+		} else if (button == "HideEventsPanel") {
+			eventsPanel.SetActive (false);
 			showEventPanel.SetActive (true);
-		} else if (button == "HideUtilityCurve") {
-			utilityPanel.SetActive (false);
-			showUtilityPanel.SetActive (true);
-		} else if (button == "HideAgents") {
+		} else if (button == "HideAgentsPanel") {
 			agentsPanel.SetActive (false);
 			showAgentsPanel.SetActive (true);
 		}
 	}
 
 	public void OnClickShow(string button){
-		if (button == "ShowActions") {
-			actionPanel.SetActive (true);
+		if (button == "ShowActionsPanel") {
+			actionsPanel.SetActive (true);
 			showActionsPanel.SetActive (false);
-		} else if (button == "ShowConsiderations") {
-			considerationPanel.SetActive (true);
-			showConsiderationPanel.SetActive (false);
-		} else if (button == "ShowEvents") {
-			eventPanel.SetActive (true);
+		} else if (button == "ShowPropertiesPanel") {
+			propertiesPanel.SetActive (true);
+			showPropertiesPanel.SetActive (false);
+		} else if (button == "ShowEventsPanel") {
+			eventsPanel.SetActive (true);
 			showEventPanel.SetActive (false);
-		} else if (button == "ShowUtilityCurve") {
-			utilityPanel.SetActive (true);
-			showUtilityPanel.SetActive (false);
-		} else if (button == "ShowAgents") {
+		} else if (button == "ShowAgentsPanel") {
 			showAgentsPanel.SetActive (false);
 			agentsPanel.SetActive (true);
 		}
