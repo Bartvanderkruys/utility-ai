@@ -10,7 +10,6 @@ public class UAI_Agent : MonoBehaviour {
 
 	public string agentName;
 	public int historyStates = 10;
-	public bool randomStartProperties;
 	public GameObject characterIndicator;
 	public List<UAI_Action> actions = new List<UAI_Action>();
 
@@ -27,13 +26,6 @@ public class UAI_Agent : MonoBehaviour {
 
 	void Start(){
 		Evaluate ();
-
-		if (randomStartProperties) {
-			UAI_Property[] properties = GetComponentsInChildren<UAI_Property>();
-			for(int i = 0; i < properties.Length; i++){
-				properties[i].SetFloatValue( Random.value * properties[i].GetFloatMax() );
-			}
-		}
 	}
 
 	public void UpdateAI(){

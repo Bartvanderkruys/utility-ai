@@ -24,7 +24,7 @@ public class UAI_Action : MonoBehaviour{
 		//evaluate appropriate considerations
 		for (int j = 0; j < considerations.Count; j++){
 			//normalize value
-			actionScore += considerations[j].utilityScore;
+			actionScore += considerations[j].utilityScore * considerations[j].weight;
 		}
 		//determine average
 		actionScore = actionScore / considerations.Count;

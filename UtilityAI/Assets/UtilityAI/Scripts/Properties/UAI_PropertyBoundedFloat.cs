@@ -3,11 +3,23 @@ using System.Collections;
 
 [AddComponentMenu("UtilityAI/Float Property")]
 public class UAI_PropertyBoundedFloat : UAI_Property {
+	public bool randomizeStartValue = false;
 	public float minValue = 0.0f;
 	public float maxValue = 100.0f;
 	public float startValue = 50.0f;
 	public float ChangePerSec = 0.0f;
 	private float currValue;
+
+	void Start(){
+		if (randomizeStartValue)
+			currValue = Random.value * maxValue;
+		else
+			currValue = startValue;
+	}
+
+	void Update () {
+		value += UtilityTime.time * ChangePerSec;
+	}
 
 	public float value {
 		get{ return currValue; }
@@ -32,15 +44,5 @@ public class UAI_PropertyBoundedFloat : UAI_Property {
 
 	public override float GetFloatMax(){
 		return maxValue;
-	}
-
-	// Use this for initialization
-	void Start () {
-		currValue = startValue;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		value += UtilityTime.time * ChangePerSec;
 	}
 }

@@ -127,6 +127,19 @@ public class CharacterLogic : MonoBehaviour {
 		}
 	}
 
+	void EatAtHome()
+	{
+		ResetPositions ();
+		
+		if(atDestination){	
+			energy.value += 2.0f * UtilityTime.time;
+			hunger.value -= 60.0f * UtilityTime.time;
+			supplies.value -= 20.0f * UtilityTime.time;
+		} else {
+			MoveToTarget ();
+		}
+	}
+
 	void EatAtRestaurant()
 	{
 		ResetPositions ();
@@ -134,7 +147,7 @@ public class CharacterLogic : MonoBehaviour {
 		if(atDestination){	
 			energy.value += 2.0f * UtilityTime.time;
 			hunger.value -= 60.0f * UtilityTime.time;
-			money.value -= 10.0f * UtilityTime.time;
+			money.value -= 50.0f * UtilityTime.time;
 		} else {
 			MoveToTarget ();
 		}
@@ -146,7 +159,7 @@ public class CharacterLogic : MonoBehaviour {
 
 		if(atDestination){	
 			entertainment.value += 15.0f * UtilityTime.time;
-			money.value -= 5.0f * UtilityTime.time;
+			money.value -= 10.0f * UtilityTime.time;
 		} else {
 			MoveToTarget ();
 		}
@@ -157,7 +170,7 @@ public class CharacterLogic : MonoBehaviour {
 		ResetPositions ();
 
 		if(atDestination){
-			money.value += 50.0f * UtilityTime.time;
+			money.value += 20.0f * UtilityTime.time;
 		} else {
 			MoveToTarget ();
 		}
