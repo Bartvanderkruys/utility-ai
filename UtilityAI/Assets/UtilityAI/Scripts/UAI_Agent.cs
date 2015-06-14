@@ -57,7 +57,6 @@ public class UAI_Agent : MonoBehaviour {
 				return;
 			}
 		}
-		Debug.Log ("Setting Action Delegate failed. Action: " + name + " Does not exist.");
 	}
 
 	public void StartTimer(){

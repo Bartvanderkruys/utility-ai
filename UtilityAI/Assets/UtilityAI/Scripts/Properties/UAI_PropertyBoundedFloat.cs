@@ -3,7 +3,7 @@ using System.Collections;
 
 [AddComponentMenu("UtilityAI/Float Property")]
 public class UAI_PropertyBoundedFloat : UAI_Property {
-	public bool randomizeStartValue = false;
+
 	public float minValue = 0.0f;
 	public float maxValue = 100.0f;
 	public float startValue = 50.0f;
@@ -12,7 +12,7 @@ public class UAI_PropertyBoundedFloat : UAI_Property {
 
 	void Start(){
 		if (randomizeStartValue)
-			currValue = Random.value * maxValue;
+			currValue = Random.Range (minValue, maxValue) + minValue;
 		else
 			currValue = startValue;
 	}
@@ -31,18 +31,5 @@ public class UAI_PropertyBoundedFloat : UAI_Property {
 			if (currValue > maxValue)
 				currValue = maxValue;
 		}
-	}
-
-	public override void SetFloatValue(float value){
-		currValue = value; 
-		nValue = (currValue - minValue) / (maxValue - minValue);
-		if (currValue < minValue)
-			currValue = minValue;
-		if (currValue > maxValue)
-			currValue = maxValue;
-	}
-
-	public override float GetFloatMax(){
-		return maxValue;
 	}
 }

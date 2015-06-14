@@ -8,9 +8,7 @@ public class UAI_Property : MonoBehaviour{
 	public float normalizedValue {
 		get{ return nValue; }
 	}
-
-	public virtual void SetFloatValue(float value){}
-	public virtual float GetFloatMax(){return nValue;}
-
+	
 	public bool modifiable;
+	public bool randomizeStartValue;
 }

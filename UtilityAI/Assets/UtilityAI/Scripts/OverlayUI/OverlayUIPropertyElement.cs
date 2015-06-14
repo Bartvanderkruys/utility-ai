@@ -47,6 +47,21 @@ public class OverlayUIPropertyElement : MonoBehaviour {
 	}
 
 	public void SliderValueChange(){
-		property.SetFloatValue(propertySlider.value * property.GetFloatMax());
+		if (property is UAI_PropertyBoundedFloat) {
+			UAI_PropertyBoundedFloat temp = (UAI_PropertyBoundedFloat)property;
+			temp.value = propertySlider.value * temp.maxValue + temp.minValue;
+		} else if (property is UAI_PropertyBoundedDouble) {
+			UAI_PropertyBoundedDouble temp = (UAI_PropertyBoundedDouble)property;
+			temp.value = propertySlider.value * temp.maxValue + temp.minValue;
+		} else if (property is UAI_PropertyBoundedInt) {
+			UAI_PropertyBoundedInt temp = (UAI_PropertyBoundedInt)property;
+			temp.value = Mathf.FloorToInt (propertySlider.value * temp.maxValue + temp.minValue);
+		} else if (property is UAI_PropertyBoundedBoolean) {
+			UAI_PropertyBoundedBoolean temp = (UAI_PropertyBoundedBoolean)property;
+			if(propertySlider.value < 0.5)
+				temp.value = false;
+			else
+				temp.value = true;
+		}
 	}
 }
