@@ -9,6 +9,7 @@ using System.Collections.Generic;
 public class UAI_Agent : MonoBehaviour {
 
 	public string agentName;
+	public bool consoleLogging = false;
 	public int historyStates = 10;
 	public float secondsBetweenEvaluations = 0.0f;
 	public GameObject characterIndicator;
@@ -34,8 +35,12 @@ public class UAI_Agent : MonoBehaviour {
 
 	public void EnableAction(string actionName){
 		for (int i = 0; i < linkedActions.Count; i++) {
-			if(linkedActions[i].action.name == actionName)
+			if(linkedActions[i].action.name == actionName){
 				linkedActions[i].enabled = true;
+
+				if (consoleLogging)
+					Debug.Log (agentName + ". Action Enabled: " + actionName);
+			}
 		}
 	}
 
@@ -45,6 +50,9 @@ public class UAI_Agent : MonoBehaviour {
 			{
 				linkedActions[i].enabled = false;
 				linkedActions[i].action.SetActionScore(0.0f); 
+
+				if (consoleLogging)
+					Debug.Log (agentName + ". Action Disabled: " + actionName);
 			}
 		}
 	}
@@ -134,6 +142,9 @@ public class UAI_Agent : MonoBehaviour {
 			actionHistory.RemoveAt(0);
 		}
 
+		if (consoleLogging)
+			Debug.Log (agentName + ". New topAction: " + topAction.name + ". With actionScore: " + topActionScore);
+
 		currentActionScore = topActionScore;
 		return topActionScore;
 	}
@@ -171,6 +182,9 @@ public class UAI_Agent : MonoBehaviour {
 
 			if (topAction.interruptible)
 				secondsSinceLastEvaluation = 0.0f;
+
+			if (consoleLogging)
+				Debug.Log (agentName + ". Interruption: " + topAction.name + ". With actionScore: " + topActionScore);
 
 			return true;
 		}
