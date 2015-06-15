@@ -3,6 +3,7 @@
 // it evaluates which action has the highest utility score
 
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 [AddComponentMenu("UtilityAI/Agent")]
@@ -28,6 +29,7 @@ public class UAI_Agent : MonoBehaviour {
 	private float currentActionScore;
 	private bool isTiming = false;
 	private bool paused = false;
+	private int topLinkedActionIndex;
 
 	void Start(){
 		Evaluate ();
@@ -36,8 +38,7 @@ public class UAI_Agent : MonoBehaviour {
 	public void EnableAction(string actionName){
 		for (int i = 0; i < linkedActions.Count; i++) {
 			if(linkedActions[i].action.name == actionName){
-				linkedActions[i].enabled = true;
-
+				linkedActions[i].actionEnabled = true;
 				if (consoleLogging)
 					Debug.Log (agentName + ". Action Enabled: " + actionName);
 			}
@@ -48,7 +49,7 @@ public class UAI_Agent : MonoBehaviour {
 		for (int i = 0; i < linkedActions.Count; i++) {
 			if(linkedActions[i].action.name == actionName)
 			{
-				linkedActions[i].enabled = false;
+				linkedActions[i].actionEnabled = false;
 				linkedActions[i].action.SetActionScore(0.0f); 
 
 				if (consoleLogging)
@@ -120,12 +121,13 @@ public class UAI_Agent : MonoBehaviour {
 		float topActionScore = 0.0f;
 
 		for (int i = 0; i < linkedActions.Count; i++) {
-			if(linkedActions[i].enabled == true){
+			if(linkedActions[i].actionEnabled == true){
 				linkedActions[i].action.EvaluateAction();
 				if(linkedActions[i].action.GetActionScore() > topActionScore)
 				{
 					topAction = linkedActions[i].action;
 					topActionScore = linkedActions[i].action.GetActionScore();
+					topLinkedActionIndex = i;
 				}	
 			}
 		}
@@ -142,9 +144,14 @@ public class UAI_Agent : MonoBehaviour {
 			actionHistory.RemoveAt(0);
 		}
 
+		if (linkedActions [topLinkedActionIndex].cooldown > 0.0f) {
+			DisableAction(linkedActions [topLinkedActionIndex].action.name);
+			StartCoroutine(CooldownAction(topLinkedActionIndex));
+		}
+
 		if (consoleLogging)
 			Debug.Log (agentName + ". New topAction: " + topAction.name + ". With actionScore: " + topActionScore);
-
+		
 		currentActionScore = topActionScore;
 		return topActionScore;
 	}
@@ -157,7 +164,7 @@ public class UAI_Agent : MonoBehaviour {
 		bool validInterruption = false;
 		
 		for (int i = 0; i < linkedActions.Count; i++) {
-			if(linkedActions[i].enabled == true){
+			if(linkedActions[i].actionEnabled == true){
 				if(linkedActions[i].action.priorityLevel < topActionPriority){
 					linkedActions[i].action.EvaluateAction();
 					if(linkedActions[i].action.GetActionScore() > currentActionScore && 
@@ -195,4 +202,15 @@ public class UAI_Agent : MonoBehaviour {
 	{
 		return topAction;
 	}
+
+	IEnumerator CooldownAction(int i){
+		while (linkedActions[i].cooldown >= linkedActions[i].cooldownTimer) {
+			linkedActions[i].cooldownTimer += UtilityTime.time;
+			yield return new WaitForEndOfFrame();
+		}
+		linkedActions [i].actionEnabled = true;
+		linkedActions [i].cooldownTimer = 0.0f;
+	}
+
+
 }

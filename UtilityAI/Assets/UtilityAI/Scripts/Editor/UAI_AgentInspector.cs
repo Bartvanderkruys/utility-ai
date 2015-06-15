@@ -15,7 +15,7 @@ public class UAI_AgentInspector : Editor {
 		actionList.drawHeaderCallback = (Rect rect) => {  
 			EditorGUI.LabelField(rect, "Actions");
 		};
-		actionList.elementHeight = EditorGUIUtility.singleLineHeight + 5;
+		actionList.elementHeight = EditorGUIUtility.singleLineHeight * 2 + 5;
 		actionList.drawElementCallback =  
 		(Rect rect, int index, bool isActive, bool isFocused) => {
 			var element = actionList.serializedProperty.GetArrayElementAtIndex(index);
@@ -26,7 +26,14 @@ public class UAI_AgentInspector : Editor {
 				element.FindPropertyRelative("action"), GUIContent.none);
 			EditorGUI.PropertyField(
 				new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight),
-				element.FindPropertyRelative("enabled"), GUIContent.none);
+				element.FindPropertyRelative("actionEnabled"), GUIContent.none);
+			EditorGUI.LabelField(
+				new Rect(rect.width - 140.0f, rect.y + EditorGUIUtility.singleLineHeight + 2, 150.0f, EditorGUIUtility.singleLineHeight),
+				"Cooldown");
+			EditorGUI.PropertyField(
+				new Rect(rect.width - 64.0f, rect.y + EditorGUIUtility.singleLineHeight + 2, 100.0f, EditorGUIUtility.singleLineHeight),
+				element.FindPropertyRelative("cooldown"), GUIContent.none);
+
 		};
 	}
 	
