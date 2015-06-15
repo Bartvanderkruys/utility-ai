@@ -347,7 +347,7 @@ public class OverlayUI : MonoBehaviour {
 		} else if (function == 0 && UtilityTime.paused){
 			UtilityTime.paused = false;
 			pauseButton.colors = normalColorBlock;
-		} else if (function == 1 && UtilityTime.speed > 1.0f) {
+		} else if (function == 1 && UtilityTime.speed > 0.25f) {
 			UtilityTime.speed -= 0.25f;
 		} else if (function == 2) {
 			UtilityTime.speed += 0.25f;
