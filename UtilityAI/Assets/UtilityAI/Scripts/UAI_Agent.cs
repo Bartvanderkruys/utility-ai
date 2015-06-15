@@ -10,18 +10,22 @@ public class UAI_Agent : MonoBehaviour {
 
 	public string agentName;
 	public int historyStates = 10;
+	public float secondsBetweenEvaluations = 0.0f;
 	public GameObject characterIndicator;
+
 	[HideInInspector]
 	public List<UAI_LinkedAction> linkedActions = new List<UAI_LinkedAction>();
 	[HideInInspector]
 	public List<string> actionHistory = new List<string>();
-	private UAI_Action previousAction, topAction;
 	[HideInInspector]
 	public float actionTimer = 0.0f;
-	private float currentActionScore;
-	private bool isTiming = false;
 	[HideInInspector]
 	public bool newAction;
+
+	private float secondsSinceLastEvaluation = 0.0f;
+	private UAI_Action previousAction, topAction;
+	private float currentActionScore;
+	private bool isTiming = false;
 	private bool paused = false;
 
 	void Start(){
@@ -51,8 +55,13 @@ public class UAI_Agent : MonoBehaviour {
 				actionTimer -= UtilityTime.time;
 				GetTopAction ().handle ();
 				if (GetTopAction ().interruptible) {
-					if (EvaluateInteruption ()) {
-						actionTimer = GetTopAction ().time;
+					if(secondsSinceLastEvaluation >= secondsBetweenEvaluations){
+						if (EvaluateInteruption ()) {
+							actionTimer = GetTopAction ().time;
+						}
+						secondsSinceLastEvaluation = 0.0f;
+					} else {
+						secondsSinceLastEvaluation += UtilityTime.time;
 					}
 				}
 			} else if (actionTimer > 0.0f) {
@@ -117,6 +126,9 @@ public class UAI_Agent : MonoBehaviour {
 		else
 			StartTimer ();
 
+		if (topAction.interruptible)
+			secondsSinceLastEvaluation = 0.0f;
+
 		actionHistory.Add (topAction.name);
 		if (actionHistory.Count > historyStates){
 			actionHistory.RemoveAt(0);
@@ -156,6 +168,10 @@ public class UAI_Agent : MonoBehaviour {
 				actionHistory.RemoveAt(0);
 			}
 			currentActionScore = topActionScore;
+
+			if (topAction.interruptible)
+				secondsSinceLastEvaluation = 0.0f;
+
 			return true;
 		}
 		return false;
