@@ -22,8 +22,11 @@ public class UAI_ActionInspector : Editor {
 			rect.y += 2;
 
 			EditorGUI.PropertyField(
-				new Rect(rect.x, rect.y, rect.width - 50.0f, EditorGUIUtility.singleLineHeight),
+				new Rect(rect.x + 20, rect.y, rect.width - 70.0f, EditorGUIUtility.singleLineHeight),
 				element.FindPropertyRelative("property"), GUIContent.none);
+			EditorGUI.PropertyField(
+				new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight),
+				element.FindPropertyRelative("enabled"), GUIContent.none);
 			EditorGUI.LabelField(
 				new Rect(rect.width - 180.0f, rect.y + EditorGUIUtility.singleLineHeight + 2, 50.0f, EditorGUIUtility.singleLineHeight),
 				"Weight");

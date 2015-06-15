@@ -19,15 +19,33 @@ public class UAI_Action : MonoBehaviour{
 
 	private float actionScore;
 
+	public void EnableConsideration(string propertyName){
+		for (int i = 0; i < considerations.Count; i++) {
+			if(considerations[i].property.name == propertyName)
+				considerations[i].enabled = true;
+		}
+	}
+
+	public void DisableConsideration(string propertyName){
+		for (int i = 0; i < considerations.Count; i++) {
+			if(considerations[i].property.name == propertyName)
+				considerations[i].enabled = false;
+		}
+	}
+
 	public void EvaluateAction(){
 		actionScore = 0.0f;
+		int enabledConsiderationsCount = 0;
 		//evaluate appropriate considerations
-		for (int j = 0; j < considerations.Count; j++){
-			//normalize value
-			actionScore += considerations[j].utilityScore * considerations[j].weight;
+		for (int i = 0; i < considerations.Count; i++){
+			//calc utility score
+			if(considerations[i].enabled) {
+				actionScore += considerations[i].utilityScore * considerations[i].weight;
+				enabledConsiderationsCount ++;
+			}
 		}
 		//determine average
-		actionScore = actionScore / considerations.Count;
+		actionScore = actionScore / enabledConsiderationsCount;
 	}
 
 	public float GetActionScore()

@@ -6,6 +6,7 @@ public class UAI_Consideration {
 	public AnimationCurve utilityCurve;
 	public UAI_Property property;
 	public float weight = 1.0f;
+	public bool enabled = true;
 
 	public float propertyScore{
 		get { return property.normalizedValue; }

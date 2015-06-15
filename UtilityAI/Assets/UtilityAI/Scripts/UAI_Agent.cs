@@ -28,6 +28,23 @@ public class UAI_Agent : MonoBehaviour {
 		Evaluate ();
 	}
 
+	public void EnableAction(string actionName){
+		for (int i = 0; i < linkedActions.Count; i++) {
+			if(linkedActions[i].action.name == actionName)
+				linkedActions[i].enabled = true;
+		}
+	}
+
+	public void DisableAction(string actionName){
+		for (int i = 0; i < linkedActions.Count; i++) {
+			if(linkedActions[i].action.name == actionName)
+			{
+				linkedActions[i].enabled = false;
+				linkedActions[i].action.SetActionScore(0.0f); 
+			}
+		}
+	}
+
 	public void UpdateAI(){
 		if (!paused) {
 			if (actionTimer > 0.0f && isTiming) {
@@ -80,17 +97,20 @@ public class UAI_Agent : MonoBehaviour {
 
 	public float Evaluate(){
 
-		previousAction = topAction;
+		if(topAction != null)
+			previousAction = topAction;
 
 		float topActionScore = 0.0f;
 
 		for (int i = 0; i < linkedActions.Count; i++) {
-			linkedActions[i].action.EvaluateAction();
-			if(linkedActions[i].action.GetActionScore() > topActionScore)
-			{
-				topAction = linkedActions[i].action;
-				topActionScore = linkedActions[i].action.GetActionScore();
-			}	
+			if(linkedActions[i].enabled == true){
+				linkedActions[i].action.EvaluateAction();
+				if(linkedActions[i].action.GetActionScore() > topActionScore)
+				{
+					topAction = linkedActions[i].action;
+					topActionScore = linkedActions[i].action.GetActionScore();
+				}	
+			}
 		}
 		if (topAction != previousAction)
 			newAction = true;
@@ -114,15 +134,17 @@ public class UAI_Agent : MonoBehaviour {
 		bool validInterruption = false;
 		
 		for (int i = 0; i < linkedActions.Count; i++) {
-			if(linkedActions[i].action.priorityLevel < topActionPriority){
-				linkedActions[i].action.EvaluateAction();
-				if(linkedActions[i].action.GetActionScore() > currentActionScore && 
-				   linkedActions[i].action.GetActionScore() > topActionScore)
-				{
-					topInterruption = linkedActions[i].action;
-					topActionScore = linkedActions[i].action.GetActionScore();
-					validInterruption = true;
-				}	
+			if(linkedActions[i].enabled == true){
+				if(linkedActions[i].action.priorityLevel < topActionPriority){
+					linkedActions[i].action.EvaluateAction();
+					if(linkedActions[i].action.GetActionScore() > currentActionScore && 
+					   linkedActions[i].action.GetActionScore() > topActionScore)
+					{
+						topInterruption = linkedActions[i].action;
+						topActionScore = linkedActions[i].action.GetActionScore();
+						validInterruption = true;
+					}	
+				}
 			}
 		}
 
