@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class TimeOfDay : MonoBehaviour {
 
 	public UAI_PropertyBoundedFloat timeProperty;
-	public UAI_PropertyBoundedFloat weekendProperty;
+	public UAI_PropertyBoolean weekendProperty;
 
 	public Text timeOfDayText;
 	public Text dayText;
@@ -47,7 +47,7 @@ public class TimeOfDay : MonoBehaviour {
 		case (int)week.SUNDAY:
 			day = (int)week.MONDAY;
 			dayText.text = "Monday";
-			weekendProperty.value = 0.0f;
+			weekendProperty.value = false;
 			break;
 		case (int)week.MONDAY:
 			day = (int)week.TUESDAY;
@@ -68,7 +68,7 @@ public class TimeOfDay : MonoBehaviour {
 		case (int)week.FRIDAY:
 			day = (int)week.SATURDAY;
 			dayText.text = "Saturday";
-			weekendProperty.value = 1.0f;
+			weekendProperty.value = true;
 			break;
 		case (int)week.SATURDAY:
 			day = (int)week.SUNDAY;

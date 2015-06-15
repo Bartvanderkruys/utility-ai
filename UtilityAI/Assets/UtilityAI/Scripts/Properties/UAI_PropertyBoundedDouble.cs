@@ -25,11 +25,11 @@ public class UAI_PropertyBoundedDouble : UAI_Property {
 		get{ return currValue; }
 		set{ 
 			currValue = value; 
-			nValue = (float)((currValue - minValue) / (maxValue - minValue));
 			if (currValue < minValue)
 				currValue = minValue;
 			if (currValue > maxValue)
 				currValue = maxValue;
+			nValue = (float)((currValue - minValue) / (maxValue - minValue));
 		}
 	}
 }

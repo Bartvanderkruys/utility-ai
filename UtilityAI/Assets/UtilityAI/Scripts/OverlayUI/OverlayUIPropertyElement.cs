@@ -56,8 +56,8 @@ public class OverlayUIPropertyElement : MonoBehaviour {
 		} else if (property is UAI_PropertyBoundedInt) {
 			UAI_PropertyBoundedInt temp = (UAI_PropertyBoundedInt)property;
 			temp.value = Mathf.FloorToInt (propertySlider.value * temp.maxValue + temp.minValue);
-		} else if (property is UAI_PropertyBoundedBoolean) {
-			UAI_PropertyBoundedBoolean temp = (UAI_PropertyBoundedBoolean)property;
+		} else if (property is UAI_PropertyBoolean) {
+			UAI_PropertyBoolean temp = (UAI_PropertyBoolean)property;
 			if(propertySlider.value < 0.5)
 				temp.value = false;
 			else

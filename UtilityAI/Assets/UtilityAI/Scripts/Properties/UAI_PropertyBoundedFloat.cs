@@ -25,11 +25,11 @@ public class UAI_PropertyBoundedFloat : UAI_Property {
 		get{ return currValue; }
 		set{ 
 			currValue = value; 
-			nValue = (currValue - minValue) / (maxValue - minValue);
 			if (currValue < minValue)
 				currValue = minValue;
 			if (currValue > maxValue)
 				currValue = maxValue;
+			nValue = (currValue - minValue) / (maxValue - minValue);
 		}
 	}
 }

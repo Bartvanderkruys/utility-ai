@@ -12,6 +12,6 @@ public class UAI_Consideration {
 	}
 
 	public float utilityScore {
-		get { return utilityCurve.Evaluate (property.normalizedValue); }
+		get { return utilityCurve.Evaluate (property.normalizedValue);}
 	}
 }

@@ -201,7 +201,7 @@ public class CharacterLogic : MonoBehaviour {
 		ResetPositions ();
 
 		if(atDestination){	
-			supplies.value += 60.0f * UtilityTime.time;
+			supplies.value += 100.0f * UtilityTime.time;
 			money.value -= 10.0f * UtilityTime.time;
 		} else {
 			MoveToTarget ();
