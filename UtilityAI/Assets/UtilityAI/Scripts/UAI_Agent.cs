@@ -31,6 +31,25 @@ public class UAI_Agent : MonoBehaviour {
 	private bool paused = false;
 	private int topLinkedActionIndex;
 
+	// Limit Evaluation
+	private static int   counter = 0;
+	public static int   maxAgents = 0;
+	
+	private IEnumerator ResetEvaluation(){
+		yield return new WaitForEndOfFrame();
+		counter = 0;
+	}
+	
+	private bool CanEvaluate(){
+		if (counter == 0) { 
+			StartCoroutine(ResetEvaluation());
+		}
+		counter ++;
+		return (maxAgents <= 0 || counter <= maxAgents);
+	} 
+	
+
+
 	void Start(){
 		Evaluate ();
 	}
@@ -59,6 +78,44 @@ public class UAI_Agent : MonoBehaviour {
 	}
 
 	public void UpdateAI(){
+		if (paused)
+			return;
+
+		if (isTiming){
+			//float delta = UtilityTime.time;
+			//if (actionTimer < UtilityTime.time)
+			//	delta = actionTimer;
+			actionTimer -= UtilityTime.time;
+		}
+
+		GetTopAction ().handle();
+		// GetTopAction ().handle( delta );
+
+		if (GetTopAction ().interruptible) {
+			secondsSinceLastEvaluation -= UtilityTime.time;
+			if (secondsSinceLastEvaluation <= 0.0f) {
+				// if interruptable then check actions with high priority
+				if (EvaluateInteruption ()) { // was interrupted
+					actionTimer = GetTopAction ().time;
+				}
+				secondsSinceLastEvaluation = secondsBetweenEvaluations;
+			}
+		}
+
+		if (actionTimer <= 0.0f){ // action ended
+			if (!CanEvaluate ()) {
+				Debug.Log("Cannot evaluate");
+				return;
+			}
+			StopTimer ();
+			Evaluate ();
+			actionTimer = GetTopAction ().time; //  - (UtilityTime.time -  delta);
+			secondsSinceLastEvaluation = secondsBetweenEvaluations;
+		}
+
+		//GetTopAction ().handle(UtilityTime.time -  delta );
+
+		/*
 		if (!paused) {
 			if (actionTimer > 0.0f && isTiming) {
 				actionTimer -= UtilityTime.time;
@@ -76,12 +133,14 @@ public class UAI_Agent : MonoBehaviour {
 			} else if (actionTimer > 0.0f) {
 				GetTopAction ().handle ();
 			} else {
+
 				StopTimer ();
 				Evaluate ();
 				actionTimer = GetTopAction ().time;
 			}
 		}
-	}
+		*/
+		}
 
 	public void SetVoidActionDelegate(string name, UAI_Action.Del del)
 	{

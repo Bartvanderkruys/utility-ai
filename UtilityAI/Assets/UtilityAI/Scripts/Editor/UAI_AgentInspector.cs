@@ -42,5 +42,10 @@ public class UAI_AgentInspector : Editor {
 		actionList.DoLayoutList();
 		serializedObject.ApplyModifiedProperties();
 		DrawDefaultInspector ();
+
+		// agent = target as UAI_Agent;
+
+		UAI_Agent.maxAgents = EditorGUILayout.IntField ("Number agents evaluated per Tick", UAI_Agent.maxAgents);
+
 	}
 }
