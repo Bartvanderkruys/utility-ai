@@ -1,4 +1,4 @@
-﻿using UnityEngine;  
+using UnityEngine;  
 using UnityEditor;  
 using UnityEditorInternal;
 
@@ -45,7 +45,7 @@ public class UAI_AgentInspector : Editor {
 
 		// agent = target as UAI_Agent;
 
-		UAI_Agent.maxAgents = EditorGUILayout.IntField ("Number agents evaluated per Tick", UAI_Agent.maxAgents);
+		UAI_Agent.maxAgentEvaluations = EditorGUILayout.IntField ("Number agents evaluated per Tick", UAI_Agent.maxAgentEvaluations);
 
 	}
 }

@@ -32,20 +32,20 @@ public class UAI_Agent : MonoBehaviour {
 	private int topLinkedActionIndex;
 
 	// Limit Evaluation
-	private static int   counter = 0;
-	public static int   maxAgents = 0;
+	private static int   agentEvaluationCounter = 0;
+	public static int   maxAgentEvaluations = 0;
 	
 	private IEnumerator ResetEvaluation(){
 		yield return new WaitForEndOfFrame();
-		counter = 0;
+		agentEvaluationCounter = 0;
 	}
 	
 	private bool CanEvaluate(){
-		if (counter == 0) { 
+		if (agentEvaluationCounter == 0) { 
 			StartCoroutine(ResetEvaluation());
 		}
-		counter ++;
-		return (maxAgents <= 0 || counter <= maxAgents);
+		agentEvaluationCounter ++;
+		return (maxAgentEvaluations <= 0 || agentEvaluationCounter <= maxAgentEvaluations);
 	} 
 	
 
@@ -112,35 +112,7 @@ public class UAI_Agent : MonoBehaviour {
 			actionTimer = GetTopAction ().time; //  - (UtilityTime.time -  delta);
 			secondsSinceLastEvaluation = secondsBetweenEvaluations;
 		}
-
-		//GetTopAction ().handle(UtilityTime.time -  delta );
-
-		/*
-		if (!paused) {
-			if (actionTimer > 0.0f && isTiming) {
-				actionTimer -= UtilityTime.time;
-				GetTopAction ().handle ();
-				if (GetTopAction ().interruptible) {
-					if(secondsSinceLastEvaluation >= secondsBetweenEvaluations){
-						if (EvaluateInteruption ()) {
-							actionTimer = GetTopAction ().time;
-						}
-						secondsSinceLastEvaluation = 0.0f;
-					} else {
-						secondsSinceLastEvaluation += UtilityTime.time;
-					}
-				}
-			} else if (actionTimer > 0.0f) {
-				GetTopAction ().handle ();
-			} else {
-
-				StopTimer ();
-				Evaluate ();
-				actionTimer = GetTopAction ().time;
-			}
-		}
-		*/
-		}
+	}
 
 	public void SetVoidActionDelegate(string name, UAI_Action.Del del)
 	{
