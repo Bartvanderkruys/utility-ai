@@ -24,6 +24,11 @@ public class TimeOfDay : MonoBehaviour {
 	int day = (int)week.WEDNESDAY;
 	
 	void Update () {
+
+		if (Input.GetKeyDown(KeyCode.Escape)){
+			Application.Quit();
+		}
+
 		//update time
 		timeOfDay += UtilityTime.time;
 		//check if a day has passed

@@ -27,7 +27,7 @@ public class UAI_Agent : MonoBehaviour {
 	private float secondsSinceLastEvaluation = 0.0f;
 	private UAI_Action previousAction, topAction;
 	private float currentActionScore;
-	private bool isTiming = false;
+	private bool isTiming = true;
 	private bool paused = false;
 	private int topLinkedActionIndex;
 
@@ -47,12 +47,6 @@ public class UAI_Agent : MonoBehaviour {
 		agentEvaluationCounter ++;
 		return (maxAgentEvaluations <= 0 || agentEvaluationCounter <= maxAgentEvaluations);
 	} 
-	
-
-
-	void Start(){
-		Evaluate ();
-	}
 
 	public void EnableAction(string actionName){
 		for (int i = 0; i < linkedActions.Count; i++) {
@@ -88,7 +82,14 @@ public class UAI_Agent : MonoBehaviour {
 			actionTimer -= UtilityTime.time;
 		}
 
-		GetTopAction ().handle();
+		if (topAction == null) {
+			Evaluate ();
+			actionTimer = GetTopAction ().time; //  - (UtilityTime.time -  delta);
+			secondsSinceLastEvaluation = secondsBetweenEvaluations;
+		}
+
+		GetTopAction ().handle ();
+
 		// GetTopAction ().handle( delta );
 
 		if (GetTopAction ().interruptible) {
@@ -159,9 +160,10 @@ public class UAI_Agent : MonoBehaviour {
 					topAction = linkedActions[i].action;
 					topActionScore = linkedActions[i].action.GetActionScore();
 					topLinkedActionIndex = i;
-				}	
+				}
 			}
 		}
+
 		if (topAction != previousAction)
 			newAction = true;
 		else
